@@ -110,7 +110,7 @@ namespace HouseholdBudgetPlanner
                     Amounts.Add(addedAmount);
                     if (Amounts.Count == 1)
                     {
-                        Console.WriteLine("Expense has been added!");
+                        Console.WriteLine("\r\nExpense has been added!");
                         Console.WriteLine(Amounts[0].Id);
                         Console.WriteLine(Amounts[0].Name);
                         Console.WriteLine(Amounts[0].Value);
@@ -120,7 +120,7 @@ namespace HouseholdBudgetPlanner
 
                     else if (Amounts.Count == 2)
                     {
-                        Console.WriteLine("Expense has been added!");
+                        Console.WriteLine("\r\nExpense has been added!");
                         Console.WriteLine(Amounts[0].Id);
                         Console.WriteLine(Amounts[0].Name);
                         Console.WriteLine(Amounts[0].Value);
@@ -133,7 +133,7 @@ namespace HouseholdBudgetPlanner
                     }
                     else if (Amounts.Count == 3)
                     {
-                        Console.WriteLine("Expense has been added!");
+                        Console.WriteLine("\r\nExpense has been added!");
                         Console.WriteLine(Amounts[0].Id);
                         Console.WriteLine(Amounts[0].Name);
                         Console.WriteLine(Amounts[0].Value);
@@ -151,12 +151,12 @@ namespace HouseholdBudgetPlanner
                     }
                     else
                     {
-                        Console.WriteLine("Nothing!");
+                        Console.WriteLine("\r\nNothing!");
                     }
                 }
                 else if (keyInfoAddExpense.KeyChar == '2')
                 {
-                    Console.WriteLine("Expense has not been added!");
+                    Console.WriteLine("\r\nExpense has not been added!");
                     if (Amounts.Count == 1)
                     {
                         Console.WriteLine(Amounts[0].Id);
@@ -197,7 +197,7 @@ namespace HouseholdBudgetPlanner
                     }
                     else
                     {
-                        Console.WriteLine("Nothing!");
+                        Console.WriteLine("\r\nNothing!");
                     }
                 }
                 else
@@ -244,7 +244,7 @@ namespace HouseholdBudgetPlanner
                     }
                     else
                     {
-                        Console.WriteLine("Nothing!");
+                        Console.WriteLine("\r\nNothing!");
                     }
                 }
         }
@@ -311,16 +311,16 @@ namespace HouseholdBudgetPlanner
                 if (keyInfoAddExpense.KeyChar == '1')
                 {
                     Amounts.Add(addedAmount);
-                    Console.WriteLine("Income has been added!");
+                    Console.WriteLine("\r\nIncome has been added!");
                 }
                 else if (keyInfoAddExpense.KeyChar == '2')
                 {
-                    Console.WriteLine("Income has not been added!");
+                    Console.WriteLine("\r\nIncome has not been added!");
                 }
                 else
                 {
                     Console.WriteLine("\r\nAction you entered does not exist\r\n");
-                    Console.WriteLine("Income has not been added!");
+                    Console.WriteLine("\r\nIncome has not been added!");
                 }
             }
             else
@@ -330,7 +330,7 @@ namespace HouseholdBudgetPlanner
         }
         public void RemoveAmount(ConsoleKeyInfo keyInfoRemoveAmount)
         {
-            Amount removedAmount = new Amount();
+            //Amount removedAmount = new Amount();
             if (keyInfoRemoveAmount.KeyChar == '1')
             {
                 Console.WriteLine("\r\nYou selected from expense!");
@@ -352,7 +352,57 @@ namespace HouseholdBudgetPlanner
                     dateEnd = Console.ReadLine();
                 }
                 Console.WriteLine($"\r\nYour selected date range is from {dateStartEntered} to {dateEndEntered}\r\n");
-                SelectAmountByDate(dateStartEntered, dateEndEntered);
+                foreach (var amount in Amounts)
+                {
+                    if (amount.Date > dateStartEntered && amount.Date < dateEndEntered.AddDays(1) && amount.Id > 0)
+                    {
+                        Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
+                    }
+                }
+                Console.Write("\r\nWrite name of expense to remove and press \"Enter\": ");
+                var nameOfRemoveAmount = Console.ReadLine();
+                Console.Write($"Please write amount of expense to remove {ValueTypes.PLN}: ");
+                var valueString = Console.ReadLine();
+                decimal valueInDecimal;
+                while (!decimal.TryParse(valueString, out valueInDecimal))
+                {
+                    Console.WriteLine("\r\nInvalid format amount, please retry!\r\n");
+                    Console.Write($"Please write value in {ValueTypes.PLN}: ");
+                    valueString = Console.ReadLine();
+                }
+                foreach (var amount in Amounts)
+                {
+                    if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered.AddDays(1)) && (amount.Id > 0) && 
+                        (amount.Name == nameOfRemoveAmount) && (amount.Value == valueInDecimal))
+                    {
+                        Console.WriteLine("\r\nYou selected: " + amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
+                        Console.WriteLine($"\r\nDo you want to remove this expense?\r\n");
+                        Console.WriteLine("1. Yes");
+                        Console.WriteLine("2. No");
+                        var keyInfoRemoveExpense = Console.ReadKey();
+                        if (keyInfoRemoveExpense.KeyChar == '1')
+                        {
+                            Amounts.Remove(amount);
+                            Console.WriteLine("\r\nExpense has been removed!");
+
+                        }
+                        else if (keyInfoRemoveExpense.KeyChar == '2')
+                        {
+                            Console.WriteLine("\r\nExpense has not been removed!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\r\nAction you entered does not exist\r\n");
+                            Console.WriteLine("\r\nExpense has not been removed!");
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"\r\nExpense by name and value you've selected does not exist!");
+                    }
+                }
+                //SelectAmountByDate(dateStartEntered, dateEndEntered);
             }
             else if (keyInfoRemoveAmount.KeyChar == '2')
             {
@@ -363,15 +413,15 @@ namespace HouseholdBudgetPlanner
 
             }
         }
-        public void SelectAmountByDate(DateTime dateStart, DateTime dateEnd)
-        {
-            foreach (var amount in Amounts)
-            {
-                if (amount.Date > dateStart && amount.Date < dateEnd)
-                {
-                    Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
-                }
-            }
-        }
+        //public void SelectAmountByDate(DateTime dateStart, DateTime dateEnd)
+        //{
+        //    foreach (var amount in Amounts)
+        //    {
+        //        if (amount.Date > dateStart && amount.Date < dateEnd && amount.Id > 0)
+        //        {
+        //            Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
+        //        }
+        //    }
+        //}
     }
 }

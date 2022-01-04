@@ -5,7 +5,7 @@ namespace HouseholdBudgetPlanner
     public class Program
     {
         //Stała
-        const string FILE_NAME = "C:\\HouseholdBudgetPlannerFiles\\ImportFile.xlsx";
+        //const string FILE_NAME = "C:\\HouseholdBudgetPlannerFiles\\ImportFile.xlsx";
         static void Main(string[] args)
         {
             //Console.WriteLine("Welcome to Household Budget Planner app!");

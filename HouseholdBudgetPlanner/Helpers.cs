@@ -9,7 +9,6 @@ namespace HouseholdBudgetPlanner
     public class Helpers
     {   
     }
-
     public enum ValueTypes
     {
         PLN,
