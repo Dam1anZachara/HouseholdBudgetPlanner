@@ -330,11 +330,10 @@ namespace HouseholdBudgetPlanner
         }
         public void RemoveAmount(ConsoleKeyInfo keyInfoRemoveAmount)
         {
-            //Amount removedAmount = new Amount();
             if (keyInfoRemoveAmount.KeyChar == '1')
             {
                 Console.WriteLine("\r\nYou selected from expense!");
-                Console.WriteLine("\r\nYou selected a date range of removed expense");
+                Console.WriteLine("\r\nPlease select a date range of removed expense");
                 Console.Write("\r\nWrite starting date in format \"dd/mm/yyyy\" and press \"Enter\": ");
                 var dateStart = Console.ReadLine();
                 DateTime dateStartEntered;
@@ -351,17 +350,17 @@ namespace HouseholdBudgetPlanner
                     Console.WriteLine("\r\nInvalid format date, please retry in format \"dd/mm/yyyy\" and press \"Enter\": ");
                     dateEnd = Console.ReadLine();
                 }
-                Console.WriteLine($"\r\nYour selected date range is from {dateStartEntered} to {dateEndEntered}\r\n");
+                Console.WriteLine($"\r\nYour expenses in date range is from {dateStartEntered} to {dateEndEntered}\r\n");
                 foreach (var amount in Amounts)
                 {
-                    if (amount.Date > dateStartEntered && amount.Date < dateEndEntered.AddDays(1) && amount.Id > 0)
+                    if (amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0)
                     {
                         Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
                     }
                 }
                 Console.Write("\r\nWrite name of expense to remove and press \"Enter\": ");
                 var nameOfRemoveAmount = Console.ReadLine();
-                Console.Write($"Please write amount of expense to remove {ValueTypes.PLN}: ");
+                Console.Write($"\r\nPlease write value of expense to remove {ValueTypes.PLN}: ");
                 var valueString = Console.ReadLine();
                 decimal valueInDecimal;
                 while (!decimal.TryParse(valueString, out valueInDecimal))
@@ -370,9 +369,10 @@ namespace HouseholdBudgetPlanner
                     Console.Write($"Please write value in {ValueTypes.PLN}: ");
                     valueString = Console.ReadLine();
                 }
+
                 foreach (var amount in Amounts)
                 {
-                    if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered.AddDays(1)) && (amount.Id > 0) && 
+                    if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && 
                         (amount.Name == nameOfRemoveAmount) && (amount.Value == valueInDecimal))
                     {
                         Console.WriteLine("\r\nYou selected: " + amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
@@ -402,26 +402,87 @@ namespace HouseholdBudgetPlanner
                         Console.WriteLine($"\r\nExpense by name and value you've selected does not exist!");
                     }
                 }
-                //SelectAmountByDate(dateStartEntered, dateEndEntered);
             }
             else if (keyInfoRemoveAmount.KeyChar == '2')
             {
                 Console.WriteLine("\r\nYou selected from income!");
+                Console.WriteLine("\r\nPlease select a date range of removed income");
+                Console.Write("\r\nWrite starting date in format \"dd/mm/yyyy\" and press \"Enter\": ");
+                var dateStart = Console.ReadLine();
+                DateTime dateStartEntered;
+                while (!DateTime.TryParseExact(dateStart, "dd/mm/yyyy", null, System.Globalization.DateTimeStyles.None, out dateStartEntered))
+                {
+                    Console.WriteLine("\r\nInvalid format date, please retry in format \"dd/mm/yyyy\" and press \"Enter\": ");
+                    dateStart = Console.ReadLine();
+                }
+                Console.Write("\r\nWrite end date in format \"dd/mm/yyyy\" and press \"Enter\": ");
+                var dateEnd = Console.ReadLine();
+                DateTime dateEndEntered;
+                while (!DateTime.TryParseExact(dateEnd, "dd/mm/yyyy", null, System.Globalization.DateTimeStyles.None, out dateEndEntered))
+                {
+                    Console.WriteLine("\r\nInvalid format date, please retry in format \"dd/mm/yyyy\" and press \"Enter\": ");
+                    dateEnd = Console.ReadLine();
+                }
+                Console.WriteLine($"\r\nYour incomes in date range is from {dateStartEntered} to {dateEndEntered}\r\n");
+                foreach (var amount in Amounts)
+                {
+                    if (amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id < 0)
+                    {
+                        Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
+                    }
+                }
+                Console.Write("\r\nWrite name of income to remove and press \"Enter\": ");
+                var nameOfRemoveAmount = Console.ReadLine();
+                Console.Write($"\r\nPlease write amount of income to remove {ValueTypes.PLN}: ");
+                var valueString = Console.ReadLine();
+                decimal valueInDecimal;
+                while (!decimal.TryParse(valueString, out valueInDecimal))
+                {
+                    Console.WriteLine("\r\nInvalid format amount, please retry!\r\n");
+                    Console.Write($"Please write value in {ValueTypes.PLN}: ");
+                    valueString = Console.ReadLine();
+                }
+                foreach (var amount in Amounts)
+                {
+                    if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) &&
+                        (amount.Name == nameOfRemoveAmount) && (amount.Value == valueInDecimal))
+                    {
+                        Console.WriteLine("\r\nYou selected: " + amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
+                        Console.WriteLine($"\r\nDo you want to remove this income?\r\n");
+                        Console.WriteLine("1. Yes");
+                        Console.WriteLine("2. No");
+                        var keyInfoRemoveExpense = Console.ReadKey();
+                        if (keyInfoRemoveExpense.KeyChar == '1')
+                        {
+                            Amounts.Remove(amount);
+                            Console.WriteLine("\r\nIncome has been removed!");
+
+                        }
+                        else if (keyInfoRemoveExpense.KeyChar == '2')
+                        {
+                            Console.WriteLine("\r\nIncome has not been removed!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\r\nAction you entered does not exist\r\n");
+                            Console.WriteLine("\r\nIncome has not been removed!");
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"\r\nIncome by name and value you've selected does not exist!");
+                    }
+                }
             }
             else
             {
-
+                Console.WriteLine("\r\nAction you entered does not exist\r\n");
             }
         }
-        //public void SelectAmountByDate(DateTime dateStart, DateTime dateEnd)
-        //{
-        //    foreach (var amount in Amounts)
-        //    {
-        //        if (amount.Date > dateStart && amount.Date < dateEnd && amount.Id > 0)
-        //        {
-        //            Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
-        //        }
-        //    }
-        //}
+        public void AmountExist()
+        {
+
+        }
     }
 }
