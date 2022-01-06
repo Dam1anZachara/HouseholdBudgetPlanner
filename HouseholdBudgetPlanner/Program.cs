@@ -61,9 +61,10 @@ namespace HouseholdBudgetPlanner
             ExpenseTypeService expenseTypeService = new ExpenseTypeService();
             IncomeTypeService incomeTypeService = new IncomeTypeService();
             AmountService amountService = new AmountService();
+            AmountServiceAdd amountServiceAdd = new AmountServiceAdd();
+            AmountServiceRemove amountServiceRemove = new AmountServiceRemove();
 
             Console.WriteLine("Welcome to Household Budget Planner app!\r\n");
-
             while (true)
             {
                 Console.WriteLine("Please let me know what you want to do:\r\n");
@@ -100,13 +101,15 @@ namespace HouseholdBudgetPlanner
                         break;
                     case '5':
                         var keyInfoAddAmount = amountService.AddAmountView(actionService);
-                        amountService.AddAmount(keyInfoAddAmount);
+                        amountServiceAdd.AddAmount(keyInfoAddAmount);
                         break;
                     case '6':
                         var keyInfoRemoveAmount = amountService.RemoveAmountView(actionService);
-                        amountService.RemoveAmount(keyInfoRemoveAmount);
+                        amountServiceRemove.RemoveAmount(keyInfoRemoveAmount);
                         break;
                     case '7':
+                        var keyInfoBudgetStatus = amountService.BudgetStatusView(actionService);
+                        amountService.BudgetStatus(keyInfoBudgetStatus);
                         break;
                     default:
                         Console.WriteLine("Action you entered does not exist");
@@ -114,7 +117,6 @@ namespace HouseholdBudgetPlanner
                 }
             }
         }
-
         private static MenuActionService Initialize(MenuActionService actionService)
         {
             actionService.AddNewAction(1, "Add type of expense", "Main");
@@ -130,6 +132,10 @@ namespace HouseholdBudgetPlanner
 
             actionService.AddNewAction(1, "Remove amount from expense", "RemoveAmountMenu");
             actionService.AddNewAction(2, "Remove amount from income", "RemoveAmountMenu");
+
+            actionService.AddNewAction(1, "Status of expenses", "BudgetStatusMenu");
+            actionService.AddNewAction(2, "Status of incomes", "BudgetStatusMenu");
+            actionService.AddNewAction(3, "Budget balance", "BudgetStatusMenu");
             return actionService;
         }
     }

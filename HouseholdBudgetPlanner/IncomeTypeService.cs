@@ -33,6 +33,18 @@ namespace HouseholdBudgetPlanner
             string name = Console.ReadLine();
             return name;
         }
+        private bool IncomeTypeExist(string name)
+        {
+            foreach (var incomeType in IncomeTypes)
+            {
+                if (incomeType.Name == name)
+                {
+                    return true;
+                    break;
+                }
+            }
+            return false;
+        }
         public void AddNewIncomeType(string name)
         {
             if (name != "")

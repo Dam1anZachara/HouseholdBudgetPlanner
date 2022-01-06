@@ -6,7 +6,7 @@ namespace HouseholdBudgetPlanner
 {
     public class ExpenseTypeService
     {
-        public static List<ExpenseType> ExpenseTypes { get; set; }
+        public List<ExpenseType> ExpenseTypes { get; set; }
 
         private int i;
         public ExpenseTypeService()
@@ -27,18 +27,37 @@ namespace HouseholdBudgetPlanner
         }
         public string AddNewExpenseTypeView()
         {
-            Console.Write("\r\nPlease write the name of new expense type and press \"enter\": ");
+            Console.Write("\r\nPlease write the name of new expense type (don't use space or existing name) and press \"enter\": ");
             string name = Console.ReadLine();
             return name;
         }
+        private bool ExpanseTypeExist(string name)
+        {
+            foreach (var expenseType in ExpenseTypes)
+            {
+                if (expenseType.Name == name)
+                {
+                    return true;
+                    break;
+                }
+            }
+            return false;
+        }
         public void AddNewExpanseType(string name)
         {
-            if (name != "")
+            bool expanseTypeExist = ExpanseTypeExist(name);
+            if (name != "" && !expanseTypeExist && !name.Contains(' '))
             {
                 ExpenseType expenseTypeToAdd = new ExpenseType() { Id = i + 1, Name = name };
                 ExpenseTypes.Add(expenseTypeToAdd);
+                Console.WriteLine($"\r\nExpense type {name} has been added.");
+            }
+            else
+            {
+                Console.WriteLine("\r\nExpense type with this name exist or your name is empty or contains space.\r\n");
             }
         }
+
         public string RemoveExpenseTypeView()
         {
             Console.Write("\r\nPlease write the name of expense type that you want to remove and press \"enter\": ");
@@ -47,16 +66,23 @@ namespace HouseholdBudgetPlanner
         }
         public void RemoveExpanseType(string name)
         {
-            ExpenseType expenseTypeToRemove = new ExpenseType();
-            foreach (var expenseType in ExpenseTypes)
+            bool expanseTypeExist = ExpanseTypeExist(name);
+            if (expanseTypeExist)
             {
-                if (expenseType.Name == name)
+                foreach (var expenseType in ExpenseTypes)
                 {
-                    expenseTypeToRemove = expenseType;
-                    break;
+                    if (expenseType.Name == name)
+                    {
+                        ExpenseTypes.Remove(expenseType);
+                        Console.WriteLine($"\r\nExpense type {name} has been removed.\r\n");
+                        break;
+                    }
                 }
             }
-            ExpenseTypes.Remove(expenseTypeToRemove);
+            else
+            {
+                Console.WriteLine("\r\nExpense type with this name don't exist.\r\n");
+            }
         }
         public ExpenseType GetExpenseToAmountByName(string name)
         {
