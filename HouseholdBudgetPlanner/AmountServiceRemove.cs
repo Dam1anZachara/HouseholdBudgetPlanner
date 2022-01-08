@@ -8,6 +8,32 @@ namespace HouseholdBudgetPlanner
 {
     public class AmountServiceRemove:AmountService
     {
+        private bool SelectedExpenseInAmountExist(DateTime dateStartEntered, DateTime dateEndEntered, string name, decimal valueInDecimal)
+        {
+            foreach (var amount in Amounts)
+            {
+                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) &&
+                        (amount.Name == name) && (amount.Value == valueInDecimal))
+                {
+                    return true;
+                    break;
+                }
+            }
+            return false;
+        }
+        private bool SelectedIncomeInAmountExist(DateTime dateStartEntered, DateTime dateEndEntered, string nameOfRemoveAmount, decimal valueInDecimal)
+        {
+            foreach (var amount in Amounts)
+            {
+                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) &&
+                        (amount.Name == nameOfRemoveAmount) && (amount.Value == valueInDecimal))
+                {
+                    return true;
+                    break;
+                }
+            }
+            return false;
+        }
         public void RemoveAmount(ConsoleKeyInfo keyInfoRemoveAmount)
         {
             if (keyInfoRemoveAmount.KeyChar == '1')
@@ -71,12 +97,12 @@ namespace HouseholdBudgetPlanner
                     }
                     else
                     {
-                        Console.WriteLine($"\r\nExpense by name and value you've selected don't exist!");
+                        Console.WriteLine($"\r\nExpense by name and value you've selected does not exist!");
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"\r\nExpenses in selected date range does not exist!");
+                    Console.WriteLine($"\r\nExpenses in selected date range do not exist!");
                 }
             }
             else if (keyInfoRemoveAmount.KeyChar == '2')
@@ -131,7 +157,7 @@ namespace HouseholdBudgetPlanner
                                 }
                                 else
                                 {
-                                    Console.WriteLine("\r\nAction you entered don't exist\r\n");
+                                    Console.WriteLine("\r\nAction you entered does not exist\r\n");
                                     Console.WriteLine("\r\nIncome has not been removed!");
                                 }
                                 break;
@@ -140,17 +166,17 @@ namespace HouseholdBudgetPlanner
                     }
                     else
                     {
-                        Console.WriteLine($"\r\nIncome by name and value you've selected don't exist!");
+                        Console.WriteLine($"\r\nIncome by name and value you've selected does not exist!");
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"\r\nIncomes in selected date range does not exist!");
+                    Console.WriteLine($"\r\nIncomes in selected date range do not exist!");
                 }
             }
             else
             {
-                Console.WriteLine("\r\nAction you entered don't exist\r\n");
+                Console.WriteLine("\r\nAction you entered does not exist\r\n");
             }
         }
     }

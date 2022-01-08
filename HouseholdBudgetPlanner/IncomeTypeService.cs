@@ -29,7 +29,7 @@ namespace HouseholdBudgetPlanner
         }
         public string AddNewIncomeTypeView()
         {
-            Console.Write("\r\nPlease write the name of new income type and press \"enter\": ");
+            Console.Write("\r\nPlease write the name of new income type (don't use space or existing name) and press \"enter\": ");
             string name = Console.ReadLine();
             return name;
         }
@@ -37,7 +37,7 @@ namespace HouseholdBudgetPlanner
         {
             foreach (var incomeType in IncomeTypes)
             {
-                if (incomeType.Name == name)
+                if (incomeType.Name == name && incomeType.Name != "General incomes")
                 {
                     return true;
                     break;
@@ -45,12 +45,19 @@ namespace HouseholdBudgetPlanner
             }
             return false;
         }
+
         public void AddNewIncomeType(string name)
         {
-            if (name != "")
+            bool incomeTypeExist = IncomeTypeExist(name);
+            if (name != "" && !incomeTypeExist && !name.Contains(' '))
             {
                 IncomeType incomeTypeToAdd = new IncomeType() { Id = (i + 1) * -1, Name = name };
                 IncomeTypes.Add(incomeTypeToAdd);
+                Console.WriteLine($"\r\nIncome type {name} has been added.");
+            }
+            else
+            {
+                Console.WriteLine("\r\nIncome type with this name exist or your name is empty or contains space.\r\n");
             }
         }
         public string RemoveIncomeTypeView()
@@ -59,18 +66,26 @@ namespace HouseholdBudgetPlanner
             string name = Console.ReadLine();
             return name;
         }
+
         public void RemoveIncomeType(string name)
         {
-            IncomeType incomeTypeToRemove = new IncomeType();
-            foreach (var incomeType in IncomeTypes)
+            bool incomeTypeExist = IncomeTypeExist(name);
+            if (incomeTypeExist)
             {
-                if (incomeType.Name == name)
+                foreach (var incomeType in IncomeTypes)
                 {
-                    incomeTypeToRemove = incomeType;
-                    break;
+                    if (incomeType.Name == name)
+                    {
+                        IncomeTypes.Remove(incomeType);
+                        Console.WriteLine($"\r\nIncome type {name} has been removed.\r\n");
+                        break;
+                    }
                 }
             }
-            IncomeTypes.Remove(incomeTypeToRemove);
+            else
+            {
+                Console.WriteLine("\r\nIncome type with this name does not exist. General incomes can not been removed!\r\n");
+            }
         }
         public IncomeType GetIncomeToAmountByName(string name)
         {

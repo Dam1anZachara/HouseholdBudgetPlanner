@@ -35,17 +35,6 @@ namespace HouseholdBudgetPlanner
             var operation = Console.ReadKey();
             return operation;
         }
-        public ConsoleKeyInfo BudgetStatusView(MenuActionService actionService)
-        {
-            var budgetStatusMenu = actionService.GetMenuActionsByMenuName("BudgetStatusMenu");
-            Console.WriteLine("\r\n\r\nPlease select status to check:\r\n");
-            for (int i = 0; i < budgetStatusMenu.Count; i++)
-            {
-                Console.WriteLine($"{budgetStatusMenu[i].Id}. {budgetStatusMenu[i].Name}");
-            }
-            var operation = Console.ReadKey();
-            return operation;
-        }
         protected DateTime DateSelect(string date)
         {
             DateTime dateEntered;
@@ -72,20 +61,7 @@ namespace HouseholdBudgetPlanner
         {
             foreach (var amount in Amounts)
             {
-                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && dateStartEntered < dateEndEntered)
-                {
-                    return true;
-                    break;
-                }
-            }
-            return false;
-        }
-        protected bool SelectedExpenseInAmountExist(DateTime dateStartEntered, DateTime dateEndEntered, string nameOfRemoveAmount, decimal valueInDecimal)
-        {
-            foreach (var amount in Amounts)
-            {
-                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) &&
-                        (amount.Name == nameOfRemoveAmount) && (amount.Value == valueInDecimal))
+                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
                 {
                     return true;
                     break;
@@ -97,41 +73,13 @@ namespace HouseholdBudgetPlanner
         {
             foreach (var amount in Amounts)
             {
-                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && dateStartEntered < dateEndEntered)
+                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
                 {
                     return true;
                     break;
                 }
             }
             return false;
-        }
-        protected bool SelectedIncomeInAmountExist(DateTime dateStartEntered, DateTime dateEndEntered, string nameOfRemoveAmount, decimal valueInDecimal)
-        {
-            foreach (var amount in Amounts)
-            {
-                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) &&
-                        (amount.Name == nameOfRemoveAmount) && (amount.Value == valueInDecimal))
-                {
-                    return true;
-                    break;
-                }
-            }
-            return false;
-        }
-
-        public void BudgetStatus(ConsoleKeyInfo keyInfoBudgetStatus)
-        {
-            switch (keyInfoBudgetStatus.KeyChar)
-            {
-                case '1':
-                    break;
-                case '2':
-                    break;
-                case '3':
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

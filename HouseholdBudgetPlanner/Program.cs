@@ -63,6 +63,8 @@ namespace HouseholdBudgetPlanner
             AmountService amountService = new AmountService();
             AmountServiceAdd amountServiceAdd = new AmountServiceAdd();
             AmountServiceRemove amountServiceRemove = new AmountServiceRemove();
+            AmountServiceBudgetStatus amountServiceBudgetStatus = new AmountServiceBudgetStatus();
+            BudgetStatusExecute budgetStatusExecute = new BudgetStatusExecute();
 
             Console.WriteLine("Welcome to Household Budget Planner app!\r\n");
             while (true)
@@ -108,8 +110,8 @@ namespace HouseholdBudgetPlanner
                         amountServiceRemove.RemoveAmount(keyInfoRemoveAmount);
                         break;
                     case '7':
-                        var keyInfoBudgetStatus = amountService.BudgetStatusView(actionService);
-                        amountService.BudgetStatus(keyInfoBudgetStatus);
+                        var keyInfoBudgetStatus = amountServiceBudgetStatus.BudgetStatusView(actionService);
+                        budgetStatusExecute.BudgetStatus(keyInfoBudgetStatus);
                         break;
                     default:
                         Console.WriteLine("Action you entered does not exist");

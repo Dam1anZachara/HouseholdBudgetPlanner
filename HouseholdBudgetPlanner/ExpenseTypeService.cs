@@ -6,7 +6,7 @@ namespace HouseholdBudgetPlanner
 {
     public class ExpenseTypeService
     {
-        public List<ExpenseType> ExpenseTypes { get; set; }
+        public static List<ExpenseType> ExpenseTypes { get; set; }
 
         private int i;
         public ExpenseTypeService()
@@ -19,10 +19,9 @@ namespace HouseholdBudgetPlanner
         public void ExpenseTypeView()
         {
             Console.WriteLine("\r\nYour all expense types are:\r\n");
-            
             for (i = 0; i < ExpenseTypes.Count; i++)
             {
-                Console.WriteLine($"{i+1}. {ExpenseTypes[i].Name}");
+                Console.WriteLine($"{i + 1}. {ExpenseTypes[i].Name}");
             }
         }
         public string AddNewExpenseTypeView()
@@ -35,7 +34,7 @@ namespace HouseholdBudgetPlanner
         {
             foreach (var expenseType in ExpenseTypes)
             {
-                if (expenseType.Name == name)
+                if (expenseType.Name == name && expenseType.Name != "General expenses")
                 {
                     return true;
                     break;
@@ -81,7 +80,7 @@ namespace HouseholdBudgetPlanner
             }
             else
             {
-                Console.WriteLine("\r\nExpense type with this name don't exist.\r\n");
+                Console.WriteLine("\r\nExpense type with this name does not exist. General expenses can not been removed!\r\n");
             }
         }
         public ExpenseType GetExpenseToAmountByName(string name)
