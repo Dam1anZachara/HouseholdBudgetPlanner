@@ -44,7 +44,6 @@ namespace HouseholdBudgetPlanner
                     Console.WriteLine($"\r\nYou've selected wrong type name!");
                     Console.WriteLine($"\r\nYour amount will be assignet to the: {addedAmount.Name}");
                 }
-
                 Console.Write("\r\nWrite date in format \"dd/mm/yyyy\" and press \"Enter\" or if you want to set current date just press \"Enter\": ");
                 var date = Console.ReadLine();
                 DateTime dateEntered;
@@ -66,22 +65,19 @@ namespace HouseholdBudgetPlanner
                 Console.WriteLine("1. Yes");
                 Console.WriteLine("2. No");
                 var keyInfoAddExpense = Console.ReadKey();
-                if (keyInfoAddExpense.KeyChar == '1')
+                switch (keyInfoAddExpense.KeyChar)
                 {
-                    Amounts.Add(addedAmount);
-                    if (Amounts.Count == 1)
-                    {
+                    case '1':
+                        Amounts.Add(addedAmount);
                         Console.WriteLine("\r\nExpense has been added!");
-                    }
-                }
-                else if (keyInfoAddExpense.KeyChar == '2')
-                {
-                    Console.WriteLine("\r\nExpense has not been added!");
-                }
-                else
-                {
-                    Console.WriteLine("\r\nAction you entered does not exist\r\n");
-                    Console.WriteLine("Expense has not been added!");
+                        break;
+                    case '2':
+                        Console.WriteLine("\r\nExpense has not been added!");
+                        break;
+                    default:
+                        Console.WriteLine("\r\nAction you entered does not exist\r\n");
+                        Console.WriteLine("Expense has not been added!");
+                        break;
                 }
             }
             else if (keyInfoAddAmount.KeyChar == '2')
@@ -110,7 +106,6 @@ namespace HouseholdBudgetPlanner
                     Console.WriteLine($"\r\nYou've selected wrong type name!");
                     Console.WriteLine($"\r\nYour amount will be assignet to the: {addedAmount.Name}");
                 }
-
                 Console.Write("\r\nWrite date in format \"dd/mm/yyyy\" and press \"Enter\" or if you want to set current date just press \"Enter\": ");
                 var date = Console.ReadLine();
                 DateTime dateEntered;
@@ -132,19 +127,19 @@ namespace HouseholdBudgetPlanner
                 Console.WriteLine("1. Yes");
                 Console.WriteLine("2. No");
                 var keyInfoAddExpense = Console.ReadKey();
-                if (keyInfoAddExpense.KeyChar == '1')
+                switch (keyInfoAddExpense.KeyChar)
                 {
-                    Amounts.Add(addedAmount);
-                    Console.WriteLine("\r\nIncome has been added!");
-                }
-                else if (keyInfoAddExpense.KeyChar == '2')
-                {
-                    Console.WriteLine("\r\nIncome has not been added!");
-                }
-                else
-                {
-                    Console.WriteLine("\r\nAction you entered does not exist\r\n");
-                    Console.WriteLine("\r\nIncome has not been added!");
+                    case '1':
+                        Amounts.Add(addedAmount);
+                        Console.WriteLine("\r\nIncome has been added!");
+                        break;
+                    case '2':
+                        Console.WriteLine("\r\nIncome has not been added!");
+                        break;
+                    default:
+                        Console.WriteLine("\r\nAction you entered does not exist\r\n");
+                        Console.WriteLine("\r\nIncome has not been added!");
+                        break;
                 }
             }
             else

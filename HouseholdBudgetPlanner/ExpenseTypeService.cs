@@ -56,7 +56,6 @@ namespace HouseholdBudgetPlanner
                 Console.WriteLine("\r\nExpense type with this name exist or your name is empty or contains space.\r\n");
             }
         }
-
         public string RemoveExpenseTypeView()
         {
             Console.Write("\r\nPlease write the name of expense type that you want to remove and press \"enter\": ");

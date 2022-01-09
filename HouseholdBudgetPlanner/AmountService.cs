@@ -16,7 +16,7 @@ namespace HouseholdBudgetPlanner
         public ConsoleKeyInfo AddAmountView(MenuActionService actionService)
         {
             var addAmountMenu = actionService.GetMenuActionsByMenuName("AddAmountMenu");
-            Console.WriteLine("\r\n\r\nPlease select where you want to assign the amount \r\n");
+            Console.WriteLine("\r\n\r\nPlease select where do you want to assign the amount \r\n");
             for (int i = 0; i < addAmountMenu.Count; i++)
             {
                 Console.WriteLine($"{addAmountMenu[i].Id}. {addAmountMenu[i].Name}");

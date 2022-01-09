@@ -19,14 +19,14 @@ namespace HouseholdBudgetPlanner
             var operation = Console.ReadKey();
             return operation;
         }
-        public ConsoleKeyInfo BudgetStatusDateMenu()
+        protected ConsoleKeyInfo BudgetStatusDateMenu()
         {
             Console.WriteLine("1. This month");
             Console.WriteLine("2. Select range of date");
             var keyInfoStatusDate = Console.ReadKey();
             return keyInfoStatusDate;
         }
-        public decimal BudgetStatusAllExpensesMonth()
+        protected decimal BudgetStatusAllExpensesMonth()
         {
             decimal amountSumAllExpenses = 0;
             foreach (var amount in Amounts)
@@ -39,7 +39,7 @@ namespace HouseholdBudgetPlanner
             Console.WriteLine($"\r\nExpenses status in this month: {amountSumAllExpenses}{ValueTypes.PLN}");
             return amountSumAllExpenses;
         }
-        public decimal BudgetStatusAllIncomesMonth()
+        protected decimal BudgetStatusAllIncomesMonth()
         {
             decimal amountSumAllIncomes = 0;
             foreach (var amount in Amounts)

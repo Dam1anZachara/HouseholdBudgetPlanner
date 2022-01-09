@@ -80,7 +80,7 @@ namespace HouseholdBudgetPlanner
                                 {
                                     Amounts.Remove(amount);
                                     Console.WriteLine("\r\nExpense has been removed!");
-
+                                    break;
                                 }
                                 else if (keyInfoRemoveExpense.KeyChar == '2')
                                 {
@@ -91,7 +91,6 @@ namespace HouseholdBudgetPlanner
                                     Console.WriteLine("\r\nAction you entered does not exist\r\n");
                                     Console.WriteLine("\r\nExpense has not been removed!");
                                 }
-                                break;
                             }
                         }
                     }
@@ -149,7 +148,7 @@ namespace HouseholdBudgetPlanner
                                 {
                                     Amounts.Remove(amount);
                                     Console.WriteLine("\r\nIncome has been removed!");
-
+                                    break;
                                 }
                                 else if (keyInfoRemoveIncome.KeyChar == '2')
                                 {
@@ -160,7 +159,6 @@ namespace HouseholdBudgetPlanner
                                     Console.WriteLine("\r\nAction you entered does not exist\r\n");
                                     Console.WriteLine("\r\nIncome has not been removed!");
                                 }
-                                break;
                             }
                         }
                     }

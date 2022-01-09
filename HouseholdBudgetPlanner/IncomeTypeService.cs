@@ -45,7 +45,6 @@ namespace HouseholdBudgetPlanner
             }
             return false;
         }
-
         public void AddNewIncomeType(string name)
         {
             bool incomeTypeExist = IncomeTypeExist(name);
@@ -66,7 +65,6 @@ namespace HouseholdBudgetPlanner
             string name = Console.ReadLine();
             return name;
         }
-
         public void RemoveIncomeType(string name)
         {
             bool incomeTypeExist = IncomeTypeExist(name);
