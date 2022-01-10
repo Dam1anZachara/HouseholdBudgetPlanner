@@ -18,8 +18,10 @@ namespace HouseholdBudgetPlanner
             BudgetStatusExecute budgetStatusExecute = new BudgetStatusExecute();
 
             Console.WriteLine("Welcome to Household Budget Planner app!\r\n");
-            while (true)
+            bool appWork = true;
+            while (appWork)
             {
+
                 Console.WriteLine("Please let me know what you want to do:\r\n");
 
                 var mainMenu = actionService.GetMenuActionsByMenuName("Main");
@@ -64,9 +66,13 @@ namespace HouseholdBudgetPlanner
                         var keyInfoBudgetStatus = amountServiceBudgetStatus.BudgetStatusView(actionService);
                         budgetStatusExecute.BudgetStatus(keyInfoBudgetStatus);
                         break;
+                    case '8':
+                        appWork = ExitApp(operation);
+                        break;
                     default:
                         Console.WriteLine("Action you entered does not exist");
                         break;
+                        
                 }
             }
         }
@@ -79,6 +85,7 @@ namespace HouseholdBudgetPlanner
             actionService.AddNewAction(5, "Add amount", "Main");
             actionService.AddNewAction(6, "Remove amount", "Main");
             actionService.AddNewAction(7, "Budget status", "Main");
+            actionService.AddNewAction(8, "Exit app", "Main");
 
             actionService.AddNewAction(1, "Set amount as expense", "AddAmountMenu");
             actionService.AddNewAction(2, "Set amount as income", "AddAmountMenu");
@@ -90,6 +97,17 @@ namespace HouseholdBudgetPlanner
             actionService.AddNewAction(2, "Status of incomes", "BudgetStatusMenu");
             actionService.AddNewAction(3, "Budget balance", "BudgetStatusMenu");
             return actionService;
+        }
+        private static bool ExitApp(ConsoleKeyInfo keyInfo)
+        {
+            if (keyInfo.KeyChar == '8')
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
