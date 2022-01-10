@@ -20,7 +20,7 @@ namespace HouseholdBudgetPlanner
 
         public void IncomeTypeView()
         {
-            Console.WriteLine("\r\n\r\nYour all income types are:\r\n");
+            Console.WriteLine("\r\n\r\nAll your income types are:\r\n");
 
             for (i = 0; i < IncomeTypes.Count; i++)
             {
@@ -29,7 +29,7 @@ namespace HouseholdBudgetPlanner
         }
         public string AddNewIncomeTypeView()
         {
-            Console.Write("\r\nPlease write the name of new income type (don't use space or existing name) and press \"enter\": ");
+            Console.Write("\r\nPlease write the name of the new income type (don't use space or existing name) and press \"enter\": ");
             string name = Console.ReadLine();
             return name;
         }
@@ -56,12 +56,12 @@ namespace HouseholdBudgetPlanner
             }
             else
             {
-                Console.WriteLine("\r\nIncome type with this name exist or your name is empty or contains space.\r\n");
+                Console.WriteLine("\r\nIncome type with this name exists, your name is empty or contains space.\r\n");
             }
         }
         public string RemoveIncomeTypeView()
         {
-            Console.Write("\r\nPlease write the name of income type that you want to remove and press \"enter\": ");
+            Console.Write("\r\nPlease write the name of the income type that you want to remove and press \"enter\": ");
             string name = Console.ReadLine();
             return name;
         }
@@ -82,7 +82,7 @@ namespace HouseholdBudgetPlanner
             }
             else
             {
-                Console.WriteLine("\r\nIncome type with this name does not exist. General incomes can not been removed!\r\n");
+                Console.WriteLine("\r\nIncome type with this name does not exist. General incomes can not be removed!\r\n");
             }
         }
         public IncomeType GetIncomeToAmountByName(string name)

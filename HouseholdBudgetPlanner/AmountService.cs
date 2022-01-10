@@ -16,7 +16,7 @@ namespace HouseholdBudgetPlanner
         public ConsoleKeyInfo AddAmountView(MenuActionService actionService)
         {
             var addAmountMenu = actionService.GetMenuActionsByMenuName("AddAmountMenu");
-            Console.WriteLine("\r\n\r\nPlease select where do you want to assign the amount \r\n");
+            Console.WriteLine("\r\n\r\nPlease select the assignment of the amount\r\n");
             for (int i = 0; i < addAmountMenu.Count; i++)
             {
                 Console.WriteLine($"{addAmountMenu[i].Id}. {addAmountMenu[i].Name}");
@@ -27,7 +27,7 @@ namespace HouseholdBudgetPlanner
         public ConsoleKeyInfo RemoveAmountView(MenuActionService actionService)
         {
             var removeAmountMenu = actionService.GetMenuActionsByMenuName("RemoveAmountMenu");
-            Console.WriteLine("\r\n\r\nPlease select from where do you want remove the amount \r\n");
+            Console.WriteLine("\r\n\r\nPlease select from where do you want to remove the amount \r\n");
             for (int i = 0; i < removeAmountMenu.Count; i++)
             {
                 Console.WriteLine($"{removeAmountMenu[i].Id}. {removeAmountMenu[i].Name}");

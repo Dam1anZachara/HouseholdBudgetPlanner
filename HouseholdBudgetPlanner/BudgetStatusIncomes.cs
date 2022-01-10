@@ -12,7 +12,7 @@ namespace HouseholdBudgetPlanner
         {
             Console.WriteLine($"\r\nSelect income type: \r\n");
             Console.WriteLine("1. All incomes");
-            Console.WriteLine("2. Select by name of incomes");
+            Console.WriteLine("2. Select by a name of an income type");
             var keyInfoStatusIncome = Console.ReadKey();
             return keyInfoStatusIncome;
         }
@@ -42,7 +42,7 @@ namespace HouseholdBudgetPlanner
         }
         public void BudgetStatusIncomesMethod()
         {
-            Console.WriteLine($"\r\nStatus of incomes. Select date: \r\n");
+            Console.WriteLine($"\r\nStatus of incomes. Select the time interval: \r\n");
             var keyInfoStatusIncomeMonthDate = BudgetStatusDateMenu();
             switch (keyInfoStatusIncomeMonthDate.KeyChar)
             {
@@ -55,7 +55,7 @@ namespace HouseholdBudgetPlanner
                             BudgetStatusAllIncomesMonth();
                             break;
                         case '2':
-                            Console.WriteLine($"\r\nYour incomes in this month:\r\n");
+                            Console.WriteLine($"\r\nYour incomes this month:\r\n");
                             foreach (var amount in Amounts)
                             {
                                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0)
@@ -63,7 +63,7 @@ namespace HouseholdBudgetPlanner
                                     Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
                                 }
                             }
-                            Console.Write("\r\nWrite name of selected income type to sort by name and press \"Enter\": ");
+                            Console.Write("\r\nWrite the name of the selected income type to sort by a name and press \"Enter\": ");
                             string name = Console.ReadLine();
                             bool monthIncomeInAmountByNameExist = MonthIncomeInAmountByNameExist(name);
                             if (monthIncomeInAmountByNameExist)
@@ -76,7 +76,7 @@ namespace HouseholdBudgetPlanner
                                         amountSumNameIncomes += amount.Value;
                                     }
                                 }
-                                Console.WriteLine($"\r\nIncomes status in this month: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
+                                Console.WriteLine($"\r\nIncomes status this month: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
                                 break;
                             }
                             else
@@ -90,11 +90,11 @@ namespace HouseholdBudgetPlanner
                     }
                     break;
                 case '2':
-                    Console.Write("\r\nWrite starting date in format \"dd/mm/yyyy\" and press \"Enter\": ");
+                    Console.Write("\r\nWrite a starting date in format \"dd/mm/yyyy\" and press \"Enter\": ");
                     var dateStart = Console.ReadLine();
                     DateTime dateStartEntered;
                     dateStartEntered = DateSelect(dateStart);
-                    Console.Write("\r\nWrite end date in format \"dd/mm/yyyy\" and press \"Enter\": ");
+                    Console.Write("\r\nWrite an ending date in format \"dd/mm/yyyy\" and press \"Enter\": ");
                     var dateEnd = Console.ReadLine();
                     DateTime dateEndEntered;
                     dateEndEntered = DateSelect(dateEnd);
@@ -113,10 +113,10 @@ namespace HouseholdBudgetPlanner
                                         amountSumAllIncomes += amount.Value;
                                     }
                                 }
-                                Console.WriteLine($"\r\nIncomes status from {dateEndEntered} to {dateEndEntered}: {amountSumAllIncomes}{ValueTypes.PLN}\r\n");
+                                Console.WriteLine($"\r\nIncomes status since {dateEndEntered} to {dateEndEntered}: {amountSumAllIncomes}{ValueTypes.PLN}\r\n");
                                 break;
                             case '2':
-                                Console.WriteLine($"\r\nYour incomes in date from {dateEndEntered} to {dateEndEntered}.\r\n");
+                                Console.WriteLine($"\r\nYour incomes since {dateEndEntered} to {dateEndEntered}.\r\n");
                                 foreach (var amount in Amounts)
                                 {
                                     if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
@@ -124,7 +124,7 @@ namespace HouseholdBudgetPlanner
                                         Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
                                     }
                                 }
-                                Console.Write("\r\nWrite name of selected income type to sort by name and press \"Enter\": ");
+                                Console.Write("\r\nWrite the name of the selected income type to sort by a name and press \"Enter\": ");
                                 string name = Console.ReadLine();
                                 bool rangeIncomeInAmountByNameExist = RangeIncomeInAmountByNameExist(dateStartEntered, dateEndEntered, name);
                                 if (rangeIncomeInAmountByNameExist)
@@ -137,7 +137,7 @@ namespace HouseholdBudgetPlanner
                                             amountSumNameIncomes += amount.Value;
                                         }
                                     }
-                                    Console.WriteLine($"\r\nIncomes status with name {name} from {dateEndEntered} to {dateEndEntered}: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
+                                    Console.WriteLine($"\r\nIncomes status with the name {name} since {dateEndEntered} to {dateEndEntered}: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
                                     break;
                                 }
                                 else

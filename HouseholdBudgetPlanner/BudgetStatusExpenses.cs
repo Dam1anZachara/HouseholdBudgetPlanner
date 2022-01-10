@@ -36,13 +36,13 @@ namespace HouseholdBudgetPlanner
         {
             Console.WriteLine($"\r\nSelect expense type: \r\n");
             Console.WriteLine("1. All expenses");
-            Console.WriteLine("2. Select by name of expenses");
+            Console.WriteLine("2. Select by a name of expenses");
             var keyInfoStatusExpense = Console.ReadKey();
             return keyInfoStatusExpense;
         }
         public void BudgetStatusExpensesMethod()
         {
-            Console.WriteLine($"\r\nStatus of expenses. Select date: \r\n");
+            Console.WriteLine($"\r\nStatus of expenses. Select the time interval: \r\n");
             var keyInfoStatusExpenseMonthDate = BudgetStatusDateMenu();
             switch (keyInfoStatusExpenseMonthDate.KeyChar)
             {
@@ -54,7 +54,7 @@ namespace HouseholdBudgetPlanner
                             BudgetStatusAllExpensesMonth();
                             break;
                         case '2':
-                            Console.WriteLine($"\r\nYour expenses in this month:\r\n");
+                            Console.WriteLine($"\r\nYour expenses this month:\r\n");
                             foreach (var amount in Amounts)
                             {
                                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0)
@@ -62,7 +62,7 @@ namespace HouseholdBudgetPlanner
                                     Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
                                 }
                             }
-                            Console.Write("\r\nWrite name of selected expense type to sort by name and press \"Enter\": ");
+                            Console.Write("\r\nWrite the name of the selected expense type to sort by a name and press \"Enter\": ");
                             string name = Console.ReadLine();
                             bool monthExpenseInAmountByNameExist = MonthExpenseInAmountByNameExist(name);
                             if (monthExpenseInAmountByNameExist)
@@ -75,7 +75,7 @@ namespace HouseholdBudgetPlanner
                                         amountSumNameExpenses += amount.Value;
                                     }
                                 }
-                                Console.WriteLine($"\r\nExpenses status in this month: {amountSumNameExpenses}{ValueTypes.PLN}\r\n");
+                                Console.WriteLine($"\r\nExpenses status this month: {amountSumNameExpenses}{ValueTypes.PLN}\r\n");
                                 break;
                             }
                             else
@@ -89,11 +89,11 @@ namespace HouseholdBudgetPlanner
                     }
                     break;
                 case '2':
-                    Console.Write("\r\nWrite starting date in format \"dd/mm/yyyy\" and press \"Enter\": ");
+                    Console.Write("\r\nWrite a starting date in format \"dd/mm/yyyy\" and press \"Enter\": ");
                     var dateStart = Console.ReadLine();
                     DateTime dateStartEntered;
                     dateStartEntered = DateSelect(dateStart);
-                    Console.Write("\r\nWrite end date in format \"dd/mm/yyyy\" and press \"Enter\": ");
+                    Console.Write("\r\nWrite an ending date in format \"dd/mm/yyyy\" and press \"Enter\": ");
                     var dateEnd = Console.ReadLine();
                     DateTime dateEndEntered;
                     dateEndEntered = DateSelect(dateEnd);
@@ -112,10 +112,10 @@ namespace HouseholdBudgetPlanner
                                         amountSumAllExpenses += amount.Value;
                                     }
                                 }
-                                Console.WriteLine($"\r\nExpenses status from {dateEndEntered} to {dateEndEntered}: {amountSumAllExpenses}{ValueTypes.PLN}\r\n");
+                                Console.WriteLine($"\r\nExpenses status since {dateEndEntered} to {dateEndEntered}: {amountSumAllExpenses}{ValueTypes.PLN}\r\n");
                                 break;
                             case '2':
-                                Console.WriteLine($"\r\nYour expenses in date from {dateEndEntered} to {dateEndEntered}.\r\n");
+                                Console.WriteLine($"\r\nYour expenses since {dateEndEntered} to {dateEndEntered}.\r\n");
                                 foreach (var amount in Amounts)
                                 {
                                     if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
@@ -123,7 +123,7 @@ namespace HouseholdBudgetPlanner
                                         Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
                                     }
                                 }
-                                Console.Write("\r\nWrite name of selected expense type to sort by name and press \"Enter\": ");
+                                Console.Write("\r\nWrite the name of the selected expense type to sort by a name and press \"Enter\": ");
                                 string name = Console.ReadLine();
                                 bool rangeExpenseInAmountByNameExist = RangeExpenseInAmountByNameExist(dateStartEntered, dateEndEntered, name);
                                 if (rangeExpenseInAmountByNameExist)
@@ -136,7 +136,7 @@ namespace HouseholdBudgetPlanner
                                             amountSumNameExpenses += amount.Value;
                                         }
                                     }
-                                    Console.WriteLine($"\r\nExpenses status with name {name} from {dateEndEntered} to {dateEndEntered}: {amountSumNameExpenses}{ValueTypes.PLN}\r\n");
+                                    Console.WriteLine($"\r\nExpenses status with the name {name} since {dateEndEntered} to {dateEndEntered}: {amountSumNameExpenses}{ValueTypes.PLN}\r\n");
                                     break;
                                 }
                                 else

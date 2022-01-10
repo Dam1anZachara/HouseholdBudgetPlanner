@@ -38,20 +38,20 @@ namespace HouseholdBudgetPlanner
         {
             if (keyInfoRemoveAmount.KeyChar == '1')
             {
-                Console.WriteLine("\r\nYou selected from expense!");
+                Console.WriteLine("\r\nYou selected from expenses!");
                 Console.WriteLine("\r\nPlease select a date range of removed expense");
-                Console.Write("\r\nWrite starting date in format \"dd/mm/yyyy\" and press \"Enter\": ");
+                Console.Write("\r\nWrite a starting date in format \"dd/mm/yyyy\" and press \"Enter\": ");
                 var dateStart = Console.ReadLine();
                 DateTime dateStartEntered;
                 dateStartEntered = DateSelect(dateStart);
-                Console.Write("\r\nWrite end date in format \"dd/mm/yyyy\" and press \"Enter\": ");
+                Console.Write("\r\nWrite an ending date in format \"dd/mm/yyyy\" and press \"Enter\": ");
                 var dateEnd = Console.ReadLine();
                 DateTime dateEndEntered;
                 dateEndEntered = DateSelect(dateEnd);
                 bool expenseInAmountByDateExist = ExpenseInAmountByDateExist(dateStartEntered, dateEndEntered);
                 if (expenseInAmountByDateExist)
                 {
-                    Console.WriteLine($"\r\nYour expenses in date range is from {dateStartEntered} to {dateEndEntered}\r\n");
+                    Console.WriteLine($"\r\nYour expenses since {dateStartEntered} to {dateEndEntered}\r\n");
                     foreach (var amount in Amounts)
                     {
                         if (amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0)
@@ -59,7 +59,7 @@ namespace HouseholdBudgetPlanner
                             Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
                         }
                     }
-                    Console.Write("\r\nWrite name of expense to remove and press \"Enter\": ");
+                    Console.Write("\r\nWrite the name of the expense to remove and press \"Enter\": ");
                     var nameOfRemoveAmount = Console.ReadLine();
                     Console.Write($"\r\nPlease write value of expense to remove {ValueTypes.PLN}: ");
                     decimal valueInDecimal = EnterValue();
