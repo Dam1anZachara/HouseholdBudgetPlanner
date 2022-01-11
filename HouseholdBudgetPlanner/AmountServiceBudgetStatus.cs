@@ -36,7 +36,7 @@ namespace HouseholdBudgetPlanner
                     amountSumAllExpenses += amount.Value;
                 }
             }
-            Console.WriteLine($"\r\nExpenses status in this month: {amountSumAllExpenses}{ValueTypes.PLN}");
+            Console.WriteLine($"\r\nExpenses status this month: {amountSumAllExpenses}{ValueTypes.PLN}");
             return amountSumAllExpenses;
         }
         protected decimal BudgetStatusAllIncomesMonth()
@@ -49,7 +49,7 @@ namespace HouseholdBudgetPlanner
                     amountSumAllIncomes += amount.Value;
                 }
             }
-            Console.WriteLine($"\r\nIncomes status in this month: {amountSumAllIncomes}{ValueTypes.PLN}");
+            Console.WriteLine($"\r\nIncomes status this month: {amountSumAllIncomes}{ValueTypes.PLN}");
             return amountSumAllIncomes;
         }
     }

@@ -27,7 +27,7 @@ namespace HouseholdBudgetPlanner
         public ConsoleKeyInfo RemoveAmountView(MenuActionService actionService)
         {
             var removeAmountMenu = actionService.GetMenuActionsByMenuName("RemoveAmountMenu");
-            Console.WriteLine("\r\n\r\nPlease select from where do you want to remove the amount \r\n");
+            Console.WriteLine("\r\n\r\nPlease select from where you want to remove the amount \r\n");
             for (int i = 0; i < removeAmountMenu.Count; i++)
             {
                 Console.WriteLine($"{removeAmountMenu[i].Id}. {removeAmountMenu[i].Name}");
@@ -40,7 +40,7 @@ namespace HouseholdBudgetPlanner
             DateTime dateEntered;
             while (!DateTime.TryParseExact(date, "dd/mm/yyyy", null, System.Globalization.DateTimeStyles.None, out dateEntered))
             {
-                Console.WriteLine("\r\nInvalid format date, please retry in format \"dd/mm/yyyy\" and press \"Enter\": ");
+                Console.WriteLine("\r\nInvalid date format, please retry in format \"dd/mm/yyyy\" and press \"Enter\": ");
                 date = Console.ReadLine();
             }
             return dateEntered;
@@ -51,8 +51,8 @@ namespace HouseholdBudgetPlanner
             decimal valueInDecimal;
             while (!(decimal.TryParse(valueString, out valueInDecimal) && valueInDecimal > 0))
             {
-                Console.WriteLine("\r\nInvalid format value or value is zero or less than zero. Please retry!\r\n");
-                Console.Write($"Please write amount in {ValueTypes.PLN}: ");
+                Console.WriteLine("\r\nInvalid value format, value is zero or less than zero. Please retry!\r\n");
+                Console.Write($"Please write value in {ValueTypes.PLN}: ");
                 valueString = Console.ReadLine();
             }
             return valueInDecimal;

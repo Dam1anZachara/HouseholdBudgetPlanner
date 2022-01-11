@@ -22,7 +22,7 @@ namespace HouseholdBudgetPlanner
             {
                 Console.WriteLine("\r\nYou selected as expense!");
                 expenseTypeService.ExpenseTypeView();
-                Console.Write("\r\nWrite name of selected expense type and press \"Enter\" or if you want to select General Expenses just press \"Enter\": ");
+                Console.Write("\r\nWrite a name of the selected expense type and press \"Enter\" or if you want to select the General Expenses just press \"Enter\": ");
                 string name = Console.ReadLine();
                 var expenseTypeByName = expenseTypeService.GetExpenseToAmountByName(name);
                 if (expenseTypeByName.Name == name)
@@ -35,16 +35,16 @@ namespace HouseholdBudgetPlanner
                 {
                     addedAmount.Name = expenseTypeByName.Name;
                     addedAmount.Id = expenseTypeByName.Id;
-                    Console.WriteLine($"\r\nYour amount will be assignet to the: {addedAmount.Name}");
+                    Console.WriteLine($"\r\nYour amount will be assigned to the: {addedAmount.Name}");
                 }
                 else
                 {
                     addedAmount.Name = expenseTypeByName.Name;
                     addedAmount.Id = expenseTypeByName.Id;
-                    Console.WriteLine($"\r\nYou've selected wrong type name!");
-                    Console.WriteLine($"\r\nYour amount will be assignet to the: {addedAmount.Name}");
+                    Console.WriteLine($"\r\nYou've selected wrong name type!");
+                    Console.WriteLine($"\r\nYour amount will be assigned to the: {addedAmount.Name}");
                 }
-                Console.Write("\r\nWrite date in format \"dd/mm/yyyy\" and press \"Enter\" or if you want to set current date just press \"Enter\": ");
+                Console.Write("\r\nWrite a date in format \"dd/mm/yyyy\" and press \"Enter\" or if you want to set current date just press \"Enter\": ");
                 var date = Console.ReadLine();
                 DateTime dateEntered;
                 if (date == "")
@@ -61,7 +61,7 @@ namespace HouseholdBudgetPlanner
                 Console.Write($"Please write value in {ValueTypes.PLN}: ");
                 decimal valueInDecimal = EnterValue();
                 addedAmount.Value = valueInDecimal;
-                Console.WriteLine($"\r\nDo you want to assign new expense {addedAmount.Value}{ValueTypes.PLN} to type: {addedAmount.Name}, with date: {addedAmount.Date}\r\n");
+                Console.WriteLine($"\r\nDo you want to assign a new expense {addedAmount.Value}{ValueTypes.PLN} to the type: {addedAmount.Name}, with a date: {addedAmount.Date}\r\n");
                 Console.WriteLine("1. Yes");
                 Console.WriteLine("2. No");
                 var keyInfoAddExpense = Console.ReadKey();
@@ -84,7 +84,7 @@ namespace HouseholdBudgetPlanner
             {
                 Console.WriteLine("\r\nYou selected as income!");
                 incomeTypeService.IncomeTypeView();
-                Console.Write("\r\nWrite name of selected income type and press \"Enter\" or if you want to select General Incomes just press \"Enter\": ");
+                Console.Write("\r\nWrite a name of a selected income type and press \"Enter\" or if you want to select the General Incomes just press \"Enter\": ");
                 string name = Console.ReadLine();
                 var incomeTypeByName = incomeTypeService.GetIncomeToAmountByName(name);
                 if (incomeTypeByName.Name == name)
@@ -97,16 +97,16 @@ namespace HouseholdBudgetPlanner
                 {
                     addedAmount.Name = incomeTypeByName.Name;
                     addedAmount.Id = incomeTypeByName.Id;
-                    Console.WriteLine($"\r\nYour amount will be assignet to the: {addedAmount.Name}");
+                    Console.WriteLine($"\r\nYour amount will be assigned to the: {addedAmount.Name}");
                 }
                 else
                 {
                     addedAmount.Name = incomeTypeByName.Name;
                     addedAmount.Id = incomeTypeByName.Id;
-                    Console.WriteLine($"\r\nYou've selected wrong type name!");
-                    Console.WriteLine($"\r\nYour amount will be assignet to the: {addedAmount.Name}");
+                    Console.WriteLine($"\r\nYou've selected wrong name type!");
+                    Console.WriteLine($"\r\nYour amount will be assigned to the: {addedAmount.Name}");
                 }
-                Console.Write("\r\nWrite date in format \"dd/mm/yyyy\" and press \"Enter\" or if you want to set current date just press \"Enter\": ");
+                Console.Write("\r\nWrite a date in format \"dd/mm/yyyy\" and press \"Enter\" or if you want to set current date just press \"Enter\": ");
                 var date = Console.ReadLine();
                 DateTime dateEntered;
                 if (date == "")
@@ -123,7 +123,7 @@ namespace HouseholdBudgetPlanner
                 Console.Write($"Please write value in {ValueTypes.PLN}: ");
                 decimal valueInDecimal = EnterValue();
                 addedAmount.Value = valueInDecimal;
-                Console.WriteLine($"\r\nDo you want to assign new income {addedAmount.Value}{ValueTypes.PLN} to type: {addedAmount.Name}, with date: {addedAmount.Date}\r\n");
+                Console.WriteLine($"\r\nDo you want to assign the new income {addedAmount.Value}{ValueTypes.PLN} to the type: {addedAmount.Name}, with a date: {addedAmount.Date}\r\n");
                 Console.WriteLine("1. Yes");
                 Console.WriteLine("2. No");
                 var keyInfoAddExpense = Console.ReadKey();
