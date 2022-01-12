@@ -55,7 +55,7 @@ namespace HouseholdBudgetPlanner
                 Console.Write($"Please write value in {ValueTypes.PLN}: ");
                 valueString = Console.ReadLine();
             }
-            return valueInDecimal;
+            return Decimal.Round(decimal.Parse(String.Format("{0:0.00}", valueInDecimal)), 2);
         }
         protected bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {

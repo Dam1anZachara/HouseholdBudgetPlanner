@@ -76,7 +76,7 @@ namespace HouseholdBudgetPlanner
                                         amountSumNameIncomes += amount.Value;
                                     }
                                 }
-                                Console.WriteLine($"\r\nIncomes status this month: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
+                                Console.WriteLine($"\r\nIncomes status this month with the name {name}: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
                                 break;
                             }
                             else

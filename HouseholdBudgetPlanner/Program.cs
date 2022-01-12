@@ -21,7 +21,6 @@ namespace HouseholdBudgetPlanner
             bool appWork = true;
             while (appWork)
             {
-
                 Console.WriteLine("Please let me know what do you want to do:\r\n");
 
                 var mainMenu = actionService.GetMenuActionsByMenuName("Main");
@@ -72,7 +71,6 @@ namespace HouseholdBudgetPlanner
                     default:
                         Console.WriteLine("Action you entered does not exist");
                         break;
-                        
                 }
             }
         }
