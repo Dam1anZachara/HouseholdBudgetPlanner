@@ -1,16 +1,32 @@
-﻿using System;
+﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.App.Concrete;
+using HouseholdBudgetPlanner.Domain.Entity;
+using HouseholdBudgetPlanner.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HouseholdBudgetPlanner
+namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class AmountServiceBudgetStatus:AmountService
+    public class AmountManagerBudgetStatus:AmountManager
     {
-        public ConsoleKeyInfo BudgetStatusView(MenuActionService actionService)
+        //private readonly IService<Amount> _amount;
+        //public List<Amount> amount;
+        //private readonly List<Amount> Amounts;
+        private readonly MenuActionService _actionService;
+        public AmountManagerBudgetStatus(MenuActionService actionService)
         {
-            var budgetStatusMenu = actionService.GetMenuActionsByMenuName("BudgetStatusMenu");
+            //amount = new List<Amount>(_amount.GetAllItems());
+            _actionService = actionService;
+        }
+        public AmountManagerBudgetStatus()
+        {
+        }
+        public ConsoleKeyInfo BudgetStatusView()
+        {
+            var budgetStatusMenu = _actionService.GetMenuActionsByMenuName("BudgetStatusMenu");
             Console.WriteLine("\r\n\r\nPlease select status to check:\r\n");
             for (int i = 0; i < budgetStatusMenu.Count; i++)
             {
@@ -28,8 +44,9 @@ namespace HouseholdBudgetPlanner
         }
         protected decimal BudgetStatusAllExpensesMonth()
         {
+            //var amountX = _amount.GetAllItems();
             decimal amountSumAllExpenses = 0;
-            foreach (var amount in Amounts)
+            foreach (var amount in Items)
             {
                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0)
                 {
@@ -42,7 +59,7 @@ namespace HouseholdBudgetPlanner
         protected decimal BudgetStatusAllIncomesMonth()
         {
             decimal amountSumAllIncomes = 0;
-            foreach (var amount in Amounts)
+            foreach (var amount in Items)
             {
                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0)
                 {

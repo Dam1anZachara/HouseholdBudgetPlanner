@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HouseholdBudgetPlanner
+namespace HouseholdBudgetPlanner.Domain.Common
 {
-    public class IncomeType
+    public class BaseEntity : AuditableModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        
     }
 }

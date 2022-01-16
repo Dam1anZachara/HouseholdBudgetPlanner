@@ -1,21 +1,32 @@
-﻿using System;
+﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.App.Concrete;
+using HouseholdBudgetPlanner.Domain.Entity;
+using HouseholdBudgetPlanner.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HouseholdBudgetPlanner
+namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class AmountService
+    public class AmountManager : AmountService
     {
-        public static List<Amount> Amounts { get; set; }
-        public AmountService()
+        //public static List<Amount> Amounts { get; set; }
+        private readonly MenuActionService _actionService;
+        private IService<Amount> _amountService;
+        public AmountManager(MenuActionService actionService, IService<Amount> amountService)
         {
-            Amounts = new List<Amount>();
+            _amountService = amountService;
+            _actionService = actionService;
+            //Amounts = new List<Amount>();
         }
-        public ConsoleKeyInfo AddAmountView(MenuActionService actionService)
+        public AmountManager()
         {
-            var addAmountMenu = actionService.GetMenuActionsByMenuName("AddAmountMenu");
+        }
+        public ConsoleKeyInfo AddAmountView()
+        {
+            var addAmountMenu = _actionService.GetMenuActionsByMenuName("AddAmountMenu");
             Console.WriteLine("\r\n\r\nPlease select the assignment of the amount\r\n");
             for (int i = 0; i < addAmountMenu.Count; i++)
             {
@@ -24,9 +35,9 @@ namespace HouseholdBudgetPlanner
             var operation = Console.ReadKey();
             return operation;
         }
-        public ConsoleKeyInfo RemoveAmountView(MenuActionService actionService)
+        public ConsoleKeyInfo RemoveAmountView()
         {
-            var removeAmountMenu = actionService.GetMenuActionsByMenuName("RemoveAmountMenu");
+            var removeAmountMenu = _actionService.GetMenuActionsByMenuName("RemoveAmountMenu");
             Console.WriteLine("\r\n\r\nPlease select from where you want to remove the amount \r\n");
             for (int i = 0; i < removeAmountMenu.Count; i++)
             {
@@ -59,7 +70,7 @@ namespace HouseholdBudgetPlanner
         }
         protected bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
-            foreach (var amount in Amounts)
+            foreach (var amount in Items)
             {
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
                 {
@@ -71,7 +82,7 @@ namespace HouseholdBudgetPlanner
         }
         protected bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
-            foreach (var amount in Amounts)
+            foreach (var amount in Items)
             {
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
                 {

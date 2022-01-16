@@ -1,4 +1,9 @@
-﻿using System;
+﻿using HouseholdBudgetPlanner.App;
+using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.App.Concrete;
+using HouseholdBudgetPlanner.App.Managers;
+using HouseholdBudgetPlanner.Domain.Entity;
+using System;
 
 namespace HouseholdBudgetPlanner
 {
@@ -8,14 +13,14 @@ namespace HouseholdBudgetPlanner
         static void Main(string[] args)
         {
             MenuActionService actionService = new MenuActionService();
-            actionService = Initialize(actionService);
-            ExpenseTypeService expenseTypeService = new ExpenseTypeService();
-            IncomeTypeService incomeTypeService = new IncomeTypeService();
+            ExpenseTypeManager expenseTypeManager = new ExpenseTypeManager();
+            IncomeTypeManager incomeTypeManager = new IncomeTypeManager();
             AmountService amountService = new AmountService();
-            AmountServiceAdd amountServiceAdd = new AmountServiceAdd();
-            AmountServiceRemove amountServiceRemove = new AmountServiceRemove();
-            AmountServiceBudgetStatus amountServiceBudgetStatus = new AmountServiceBudgetStatus();
-            BudgetStatusExecute budgetStatusExecute = new BudgetStatusExecute();
+            AmountManager amountManager = new AmountManager(actionService, amountService);
+            AmountManagerAdd amountManagerAdd = new AmountManagerAdd(expenseTypeManager, incomeTypeManager);
+            AmountManagerRemove amountManagerRemove = new AmountManagerRemove();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus(actionService);
+            BudgetStatusExecuteManager budgetStatusExecuteManager = new BudgetStatusExecuteManager();
 
             Console.WriteLine("Welcome to the Household Budget Planner app!\r\n");
             bool appWork = true;
@@ -34,36 +39,36 @@ namespace HouseholdBudgetPlanner
                 switch (operation.KeyChar)
                 {
                     case '1':
-                        expenseTypeService.ExpenseTypeView();
-                        var expenseNameToAdd = expenseTypeService.AddNewExpenseTypeView();
-                        expenseTypeService.AddNewExpanseType(expenseNameToAdd);
+                        expenseTypeManager.ExpenseTypeView();
+                        var expenseNameToAdd = expenseTypeManager.AddNewExpenseTypeView();
+                        expenseTypeManager.AddNewExpanseType(expenseNameToAdd);
                         break;
                     case '2':
-                        expenseTypeService.ExpenseTypeView();
-                        var expenseNameToRemove = expenseTypeService.RemoveExpenseTypeView();
-                        expenseTypeService.RemoveExpanseType(expenseNameToRemove);
+                        expenseTypeManager.ExpenseTypeView();
+                        var expenseNameToRemove = expenseTypeManager.RemoveExpenseTypeView();
+                        expenseTypeManager.RemoveExpanseType(expenseNameToRemove);
                         break;
                     case '3':
-                        incomeTypeService.IncomeTypeView();
-                        var incomeNameToAdd = incomeTypeService.AddNewIncomeTypeView();
-                        incomeTypeService.AddNewIncomeType(incomeNameToAdd);
+                        incomeTypeManager.IncomeTypeView();
+                        var incomeNameToAdd = incomeTypeManager.AddNewIncomeTypeView();
+                        incomeTypeManager.AddNewIncomeType(incomeNameToAdd);
                         break;
                     case '4':
-                        incomeTypeService.IncomeTypeView();
-                        var incomeNameToRemove = incomeTypeService.RemoveIncomeTypeView();
-                        incomeTypeService.RemoveIncomeType(incomeNameToRemove);
+                        incomeTypeManager.IncomeTypeView();
+                        var incomeNameToRemove = incomeTypeManager.RemoveIncomeTypeView();
+                        incomeTypeManager.RemoveIncomeType(incomeNameToRemove);
                         break;
                     case '5':
-                        var keyInfoAddAmount = amountService.AddAmountView(actionService);
-                        amountServiceAdd.AddAmount(keyInfoAddAmount);
+                        var keyInfoAddAmount = amountManager.AddAmountView();
+                        amountManagerAdd.AddAmount(keyInfoAddAmount);
                         break;
                     case '6':
-                        var keyInfoRemoveAmount = amountService.RemoveAmountView(actionService);
-                        amountServiceRemove.RemoveAmount(keyInfoRemoveAmount);
+                        var keyInfoRemoveAmount = amountManager.RemoveAmountView();
+                        amountManagerRemove.RemoveAmount(keyInfoRemoveAmount);
                         break;
                     case '7':
-                        var keyInfoBudgetStatus = amountServiceBudgetStatus.BudgetStatusView(actionService);
-                        budgetStatusExecute.BudgetStatus(keyInfoBudgetStatus);
+                        var keyInfoBudgetStatus = amountManagerBudgetStatus.BudgetStatusView();
+                        budgetStatusExecuteManager.BudgetStatus(keyInfoBudgetStatus);
                         break;
                     case '8':
                         appWork = ExitApp(operation);
@@ -74,28 +79,7 @@ namespace HouseholdBudgetPlanner
                 }
             }
         }
-        private static MenuActionService Initialize(MenuActionService actionService)
-        {
-            actionService.AddNewAction(1, "Add type of an expense", "Main");
-            actionService.AddNewAction(2, "Remove type of an expense", "Main");
-            actionService.AddNewAction(3, "Add type of an income", "Main");
-            actionService.AddNewAction(4, "Remove type of an income", "Main");
-            actionService.AddNewAction(5, "Add amount", "Main");
-            actionService.AddNewAction(6, "Remove amount", "Main");
-            actionService.AddNewAction(7, "Budget status", "Main");
-            actionService.AddNewAction(8, "Exit app", "Main");
 
-            actionService.AddNewAction(1, "Assign as expense", "AddAmountMenu");
-            actionService.AddNewAction(2, "Assign as income", "AddAmountMenu");
-
-            actionService.AddNewAction(1, "Remove amount from expenses", "RemoveAmountMenu");
-            actionService.AddNewAction(2, "Remove amount from incomes", "RemoveAmountMenu");
-
-            actionService.AddNewAction(1, "Status of expenses", "BudgetStatusMenu");
-            actionService.AddNewAction(2, "Status of incomes", "BudgetStatusMenu");
-            actionService.AddNewAction(3, "Budget balance", "BudgetStatusMenu");
-            return actionService;
-        }
         private static bool ExitApp(ConsoleKeyInfo keyInfo)
         {
             if (keyInfo.KeyChar == '8')

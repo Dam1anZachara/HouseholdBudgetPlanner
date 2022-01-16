@@ -1,13 +1,22 @@
-﻿using System;
+﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.Domain.Entity;
+using HouseholdBudgetPlanner.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HouseholdBudgetPlanner
+namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class BudgetStatusBalance:AmountServiceBudgetStatus
+    public class BudgetStatusBalanceManager:AmountManagerBudgetStatus
     {
+        //private IService<Amount> _amount;
+        //private readonly List<Amount> Amounts;
+        public BudgetStatusBalanceManager()
+        {
+            //Amounts = _amount.GetAllItems();
+        }
         public void BudgetStatusBalanceMethod()
         {
             Console.WriteLine($"\r\nBudget balance. Select time interval: \r\n");
@@ -29,7 +38,7 @@ namespace HouseholdBudgetPlanner
                     DateTime dateEndEntered;
                     dateEndEntered = DateSelect(dateEnd);
                     decimal amountSumAllExpensesDate = 0;
-                    foreach (var amount in Amounts)
+                    foreach (var amount in Items)
                     {
                         if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
                         {
@@ -38,7 +47,7 @@ namespace HouseholdBudgetPlanner
                     }
                     Console.WriteLine($"\r\nExpenses status since {dateEndEntered} to {dateEndEntered}: {amountSumAllExpensesDate}{ValueTypes.PLN}");
                     decimal amountSumAllIncomesDate = 0;
-                    foreach (var amount in Amounts)
+                    foreach (var amount in Items)
                     {
                         if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
                         {

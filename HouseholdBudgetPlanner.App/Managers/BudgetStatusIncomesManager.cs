@@ -1,13 +1,22 @@
-﻿using System;
+﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.Domain.Entity;
+using HouseholdBudgetPlanner.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HouseholdBudgetPlanner
+namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class BudgetStatusIncomes:AmountServiceBudgetStatus
+    public class BudgetStatusIncomesManager:AmountManagerBudgetStatus
     {
+        //private IService<Amount> _amount;
+        //private readonly List<Amount> Amounts;
+        public BudgetStatusIncomesManager()
+        {
+            //Amounts = _amount.GetAllItems();
+        }
         private ConsoleKeyInfo BudgetStatusIncomeTypeMenu()
         {
             Console.WriteLine($"\r\nSelect income type: \r\n");
@@ -18,7 +27,7 @@ namespace HouseholdBudgetPlanner
         }
         private bool MonthIncomeInAmountByNameExist(string name)
         {
-            foreach (var amount in Amounts)
+            foreach (var amount in Items)
             {
                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0 && amount.Name == name)
                 {
@@ -30,7 +39,7 @@ namespace HouseholdBudgetPlanner
         }
         private bool RangeIncomeInAmountByNameExist(DateTime dateStartEntered, DateTime dateEndEntered, string name)
         {
-            foreach (var amount in Amounts)
+            foreach (var amount in Items)
             {
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered) && (amount.Name == name))
                 {
@@ -56,7 +65,7 @@ namespace HouseholdBudgetPlanner
                             break;
                         case '2':
                             Console.WriteLine($"\r\nYour incomes this month:\r\n");
-                            foreach (var amount in Amounts)
+                            foreach (var amount in Items)
                             {
                                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0)
                                 {
@@ -69,7 +78,7 @@ namespace HouseholdBudgetPlanner
                             if (monthIncomeInAmountByNameExist)
                             {
                                 decimal amountSumNameIncomes = 0;
-                                foreach (var amount in Amounts)
+                                foreach (var amount in Items)
                                 {
                                     if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0 && amount.Name == name)
                                     {
@@ -106,7 +115,7 @@ namespace HouseholdBudgetPlanner
                         {
                             case '1':
                                 decimal amountSumAllIncomes = 0;
-                                foreach (var amount in Amounts)
+                                foreach (var amount in Items)
                                 {
                                     if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
                                     {
@@ -117,7 +126,7 @@ namespace HouseholdBudgetPlanner
                                 break;
                             case '2':
                                 Console.WriteLine($"\r\nYour incomes since {dateEndEntered} to {dateEndEntered}.\r\n");
-                                foreach (var amount in Amounts)
+                                foreach (var amount in Items)
                                 {
                                     if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
                                     {
@@ -130,7 +139,7 @@ namespace HouseholdBudgetPlanner
                                 if (rangeIncomeInAmountByNameExist)
                                 {
                                     decimal amountSumNameIncomes = 0;
-                                    foreach (var amount in Amounts)
+                                    foreach (var amount in Items)
                                     {
                                         if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered) && (amount.Name == name))
                                         {

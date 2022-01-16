@@ -1,27 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.App.Concrete;
+using HouseholdBudgetPlanner.Domain.Entity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace HouseholdBudgetPlanner
+namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class ExpenseTypeService
+    public class ExpenseTypeManager : ExpenseTypeService
     {
-        public static List<ExpenseType> ExpenseTypes { get; set; }
-
+        
+        private IService<ExpenseType> _expenseType;
+        //private readonly List<ExpenseType> ExpenseTypes;
         private int i;
-        public ExpenseTypeService()
+
+        //public List<ExpenseType> ExpenseTypes { get; set; }
+
+        public ExpenseTypeManager()
         {
-            ExpenseTypes = new List<ExpenseType>();
+            //_expenseType = expenseType;
+            //ExpenseTypes = new List<ExpenseType>();
             ExpenseType expenseType = new ExpenseType() { Id = 1, Name = "General expenses" };
-            ExpenseTypes.Add(expenseType);
+            //_expenseType.AddItem(expenseType);
+            Items.Add(expenseType);
         }
 
+        //public ExpenseTypeManager()
+        //{
+        //    //ExpenseTypes = _expenseType.GetAllItems();
+        //}
         public void ExpenseTypeView()
         {
+            //var expenseTypes = _expenseType.GetAllItems();
             Console.WriteLine("\r\nAll your expense types are:\r\n");
-            for (i = 0; i < ExpenseTypes.Count; i++)
+            for (i = 0; i < Items.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {ExpenseTypes[i].Name}");
+                Console.WriteLine($"{i + 1}. {Items[i].Name}");
             }
         }
         public string AddNewExpenseTypeView()
@@ -32,7 +48,7 @@ namespace HouseholdBudgetPlanner
         }
         private bool ExpanseTypeExist(string name)
         {
-            foreach (var expenseType in ExpenseTypes)
+            foreach (var expenseType in Items)
             {
                 if (expenseType.Name == name && expenseType.Name != "General expenses")
                 {
@@ -48,7 +64,7 @@ namespace HouseholdBudgetPlanner
             if (name != "" && !expanseTypeExist && !name.Contains(' '))
             {
                 ExpenseType expenseTypeToAdd = new ExpenseType() { Id = i + 1, Name = name };
-                ExpenseTypes.Add(expenseTypeToAdd);
+                Items.Add(expenseTypeToAdd);
                 Console.WriteLine($"\r\nExpense type {name} has been added.");
             }
             else
@@ -67,11 +83,11 @@ namespace HouseholdBudgetPlanner
             bool expanseTypeExist = ExpanseTypeExist(name);
             if (expanseTypeExist)
             {
-                foreach (var expenseType in ExpenseTypes)
+                foreach (var expenseType in Items)
                 {
                     if (expenseType.Name == name)
                     {
-                        ExpenseTypes.Remove(expenseType);
+                        Items.Remove(expenseType);
                         Console.WriteLine($"\r\nExpense type {name} has been removed.\r\n");
                         break;
                     }
@@ -84,14 +100,14 @@ namespace HouseholdBudgetPlanner
         }
         public ExpenseType GetExpenseToAmountByName(string name)
         {
-            foreach (var expenseType in ExpenseTypes)
+            foreach (var expenseType in Items)
             {
                 if (expenseType.Name == name)
                 {
                     return expenseType;
                 }
             }
-            var expenseTypeFirst = ExpenseTypes.First<ExpenseType>();
+            var expenseTypeFirst = Items.First<ExpenseType>();
             return expenseTypeFirst;
         }
     }

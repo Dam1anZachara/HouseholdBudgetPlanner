@@ -1,16 +1,25 @@
-﻿using System;
+﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.Domain.Entity;
+using HouseholdBudgetPlanner.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HouseholdBudgetPlanner
+namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class AmountServiceRemove:AmountService
+    public class AmountManagerRemove:AmountManager
     {
+        //private readonly IService<Amount> _amount;
+        //private readonly List<Amount> Amounts;
+        public AmountManagerRemove()
+        {
+            //Amounts = _amount.GetAllItems();
+        }
         private bool SelectedExpenseInAmountExist(DateTime dateStartEntered, DateTime dateEndEntered, string name, decimal valueInDecimal)
         {
-            foreach (var amount in Amounts)
+            foreach (var amount in Items)
             {
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) &&
                         (amount.Name == name) && (amount.Value == valueInDecimal))
@@ -23,7 +32,7 @@ namespace HouseholdBudgetPlanner
         }
         private bool SelectedIncomeInAmountExist(DateTime dateStartEntered, DateTime dateEndEntered, string nameOfRemoveAmount, decimal valueInDecimal)
         {
-            foreach (var amount in Amounts)
+            foreach (var amount in Items)
             {
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) &&
                         (amount.Name == nameOfRemoveAmount) && (amount.Value == valueInDecimal))
@@ -52,7 +61,7 @@ namespace HouseholdBudgetPlanner
                 if (expenseInAmountByDateExist)
                 {
                     Console.WriteLine($"\r\nYour expenses since {dateStartEntered} to {dateEndEntered}\r\n");
-                    foreach (var amount in Amounts)
+                    foreach (var amount in Items)
                     {
                         if (amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0)
                         {
@@ -66,7 +75,7 @@ namespace HouseholdBudgetPlanner
                     bool selectedExpenseInAmountExist = SelectedExpenseInAmountExist(dateStartEntered, dateEndEntered, nameOfRemoveAmount, valueInDecimal);
                     if (selectedExpenseInAmountExist)
                     {
-                        foreach (var amount in Amounts)
+                        foreach (var amount in Items)
                         {
                             if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) &&
                                 (amount.Name == nameOfRemoveAmount) && (amount.Value == valueInDecimal))
@@ -78,7 +87,7 @@ namespace HouseholdBudgetPlanner
                                 var keyInfoRemoveExpense = Console.ReadKey();
                                 if (keyInfoRemoveExpense.KeyChar == '1')
                                 {
-                                    Amounts.Remove(amount);
+                                    Items.Remove(amount);
                                     Console.WriteLine("\r\nExpense has been removed!");
                                     break;
                                 }
@@ -120,7 +129,7 @@ namespace HouseholdBudgetPlanner
                 if (incomeInAmountByDateExist)
                 {
                     Console.WriteLine($"\r\nYour incomes since {dateStartEntered} to {dateEndEntered}\r\n");
-                    foreach (var amount in Amounts)
+                    foreach (var amount in Items)
                     {
                         if (amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id < 0)
                         {
@@ -134,7 +143,7 @@ namespace HouseholdBudgetPlanner
                     bool selectedIncomeInAmountExist = SelectedIncomeInAmountExist(dateStartEntered, dateEndEntered, nameOfRemoveAmount, valueInDecimal);
                     if (selectedIncomeInAmountExist)
                     {
-                        foreach (var amount in Amounts)
+                        foreach (var amount in Items)
                         {
                             if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) &&
                                 (amount.Name == nameOfRemoveAmount) && (amount.Value == valueInDecimal))
@@ -146,7 +155,7 @@ namespace HouseholdBudgetPlanner
                                 var keyInfoRemoveIncome = Console.ReadKey();
                                 if (keyInfoRemoveIncome.KeyChar == '1')
                                 {
-                                    Amounts.Remove(amount);
+                                    Items.Remove(amount);
                                     Console.WriteLine("\r\nIncome has been removed!");
                                     break;
                                 }

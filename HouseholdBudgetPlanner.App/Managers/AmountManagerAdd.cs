@@ -1,19 +1,27 @@
-﻿using System;
+﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.App.Concrete;
+using HouseholdBudgetPlanner.App.Managers;
+using HouseholdBudgetPlanner.Domain.Entity;
+using HouseholdBudgetPlanner.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HouseholdBudgetPlanner
+namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class AmountServiceAdd:AmountService
+    public class AmountManagerAdd:AmountManager
     {
-        ExpenseTypeService expenseTypeService;
-        IncomeTypeService incomeTypeService;
-        public AmountServiceAdd()
+        //private IService<Amount> _amount;
+        //private List<Amount> Amounts;
+        private readonly ExpenseTypeManager _expenseTypeManager;
+        private readonly IncomeTypeManager _incomeTypeManager;
+        public AmountManagerAdd(ExpenseTypeManager expenseTypeManager, IncomeTypeManager incomeTypeManager)
         {
-            expenseTypeService = new ExpenseTypeService();
-            incomeTypeService = new IncomeTypeService();
+            //Amounts = _amount.GetAllItems();
+            _expenseTypeManager = expenseTypeManager;
+            _incomeTypeManager = incomeTypeManager;
         }
         public void AddAmount(ConsoleKeyInfo keyInfoAddAmount)
         {
@@ -21,10 +29,10 @@ namespace HouseholdBudgetPlanner
             if (keyInfoAddAmount.KeyChar == '1')
             {
                 Console.WriteLine("\r\nYou selected as expense!");
-                expenseTypeService.ExpenseTypeView();
+                _expenseTypeManager.ExpenseTypeView();
                 Console.Write("\r\nWrite a name of the selected expense type and press \"Enter\" or if you want to select the General Expenses just press \"Enter\": ");
                 string name = Console.ReadLine();
-                var expenseTypeByName = expenseTypeService.GetExpenseToAmountByName(name);
+                var expenseTypeByName = _expenseTypeManager.GetExpenseToAmountByName(name);
                 if (expenseTypeByName.Name == name)
                 {
                     addedAmount.Name = expenseTypeByName.Name;
@@ -68,7 +76,7 @@ namespace HouseholdBudgetPlanner
                 switch (keyInfoAddExpense.KeyChar)
                 {
                     case '1':
-                        Amounts.Add(addedAmount);
+                        Items.Add(addedAmount);
                         Console.WriteLine("\r\nExpense has been added!");
                         break;
                     case '2':
@@ -83,10 +91,10 @@ namespace HouseholdBudgetPlanner
             else if (keyInfoAddAmount.KeyChar == '2')
             {
                 Console.WriteLine("\r\nYou selected as income!");
-                incomeTypeService.IncomeTypeView();
+                _incomeTypeManager.IncomeTypeView();
                 Console.Write("\r\nWrite a name of a selected income type and press \"Enter\" or if you want to select the General Incomes just press \"Enter\": ");
                 string name = Console.ReadLine();
-                var incomeTypeByName = incomeTypeService.GetIncomeToAmountByName(name);
+                var incomeTypeByName = _incomeTypeManager.GetIncomeToAmountByName(name);
                 if (incomeTypeByName.Name == name)
                 {
                     addedAmount.Name = incomeTypeByName.Name;
@@ -130,7 +138,7 @@ namespace HouseholdBudgetPlanner
                 switch (keyInfoAddExpense.KeyChar)
                 {
                     case '1':
-                        Amounts.Add(addedAmount);
+                        Items.Add(addedAmount);
                         Console.WriteLine("\r\nIncome has been added!");
                         break;
                     case '2':

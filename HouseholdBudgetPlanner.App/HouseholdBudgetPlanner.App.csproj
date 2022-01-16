@@ -1,12 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HouseholdBudgetPlanner.App\HouseholdBudgetPlanner.App.csproj" />
     <ProjectReference Include="..\HouseholdBudgetPlanner.Domain\HouseholdBudgetPlanner.Domain.csproj" />
   </ItemGroup>
 
