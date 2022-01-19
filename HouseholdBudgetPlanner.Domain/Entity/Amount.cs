@@ -12,5 +12,12 @@ namespace HouseholdBudgetPlanner.Domain.Entity
         public string Name { get; set; }
         public decimal Value { get; set; }
         public DateTime Date { get; set; }
+        //public Amount(int id, string name, decimal value, DateTime date)
+        //{
+        //    Id = id;
+        //    Name = name;
+        //    Value = value;
+        //    Date = date;
+        //}
     }
 }

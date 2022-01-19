@@ -15,7 +15,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         private readonly MenuActionService _actionService;
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
-        public AmountManagerBudgetStatus(MenuActionService actionService, AmountService amountService)
+        public AmountManagerBudgetStatus(MenuActionService actionService, IService<Amount> amountService)
         {
             _actionService = actionService;
             _amountService = amountService;
@@ -23,7 +23,6 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         public AmountManagerBudgetStatus()
         {
-
         }
 
         public ConsoleKeyInfo BudgetStatusView()

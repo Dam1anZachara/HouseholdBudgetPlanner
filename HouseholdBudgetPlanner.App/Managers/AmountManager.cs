@@ -24,6 +24,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         public AmountManager()
         {
         }
+
         public ConsoleKeyInfo AddAmountView()
         {
             var addAmountMenu = _actionService.GetMenuActionsByMenuName("AddAmountMenu");

@@ -17,7 +17,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         private readonly IncomeTypeManager _incomeTypeManager;
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
-        public AmountManagerAdd(ExpenseTypeManager expenseTypeManager, IncomeTypeManager incomeTypeManager, AmountService amountService)
+        public AmountManagerAdd(ExpenseTypeManager expenseTypeManager, IncomeTypeManager incomeTypeManager, IService<Amount> amountService)
         {
             _expenseTypeManager = expenseTypeManager;
             _incomeTypeManager = incomeTypeManager;

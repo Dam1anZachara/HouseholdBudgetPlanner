@@ -13,7 +13,7 @@ namespace HouseholdBudgetPlanner.App.Managers
     {
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
-        public BudgetStatusExpensesManager(AmountService amountService)
+        public BudgetStatusExpensesManager(IService<Amount> amountService)
         {
             _amountService = amountService;
             _amountsGetList = amountService.GetAllItems();
