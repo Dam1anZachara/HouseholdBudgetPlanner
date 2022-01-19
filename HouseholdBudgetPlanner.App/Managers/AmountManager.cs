@@ -15,6 +15,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         private readonly MenuActionService _actionService;
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
+       
         public AmountManager(MenuActionService actionService, IService<Amount> amountService)
         {
             _amountService = amountService;
@@ -47,7 +48,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             var operation = Console.ReadKey();
             return operation;
         }
-        protected DateTime DateSelect(string date)
+        public DateTime DateSelect(string date)
         {
             DateTime dateEntered;
             while (!DateTime.TryParseExact(date, "dd/mm/yyyy", null, System.Globalization.DateTimeStyles.None, out dateEntered))
@@ -57,7 +58,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return dateEntered;
         }
-        protected decimal EnterValue()
+        public decimal EnterValue()
         {
             var valueString = Console.ReadLine();
             decimal valueInDecimal;
@@ -69,7 +70,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return Decimal.Round(decimal.Parse(String.Format("{0:0.00}", valueInDecimal)), 2);
         }
-        public bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
+        protected bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
             foreach (var amount in _amountsGetList)
             {
@@ -81,7 +82,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
-        public bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
+        protected bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
             foreach (var amount in _amountsGetList)
             {

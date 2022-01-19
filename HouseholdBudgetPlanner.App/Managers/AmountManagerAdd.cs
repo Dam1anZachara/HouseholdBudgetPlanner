@@ -155,6 +155,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 Console.WriteLine("\r\nAction you entered does not exist\r\n");
             }
+            _amountService.UpdateItem(addedAmount);
         }
     }
 }
