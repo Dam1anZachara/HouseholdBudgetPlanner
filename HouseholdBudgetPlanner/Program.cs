@@ -12,15 +12,20 @@ namespace HouseholdBudgetPlanner
         //const string FILE_NAME = "C:\\HouseholdBudgetPlannerFiles\\ImportFile.xlsx";
         static void Main(string[] args)
         {
+            ExpenseTypeService expenseTypeService = new ExpenseTypeService();
+            IncomeTypeService incomeTypeService = new IncomeTypeService();
             MenuActionService actionService = new MenuActionService();
-            ExpenseTypeManager expenseTypeManager = new ExpenseTypeManager();
-            IncomeTypeManager incomeTypeManager = new IncomeTypeManager();
+            ExpenseTypeManager expenseTypeManager = new ExpenseTypeManager(expenseTypeService);
+            IncomeTypeManager incomeTypeManager = new IncomeTypeManager(incomeTypeService);
             AmountService amountService = new AmountService();
             AmountManager amountManager = new AmountManager(actionService, amountService);
-            AmountManagerAdd amountManagerAdd = new AmountManagerAdd(expenseTypeManager, incomeTypeManager);
-            AmountManagerRemove amountManagerRemove = new AmountManagerRemove();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus(actionService);
-            BudgetStatusExecuteManager budgetStatusExecuteManager = new BudgetStatusExecuteManager();
+            AmountManagerAdd amountManagerAdd = new AmountManagerAdd(expenseTypeManager, incomeTypeManager, amountService);
+            AmountManagerRemove amountManagerRemove = new AmountManagerRemove(amountService);
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus(actionService, amountService);
+            BudgetStatusExpensesManager budgetStatusExpensesManager = new BudgetStatusExpensesManager(amountService);
+            BudgetStatusIncomesManager budgetStatusIncomesManager = new BudgetStatusIncomesManager(amountService);
+            BudgetStatusBalanceManager budgetStatusBalanceManager = new BudgetStatusBalanceManager(amountService);
+            BudgetStatusExecuteManager budgetStatusExecuteManager = new BudgetStatusExecuteManager(budgetStatusExpensesManager, budgetStatusIncomesManager, budgetStatusBalanceManager );
 
             Console.WriteLine("Welcome to the Household Budget Planner app!\r\n");
             bool appWork = true;

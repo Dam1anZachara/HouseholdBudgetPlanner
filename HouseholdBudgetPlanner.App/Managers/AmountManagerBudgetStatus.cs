@@ -10,20 +10,22 @@ using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class AmountManagerBudgetStatus:AmountManager
+    public class AmountManagerBudgetStatus : AmountManager
     {
-        //private readonly IService<Amount> _amount;
-        //public List<Amount> amount;
-        //private readonly List<Amount> Amounts;
         private readonly MenuActionService _actionService;
-        public AmountManagerBudgetStatus(MenuActionService actionService)
+        private IService<Amount> _amountService;
+        private List<Amount> _amountsGetList;
+        public AmountManagerBudgetStatus(MenuActionService actionService, AmountService amountService)
         {
-            //amount = new List<Amount>(_amount.GetAllItems());
             _actionService = actionService;
+            _amountService = amountService;
+            _amountsGetList = amountService.GetAllItems();
         }
         public AmountManagerBudgetStatus()
         {
+
         }
+
         public ConsoleKeyInfo BudgetStatusView()
         {
             var budgetStatusMenu = _actionService.GetMenuActionsByMenuName("BudgetStatusMenu");
@@ -44,9 +46,8 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         protected decimal BudgetStatusAllExpensesMonth()
         {
-            //var amountX = _amount.GetAllItems();
             decimal amountSumAllExpenses = 0;
-            foreach (var amount in Items)
+            foreach (var amount in _amountsGetList)
             {
                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0)
                 {
@@ -59,7 +60,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         protected decimal BudgetStatusAllIncomesMonth()
         {
             decimal amountSumAllIncomes = 0;
-            foreach (var amount in Items)
+            foreach (var amount in _amountsGetList)
             {
                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0)
                 {

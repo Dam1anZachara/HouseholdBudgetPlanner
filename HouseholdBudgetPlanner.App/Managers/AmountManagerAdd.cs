@@ -11,17 +11,18 @@ using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class AmountManagerAdd:AmountManager
+    public class AmountManagerAdd : AmountManager
     {
-        //private IService<Amount> _amount;
-        //private List<Amount> Amounts;
         private readonly ExpenseTypeManager _expenseTypeManager;
         private readonly IncomeTypeManager _incomeTypeManager;
-        public AmountManagerAdd(ExpenseTypeManager expenseTypeManager, IncomeTypeManager incomeTypeManager)
+        private IService<Amount> _amountService;
+        private List<Amount> _amountsGetList;
+        public AmountManagerAdd(ExpenseTypeManager expenseTypeManager, IncomeTypeManager incomeTypeManager, AmountService amountService)
         {
-            //Amounts = _amount.GetAllItems();
             _expenseTypeManager = expenseTypeManager;
             _incomeTypeManager = incomeTypeManager;
+            _amountService = amountService;
+            _amountsGetList = amountService.GetAllItems();
         }
         public void AddAmount(ConsoleKeyInfo keyInfoAddAmount)
         {
@@ -76,7 +77,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 switch (keyInfoAddExpense.KeyChar)
                 {
                     case '1':
-                        Items.Add(addedAmount);
+                        _amountService.AddItem(addedAmount);
                         Console.WriteLine("\r\nExpense has been added!");
                         break;
                     case '2':
@@ -138,7 +139,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 switch (keyInfoAddExpense.KeyChar)
                 {
                     case '1':
-                        Items.Add(addedAmount);
+                        _amountService.AddItem(addedAmount);
                         Console.WriteLine("\r\nIncome has been added!");
                         break;
                     case '2':

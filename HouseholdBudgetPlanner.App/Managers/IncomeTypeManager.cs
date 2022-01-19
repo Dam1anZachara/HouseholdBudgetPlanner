@@ -9,30 +9,26 @@ using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class IncomeTypeManager : IncomeTypeService
+    public class IncomeTypeManager
     {
-        //public List<IncomeType> IncomeTypes { get; set; }
-
-        public IncomeTypeManager()
-        {
-            //IncomeTypes = new List<IncomeType>();
-            IncomeType expenseType = new IncomeType() { Id = -1, Name = "General incomes" };
-            Items.Add(expenseType);
-        }
-        //private IService<IncomeType> _incomeType;
-        //private readonly List<IncomeType> IncomeTypes;
+        private IService<IncomeType> _IncomeTypeService;
+        private List<IncomeType> _incomeTypesGetList;
         private int i;
-        //public IncomeTypeManager()
-        //{
-        //    //IncomeTypes = _incomeType.GetAllItems();
-        //}
+
+        public IncomeTypeManager(IService<IncomeType> incomeTypeService)
+        {
+            _IncomeTypeService = incomeTypeService;
+            IncomeType expenseType = new IncomeType() { Id = -1, Name = "General incomes" };
+            _IncomeTypeService.AddItem(expenseType);
+            _incomeTypesGetList = incomeTypeService.GetAllItems();
+        }
         public void IncomeTypeView()
         {
             Console.WriteLine("\r\n\r\nAll your income types are:\r\n");
 
-            for (i = 0; i < Items.Count; i++)
+            for (i = 0; i < _incomeTypesGetList.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {Items[i].Name}");
+                Console.WriteLine($"{i + 1}. {_incomeTypesGetList[i].Name}");
             }
         }
         public string AddNewIncomeTypeView()
@@ -43,7 +39,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         private bool IncomeTypeExist(string name)
         {
-            foreach (var incomeType in Items)
+            foreach (var incomeType in _incomeTypesGetList)
             {
                 if (incomeType.Name == name && incomeType.Name != "General incomes")
                 {
@@ -59,7 +55,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             if (name != "" && !incomeTypeExist && !name.Contains(' '))
             {
                 IncomeType incomeTypeToAdd = new IncomeType() { Id = (i + 1) * -1, Name = name };
-                Items.Add(incomeTypeToAdd);
+                _IncomeTypeService.AddItem(incomeTypeToAdd);
                 Console.WriteLine($"\r\nIncome type {name} has been added.");
             }
             else
@@ -78,11 +74,11 @@ namespace HouseholdBudgetPlanner.App.Managers
             bool incomeTypeExist = IncomeTypeExist(name);
             if (incomeTypeExist)
             {
-                foreach (var incomeType in Items)
+                foreach (var incomeType in _incomeTypesGetList)
                 {
                     if (incomeType.Name == name)
                     {
-                        Items.Remove(incomeType);
+                        _IncomeTypeService.RemoveItem(incomeType);
                         Console.WriteLine($"\r\nIncome type {name} has been removed.\r\n");
                         break;
                     }
@@ -95,14 +91,14 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         public IncomeType GetIncomeToAmountByName(string name)
         {
-            foreach (var incomeType in Items)
+            foreach (var incomeType in _incomeTypesGetList)
             {
                 if (incomeType.Name == name)
                 {
                     return incomeType;
                 }
             }
-            var incomeTypeFirst = Items.First<IncomeType>();
+            var incomeTypeFirst = _incomeTypesGetList.First<IncomeType>();
             return incomeTypeFirst;
         }
     }

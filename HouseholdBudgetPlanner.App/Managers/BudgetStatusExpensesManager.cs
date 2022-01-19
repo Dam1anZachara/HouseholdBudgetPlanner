@@ -11,15 +11,16 @@ namespace HouseholdBudgetPlanner.App.Managers
 {
     public class BudgetStatusExpensesManager : AmountManagerBudgetStatus
     {
-        //private IService<Amount> _amount;
-        //private readonly List<Amount> Amounts;
-        public BudgetStatusExpensesManager()
+        private IService<Amount> _amountService;
+        private List<Amount> _amountsGetList;
+        public BudgetStatusExpensesManager(AmountService amountService)
         {
-            //Amounts = _amount.GetAllItems();
+            _amountService = amountService;
+            _amountsGetList = amountService.GetAllItems();
         }
         private bool MonthExpenseInAmountByNameExist(string name)
         {
-            foreach (var amount in Items)
+            foreach (var amount in _amountsGetList)
             {
                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0 && amount.Name == name)
                 {
@@ -31,7 +32,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         private bool RangeExpenseInAmountByNameExist(DateTime dateStartEntered, DateTime dateEndEntered, string name)
         {
-            foreach (var amount in Items)
+            foreach (var amount in _amountsGetList)
             {
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered) && (amount.Name == name))
                 {
@@ -64,7 +65,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                             break;
                         case '2':
                             Console.WriteLine($"\r\nYour expenses this month:\r\n");
-                            foreach (var amount in Items)
+                            foreach (var amount in _amountsGetList)
                             {
                                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0)
                                 {
@@ -77,7 +78,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                             if (monthExpenseInAmountByNameExist)
                             {
                                 decimal amountSumNameExpenses = 0;
-                                foreach (var amount in Items)
+                                foreach (var amount in _amountsGetList)
                                 {
                                     if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0 && amount.Name == name)
                                     {
@@ -114,7 +115,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                         {
                             case '1':
                                 decimal amountSumAllExpenses = 0;
-                                foreach (var amount in Items)
+                                foreach (var amount in _amountsGetList)
                                 {
                                     if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
                                     {
@@ -125,7 +126,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                                 break;
                             case '2':
                                 Console.WriteLine($"\r\nYour expenses since {dateEndEntered} to {dateEndEntered}.\r\n");
-                                foreach (var amount in Items)
+                                foreach (var amount in _amountsGetList)
                                 {
                                     if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
                                     {
@@ -138,7 +139,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                                 if (rangeExpenseInAmountByNameExist)
                                 {
                                     decimal amountSumNameExpenses = 0;
-                                    foreach (var amount in Items)
+                                    foreach (var amount in _amountsGetList)
                                     {
                                         if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered) && (amount.Name == name))
                                         {

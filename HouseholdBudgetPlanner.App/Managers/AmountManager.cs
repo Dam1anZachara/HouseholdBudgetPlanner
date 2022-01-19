@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class AmountManager : AmountService
+    public class AmountManager
     {
-        //public static List<Amount> Amounts { get; set; }
         private readonly MenuActionService _actionService;
         private IService<Amount> _amountService;
+        private List<Amount> _amountsGetList;
         public AmountManager(MenuActionService actionService, IService<Amount> amountService)
         {
             _amountService = amountService;
             _actionService = actionService;
-            //Amounts = new List<Amount>();
+            _amountsGetList = amountService.GetAllItems();
         }
         public AmountManager()
         {
@@ -70,7 +70,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         protected bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
-            foreach (var amount in Items)
+            foreach (var amount in _amountsGetList)
             {
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
                 {
@@ -82,7 +82,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         protected bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
-            foreach (var amount in Items)
+            foreach (var amount in _amountsGetList)
             {
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
                 {

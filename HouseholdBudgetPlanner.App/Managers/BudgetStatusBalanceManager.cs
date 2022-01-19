@@ -1,4 +1,5 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.App.Concrete;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
@@ -9,13 +10,14 @@ using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class BudgetStatusBalanceManager:AmountManagerBudgetStatus
+    public class BudgetStatusBalanceManager : AmountManagerBudgetStatus
     {
-        //private IService<Amount> _amount;
-        //private readonly List<Amount> Amounts;
-        public BudgetStatusBalanceManager()
+        private IService<Amount> _amountService;
+        private List<Amount> _amountsGetList;
+        public BudgetStatusBalanceManager(AmountService amountService)
         {
-            //Amounts = _amount.GetAllItems();
+            _amountService = amountService;
+            _amountsGetList = amountService.GetAllItems();
         }
         public void BudgetStatusBalanceMethod()
         {
@@ -38,7 +40,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                     DateTime dateEndEntered;
                     dateEndEntered = DateSelect(dateEnd);
                     decimal amountSumAllExpensesDate = 0;
-                    foreach (var amount in Items)
+                    foreach (var amount in _amountsGetList)
                     {
                         if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
                         {
@@ -47,7 +49,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                     }
                     Console.WriteLine($"\r\nExpenses status since {dateEndEntered} to {dateEndEntered}: {amountSumAllExpensesDate}{ValueTypes.PLN}");
                     decimal amountSumAllIncomesDate = 0;
-                    foreach (var amount in Items)
+                    foreach (var amount in _amountsGetList)
                     {
                         if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
                         {

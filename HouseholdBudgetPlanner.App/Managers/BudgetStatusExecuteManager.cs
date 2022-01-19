@@ -11,11 +11,11 @@ namespace HouseholdBudgetPlanner.App.Managers
         private readonly BudgetStatusExpensesManager _budgetStatusExpensesManager;
         private readonly BudgetStatusIncomesManager _budgetStatusIncomesManager;
         private readonly BudgetStatusBalanceManager _budgetStatusBalanceManager;
-        public BudgetStatusExecuteManager()
+        public BudgetStatusExecuteManager(BudgetStatusExpensesManager budgetStatusExpensesManager, BudgetStatusIncomesManager budgetStatusIncomesManager, BudgetStatusBalanceManager budgetStatusBalanceManager)
         {
-            _budgetStatusExpensesManager = new BudgetStatusExpensesManager();
-            _budgetStatusIncomesManager = new BudgetStatusIncomesManager();
-            _budgetStatusBalanceManager = new BudgetStatusBalanceManager();
+            _budgetStatusExpensesManager = budgetStatusExpensesManager;
+            _budgetStatusIncomesManager = budgetStatusIncomesManager;
+            _budgetStatusBalanceManager = budgetStatusBalanceManager;
         }
         public void BudgetStatus(ConsoleKeyInfo keyInfoBudgetStatus)
         {
