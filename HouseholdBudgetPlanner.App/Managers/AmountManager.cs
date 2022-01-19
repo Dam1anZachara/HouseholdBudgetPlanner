@@ -19,7 +19,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         {
             _amountService = amountService;
             _actionService = actionService;
-            _amountsGetList = amountService.GetAllItems();
+            _amountsGetList = _amountService.GetAllItems();
         }
         public AmountManager()
         {
@@ -69,7 +69,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return Decimal.Round(decimal.Parse(String.Format("{0:0.00}", valueInDecimal)), 2);
         }
-        protected bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
+        public bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
             foreach (var amount in _amountsGetList)
             {
@@ -81,7 +81,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
-        protected bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
+        public bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
             foreach (var amount in _amountsGetList)
             {

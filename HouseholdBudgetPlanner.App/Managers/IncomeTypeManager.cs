@@ -18,8 +18,8 @@ namespace HouseholdBudgetPlanner.App.Managers
         public IncomeTypeManager(IService<IncomeType> incomeTypeService)
         {
             _IncomeTypeService = incomeTypeService;
-            IncomeType expenseType = new IncomeType() { Id = -1, Name = "General incomes" };
-            _IncomeTypeService.AddItem(expenseType);
+            IncomeType incomeType = new IncomeType() { Id = -1, Name = "General incomes" };
+            _IncomeTypeService.AddItem(incomeType);
             _incomeTypesGetList = incomeTypeService.GetAllItems();
         }
         public void IncomeTypeView()

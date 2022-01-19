@@ -10,7 +10,7 @@ namespace HouseholdBudgetPlanner.App.Abstract
     {
         List<T> Items { get; set; }
 
-        List<T> GetAllItems();
+        List <T> GetAllItems();
         int AddItem(T item);
         int UpdateItem(T item);
         void RemoveItem(T item);
