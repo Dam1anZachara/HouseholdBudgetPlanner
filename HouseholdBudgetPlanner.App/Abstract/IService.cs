@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace HouseholdBudgetPlanner.App.Abstract
 {
@@ -11,8 +7,8 @@ namespace HouseholdBudgetPlanner.App.Abstract
         List<T> Items { get; set; }
 
         List <T> GetAllItems();
-        int AddItem(T item);
-        int UpdateItem(T item);
+        void AddItem(T item);
+        //int UpdateItem(T item);
         void RemoveItem(T item);
     }
 }

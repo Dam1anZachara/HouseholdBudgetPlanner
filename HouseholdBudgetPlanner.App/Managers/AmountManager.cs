@@ -4,9 +4,6 @@ using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -70,7 +67,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return Decimal.Round(decimal.Parse(String.Format("{0:0.00}", valueInDecimal)), 2);
         }
-        protected bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
+        public bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
             foreach (var amount in _amountsGetList)
             {
@@ -82,7 +79,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
-        protected bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
+        public bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
             foreach (var amount in _amountsGetList)
             {

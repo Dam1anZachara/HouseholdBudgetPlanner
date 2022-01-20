@@ -4,9 +4,6 @@ using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -43,7 +40,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             var keyInfoStatusDate = Console.ReadKey();
             return keyInfoStatusDate;
         }
-        protected decimal BudgetStatusAllExpensesMonth()
+        public decimal BudgetStatusAllExpensesMonth()
         {
             decimal amountSumAllExpenses = 0;
             foreach (var amount in _amountsGetList)
@@ -56,7 +53,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             Console.WriteLine($"\r\nExpenses status this month: {amountSumAllExpenses}{ValueTypes.PLN}");
             return amountSumAllExpenses;
         }
-        protected decimal BudgetStatusAllIncomesMonth()
+        public decimal BudgetStatusAllIncomesMonth()
         {
             decimal amountSumAllIncomes = 0;
             foreach (var amount in _amountsGetList)

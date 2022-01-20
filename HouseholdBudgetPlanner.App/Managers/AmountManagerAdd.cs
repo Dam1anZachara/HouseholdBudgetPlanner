@@ -1,13 +1,8 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
-using HouseholdBudgetPlanner.App.Concrete;
-using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -155,7 +150,6 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 Console.WriteLine("\r\nAction you entered does not exist\r\n");
             }
-            _amountService.UpdateItem(addedAmount);
         }
     }
 }

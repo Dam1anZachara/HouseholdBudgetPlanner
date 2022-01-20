@@ -3,9 +3,6 @@ using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -13,10 +10,14 @@ namespace HouseholdBudgetPlanner.App.Managers
     {
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
-        public BudgetStatusExpensesManager(IService<Amount> amountService)
+        private readonly AmountManagerBudgetStatus _amountManagerBudgetStatus;
+        private readonly AmountManager _amountManager;
+        public BudgetStatusExpensesManager(IService<Amount> amountService, AmountManagerBudgetStatus amountManagerBudgetStatus, AmountManager amountManager)
         {
             _amountService = amountService;
             _amountsGetList = amountService.GetAllItems();
+            _amountManagerBudgetStatus = amountManagerBudgetStatus;
+            _amountManager = amountManager;
         }
         private bool MonthExpenseInAmountByNameExist(string name)
         {
@@ -61,7 +62,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                     switch (keyInfoStatusExpenseMonthName.KeyChar)
                     {
                         case '1':
-                            BudgetStatusAllExpensesMonth();
+                            _amountManagerBudgetStatus.BudgetStatusAllExpensesMonth();
                             break;
                         case '2':
                             Console.WriteLine($"\r\nYour expenses this month:\r\n");
@@ -107,7 +108,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                     var dateEnd = Console.ReadLine();
                     DateTime dateEndEntered;
                     dateEndEntered = DateSelect(dateEnd);
-                    bool expenseInAmountByDateExist = ExpenseInAmountByDateExist(dateStartEntered, dateEndEntered);
+                    bool expenseInAmountByDateExist = _amountManager.ExpenseInAmountByDateExist(dateStartEntered, dateEndEntered);
                     if (expenseInAmountByDateExist)
                     {
                         var keyInfoStatusExpenseRangeName = BudgetStatusExpenseTypeMenu();

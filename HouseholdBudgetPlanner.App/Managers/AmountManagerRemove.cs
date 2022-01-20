@@ -3,9 +3,6 @@ using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -13,11 +10,14 @@ namespace HouseholdBudgetPlanner.App.Managers
     {
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
-        public AmountManagerRemove(IService<Amount> amountService)
+        private readonly AmountManager _amountManager;
+        public AmountManagerRemove(IService<Amount> amountService, AmountManager amountManager)
         {
             _amountService = amountService;
             _amountsGetList = amountService.GetAllItems();
+            _amountManager = amountManager;
         }
+
         private bool SelectedExpenseInAmountExist(DateTime dateStartEntered, DateTime dateEndEntered, string name, decimal valueInDecimal)
         {
             foreach (var amount in _amountsGetList)
@@ -58,7 +58,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 var dateEnd = Console.ReadLine();
                 DateTime dateEndEntered;
                 dateEndEntered = DateSelect(dateEnd);
-                bool expenseInAmountByDateExist = ExpenseInAmountByDateExist(dateStartEntered, dateEndEntered);
+                bool expenseInAmountByDateExist = _amountManager.ExpenseInAmountByDateExist(dateStartEntered, dateEndEntered);
                 if (expenseInAmountByDateExist)
                 {
                     Console.WriteLine($"\r\nYour expenses since {dateStartEntered} to {dateEndEntered}\r\n");
@@ -126,7 +126,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 var dateEnd = Console.ReadLine();
                 DateTime dateEndEntered;
                 dateEndEntered = DateSelect(dateEnd);
-                bool incomeInAmountByDateExist = IncomeInAmountByDateExist(dateStartEntered, dateEndEntered);
+                bool incomeInAmountByDateExist = _amountManager.IncomeInAmountByDateExist(dateStartEntered, dateEndEntered);
                 if (incomeInAmountByDateExist)
                 {
                     Console.WriteLine($"\r\nYour incomes since {dateStartEntered} to {dateEndEntered}\r\n");

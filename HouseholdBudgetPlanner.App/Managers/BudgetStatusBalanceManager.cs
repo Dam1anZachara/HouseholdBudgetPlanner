@@ -1,12 +1,8 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
-using HouseholdBudgetPlanner.App.Concrete;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -14,10 +10,12 @@ namespace HouseholdBudgetPlanner.App.Managers
     {
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
-        public BudgetStatusBalanceManager(IService<Amount> amountService)
+        private readonly AmountManagerBudgetStatus _amountManagerBudgetStatus;
+        public BudgetStatusBalanceManager(IService<Amount> amountService, AmountManagerBudgetStatus amountManagerBudgetStatus)
         {
             _amountService = amountService;
             _amountsGetList = amountService.GetAllItems();
+            _amountManagerBudgetStatus = amountManagerBudgetStatus;
         }
         public void BudgetStatusBalanceMethod()
         {
@@ -26,8 +24,8 @@ namespace HouseholdBudgetPlanner.App.Managers
             switch (keyInfoStatusBalanceMonthDate.KeyChar)
             {
                 case '1':
-                    decimal amountSumAllExpenses = BudgetStatusAllExpensesMonth();
-                    decimal amountSumAllIncomes = BudgetStatusAllIncomesMonth();
+                    decimal amountSumAllExpenses = _amountManagerBudgetStatus.BudgetStatusAllExpensesMonth();
+                    decimal amountSumAllIncomes = _amountManagerBudgetStatus.BudgetStatusAllIncomesMonth();
                     Console.WriteLine($"\r\nBudget balance this month: {amountSumAllIncomes - amountSumAllExpenses}{ValueTypes.PLN}\r\n");
                     break;
                 case '2':

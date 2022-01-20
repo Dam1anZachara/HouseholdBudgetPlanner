@@ -3,9 +3,6 @@ using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -13,10 +10,14 @@ namespace HouseholdBudgetPlanner.App.Managers
     {
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
-        public BudgetStatusIncomesManager(IService<Amount> amountService)
+        private readonly AmountManagerBudgetStatus _amountManagerBudgetStatus;
+        private readonly AmountManager _amountManager;
+        public BudgetStatusIncomesManager(IService<Amount> amountService, AmountManagerBudgetStatus amountManagerBudgetStatus, AmountManager amountManager)
         {
             _amountService = amountService;
             _amountsGetList = amountService.GetAllItems();
+            _amountManagerBudgetStatus = amountManagerBudgetStatus;
+            _amountManager = amountManager;
         }
         private ConsoleKeyInfo BudgetStatusIncomeTypeMenu()
         {
@@ -62,7 +63,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                     switch (keyInfoStatusIncomeMonthName.KeyChar)
                     {
                         case '1':
-                            BudgetStatusAllIncomesMonth();
+                            _amountManagerBudgetStatus.BudgetStatusAllIncomesMonth();
                             break;
                         case '2':
                             Console.WriteLine($"\r\nYour incomes this month:\r\n");
@@ -108,7 +109,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                     var dateEnd = Console.ReadLine();
                     DateTime dateEndEntered;
                     dateEndEntered = DateSelect(dateEnd);
-                    bool incomeInAmountByDateExist = IncomeInAmountByDateExist(dateStartEntered, dateEndEntered);
+                    bool incomeInAmountByDateExist = _amountManager.IncomeInAmountByDateExist(dateStartEntered, dateEndEntered);
                     if (incomeInAmountByDateExist)
                     {
                         var keyInfoStatusIncomeRangeName = BudgetStatusIncomeTypeMenu();

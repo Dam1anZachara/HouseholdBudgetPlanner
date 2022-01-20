@@ -1,8 +1,6 @@
 ﻿using HouseholdBudgetPlanner.App;
-using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Concrete;
 using HouseholdBudgetPlanner.App.Managers;
-using HouseholdBudgetPlanner.Domain.Entity;
 using System;
 
 namespace HouseholdBudgetPlanner
@@ -15,17 +13,17 @@ namespace HouseholdBudgetPlanner
             ExpenseTypeService expenseTypeService = new ExpenseTypeService();
             IncomeTypeService incomeTypeService = new IncomeTypeService();
             MenuActionService actionService = new MenuActionService();
+            AmountService amountService = new AmountService();
             ExpenseTypeManager expenseTypeManager = new ExpenseTypeManager(expenseTypeService);
             IncomeTypeManager incomeTypeManager = new IncomeTypeManager(incomeTypeService);
-            AmountService amountService = new AmountService();
             AmountManager amountManager = new AmountManager(actionService, amountService);
             AmountManagerAdd amountManagerAdd = new AmountManagerAdd(expenseTypeManager, incomeTypeManager, amountService);
-            AmountManagerRemove amountManagerRemove = new AmountManagerRemove(amountService);
+            AmountManagerRemove amountManagerRemove = new AmountManagerRemove(amountService, amountManager);
             AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus(actionService, amountService);
-            BudgetStatusExpensesManager budgetStatusExpensesManager = new BudgetStatusExpensesManager(amountService);
-            BudgetStatusIncomesManager budgetStatusIncomesManager = new BudgetStatusIncomesManager(amountService);
-            BudgetStatusBalanceManager budgetStatusBalanceManager = new BudgetStatusBalanceManager(amountService);
-            BudgetStatusExecuteManager budgetStatusExecuteManager = new BudgetStatusExecuteManager(budgetStatusExpensesManager, budgetStatusIncomesManager, budgetStatusBalanceManager );
+            BudgetStatusExpensesManager budgetStatusExpensesManager = new BudgetStatusExpensesManager(amountService, amountManagerBudgetStatus, amountManager);
+            BudgetStatusIncomesManager budgetStatusIncomesManager = new BudgetStatusIncomesManager(amountService, amountManagerBudgetStatus, amountManager);
+            BudgetStatusBalanceManager budgetStatusBalanceManager = new BudgetStatusBalanceManager(amountService, amountManagerBudgetStatus);
+            BudgetStatusExecuteManager budgetStatusExecuteManager = new BudgetStatusExecuteManager(budgetStatusExpensesManager, budgetStatusIncomesManager, budgetStatusBalanceManager);
 
             Console.WriteLine("Welcome to the Household Budget Planner app!\r\n");
             bool appWork = true;
