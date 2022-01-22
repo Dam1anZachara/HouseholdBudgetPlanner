@@ -45,7 +45,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             var operation = Console.ReadKey();
             return operation;
         }
-        public DateTime DateSelect(string date)
+        protected DateTime DateSelect(string date)
         {
             DateTime dateEntered;
             while (!DateTime.TryParseExact(date, "dd/mm/yyyy", null, System.Globalization.DateTimeStyles.None, out dateEntered))
@@ -55,7 +55,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return dateEntered;
         }
-        public decimal EnterValue()
+        protected decimal EnterValue()
         {
             var valueString = Console.ReadLine();
             decimal valueInDecimal;
@@ -67,7 +67,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return Decimal.Round(decimal.Parse(String.Format("{0:0.00}", valueInDecimal)), 2);
         }
-        public bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
+        internal bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
             foreach (var amount in _amountsGetList)
             {
@@ -79,7 +79,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
-        public bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
+        internal bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
         {
             foreach (var amount in _amountsGetList)
             {

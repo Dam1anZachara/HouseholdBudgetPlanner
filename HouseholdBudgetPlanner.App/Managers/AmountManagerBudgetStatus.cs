@@ -40,7 +40,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             var keyInfoStatusDate = Console.ReadKey();
             return keyInfoStatusDate;
         }
-        public decimal BudgetStatusAllExpensesMonth()
+        internal decimal BudgetStatusAllExpensesMonth()
         {
             decimal amountSumAllExpenses = 0;
             foreach (var amount in _amountsGetList)
@@ -53,7 +53,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             Console.WriteLine($"\r\nExpenses status this month: {amountSumAllExpenses}{ValueTypes.PLN}");
             return amountSumAllExpenses;
         }
-        public decimal BudgetStatusAllIncomesMonth()
+        internal decimal BudgetStatusAllIncomesMonth()
         {
             decimal amountSumAllIncomes = 0;
             foreach (var amount in _amountsGetList)

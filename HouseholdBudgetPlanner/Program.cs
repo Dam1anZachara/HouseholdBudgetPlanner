@@ -26,6 +26,7 @@ namespace HouseholdBudgetPlanner
             BudgetStatusExecuteManager budgetStatusExecuteManager = new BudgetStatusExecuteManager(budgetStatusExpensesManager, budgetStatusIncomesManager, budgetStatusBalanceManager);
 
             Console.WriteLine("Welcome to the Household Budget Planner app!\r\n");
+            
             bool appWork = true;
             while (appWork)
             {
@@ -38,7 +39,6 @@ namespace HouseholdBudgetPlanner
                 }
 
                 var operation = Console.ReadKey();
-
                 switch (operation.KeyChar)
                 {
                     case '1':

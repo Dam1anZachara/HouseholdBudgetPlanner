@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
-    public class BudgetStatusIncomesManager:AmountManagerBudgetStatus
+    public class BudgetStatusIncomesManager : AmountManagerBudgetStatus
     {
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
@@ -51,7 +51,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
-        public void BudgetStatusIncomesMethod()
+        internal void BudgetStatusIncomesMethod()
         {
             Console.WriteLine($"\r\nStatus of incomes. Select the time interval: \r\n");
             var keyInfoStatusIncomeMonthDate = BudgetStatusDateMenu();

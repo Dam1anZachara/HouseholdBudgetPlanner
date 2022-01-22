@@ -51,7 +51,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             var keyInfoStatusExpense = Console.ReadKey();
             return keyInfoStatusExpense;
         }
-        public void BudgetStatusExpensesMethod()
+        internal void BudgetStatusExpensesMethod()
         {
             Console.WriteLine($"\r\nStatus of expenses. Select the time interval: \r\n");
             var keyInfoStatusExpenseMonthDate = BudgetStatusDateMenu();

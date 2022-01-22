@@ -85,7 +85,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 Console.WriteLine("\r\nExpense type with this name does not exist. General expenses can not be removed!\r\n");
             }
         }
-        public ExpenseType GetExpenseToAmountByName(string name)
+        internal ExpenseType GetExpenseToAmountByName(string name)
         {
             foreach (var expenseType in _expenseTypesGetList)
             {

@@ -17,7 +17,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             _amountsGetList = amountService.GetAllItems();
             _amountManagerBudgetStatus = amountManagerBudgetStatus;
         }
-        public void BudgetStatusBalanceMethod()
+        internal void BudgetStatusBalanceMethod()
         {
             Console.WriteLine($"\r\nBudget balance. Select time interval: \r\n");
             var keyInfoStatusBalanceMonthDate = BudgetStatusDateMenu();
