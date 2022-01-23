@@ -1,6 +1,7 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.Domain.Common;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HouseholdBudgetPlanner.App.Common
 {
@@ -21,6 +22,19 @@ namespace HouseholdBudgetPlanner.App.Common
         public List<T> GetAllItems()
         {
             return Items;
+        }
+
+        public T GetItemByName(string name)
+        {
+            foreach (var entity in Items)
+            {
+                if (entity.Name == name)
+                {
+                    return entity;
+                }
+            }
+            var entityFirst = Items.First<T>();
+            return entityFirst;
         }
 
         public void RemoveItem(T item)

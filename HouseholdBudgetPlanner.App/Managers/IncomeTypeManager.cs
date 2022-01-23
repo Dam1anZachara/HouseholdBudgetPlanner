@@ -88,15 +88,8 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         internal IncomeType GetIncomeToAmountByName(string name)
         {
-            foreach (var incomeType in _incomeTypesGetList)
-            {
-                if (incomeType.Name == name)
-                {
-                    return incomeType;
-                }
-            }
-            var incomeTypeFirst = _incomeTypesGetList.First<IncomeType>();
-            return incomeTypeFirst;
+            var incomeType = _IncomeTypeService.GetItemByName(name);
+            return incomeType;
         }
     }
 }
