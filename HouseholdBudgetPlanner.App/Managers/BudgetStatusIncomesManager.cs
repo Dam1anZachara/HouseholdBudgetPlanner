@@ -124,10 +124,10 @@ namespace HouseholdBudgetPlanner.App.Managers
                                         amountSumAllIncomes += amount.Value;
                                     }
                                 }
-                                Console.WriteLine($"\r\nIncomes status since {dateEndEntered} to {dateEndEntered}: {amountSumAllIncomes}{ValueTypes.PLN}\r\n");
+                                Console.WriteLine($"\r\nIncomes status since {dateStartEntered} to {dateEndEntered}: {amountSumAllIncomes}{ValueTypes.PLN}\r\n");
                                 break;
                             case '2':
-                                Console.WriteLine($"\r\nYour incomes since {dateEndEntered} to {dateEndEntered}.\r\n");
+                                Console.WriteLine($"\r\nYour incomes since {dateStartEntered} to {dateEndEntered}.\r\n");
                                 foreach (var amount in _amountsGetList)
                                 {
                                     if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
@@ -148,7 +148,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                                             amountSumNameIncomes += amount.Value;
                                         }
                                     }
-                                    Console.WriteLine($"\r\nIncomes status with the name {name} since {dateEndEntered} to {dateEndEntered}: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
+                                    Console.WriteLine($"\r\nIncomes status with the name {name} since {dateStartEntered} to {dateEndEntered}: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
                                     break;
                                 }
                                 else

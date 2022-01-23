@@ -45,7 +45,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                             amountSumAllExpensesDate += amount.Value;
                         }
                     }
-                    Console.WriteLine($"\r\nExpenses status since {dateEndEntered} to {dateEndEntered}: {amountSumAllExpensesDate}{ValueTypes.PLN}");
+                    Console.WriteLine($"\r\nExpenses status since {dateStartEntered} to {dateEndEntered}: {amountSumAllExpensesDate}{ValueTypes.PLN}");
                     decimal amountSumAllIncomesDate = 0;
                     foreach (var amount in _amountsGetList)
                     {
@@ -54,8 +54,8 @@ namespace HouseholdBudgetPlanner.App.Managers
                             amountSumAllIncomesDate += amount.Value;
                         }
                     }
-                    Console.WriteLine($"\r\nIncomes status since {dateEndEntered} to {dateEndEntered}: {amountSumAllIncomesDate}{ValueTypes.PLN}");
-                    Console.WriteLine($"\r\nBudget balance since {dateEndEntered} to {dateEndEntered}: {amountSumAllIncomesDate - amountSumAllExpensesDate}{ValueTypes.PLN}\r\n");
+                    Console.WriteLine($"\r\nIncomes status since {dateStartEntered} to {dateEndEntered}: {amountSumAllIncomesDate}{ValueTypes.PLN}");
+                    Console.WriteLine($"\r\nBudget balance since {dateStartEntered} to {dateEndEntered}: {amountSumAllIncomesDate - amountSumAllExpensesDate}{ValueTypes.PLN}\r\n");
                     break;
                 default:
                     Console.WriteLine("\r\nAction you entered does not exist\r\n");
