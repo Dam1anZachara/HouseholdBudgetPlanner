@@ -10,8 +10,8 @@ namespace HouseholdBudgetPlanner.App.Managers
     public class AmountManager
     {
         private readonly MenuActionService _actionService;
-        private IService<Amount> _amountService;
-        private List<Amount> _amountsGetList;
+        private readonly IService<Amount> _amountService;
+        private readonly List<Amount> _amountsGetList;
        
         public AmountManager(MenuActionService actionService, IService<Amount> amountService)
         {
@@ -74,7 +74,6 @@ namespace HouseholdBudgetPlanner.App.Managers
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
                 {
                     return true;
-                    break;
                 }
             }
             return false;
@@ -86,7 +85,6 @@ namespace HouseholdBudgetPlanner.App.Managers
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
                 {
                     return true;
-                    break;
                 }
             }
             return false;

@@ -34,7 +34,6 @@ namespace HouseholdBudgetPlanner.App.Managers
                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0 && amount.Name == name)
                 {
                     return true;
-                    break;
                 }
             }
             return false;
@@ -46,7 +45,6 @@ namespace HouseholdBudgetPlanner.App.Managers
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered) && (amount.Name == name))
                 {
                     return true;
-                    break;
                 }
             }
             return false;

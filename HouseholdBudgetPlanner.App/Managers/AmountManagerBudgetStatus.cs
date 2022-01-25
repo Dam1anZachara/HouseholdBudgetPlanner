@@ -53,6 +53,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             Console.WriteLine($"\r\nExpenses status this month: {amountSumAllExpenses}{ValueTypes.PLN}");
             return amountSumAllExpenses;
         }
+
         internal decimal BudgetStatusAllIncomesMonth()
         {
             decimal amountSumAllIncomes = 0;

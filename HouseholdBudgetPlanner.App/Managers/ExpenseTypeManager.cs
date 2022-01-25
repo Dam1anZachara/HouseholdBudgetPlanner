@@ -39,7 +39,6 @@ namespace HouseholdBudgetPlanner.App.Managers
                 if (expenseType.Name == name && expenseType.Name != "General expenses")
                 {
                     return true;
-                    break;
                 }
             }
             return false;

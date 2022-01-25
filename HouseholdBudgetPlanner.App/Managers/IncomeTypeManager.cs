@@ -40,7 +40,6 @@ namespace HouseholdBudgetPlanner.App.Managers
                 if (incomeType.Name == name && incomeType.Name != "General incomes")
                 {
                     return true;
-                    break;
                 }
             }
             return false;

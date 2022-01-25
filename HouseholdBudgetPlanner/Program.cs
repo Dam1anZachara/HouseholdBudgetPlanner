@@ -17,8 +17,12 @@ namespace HouseholdBudgetPlanner
             ExpenseTypeManager expenseTypeManager = new ExpenseTypeManager(expenseTypeService);
             IncomeTypeManager incomeTypeManager = new IncomeTypeManager(incomeTypeService);
             AmountManager amountManager = new AmountManager(actionService, amountService);
-            AmountManagerAdd amountManagerAdd = new AmountManagerAdd(expenseTypeManager, incomeTypeManager, amountService);
-            AmountManagerRemove amountManagerRemove = new AmountManagerRemove(amountService, amountManager);
+            AmountManagerAddExpense amountManagerAddExpense = new AmountManagerAddExpense(expenseTypeManager);
+            AmountManagerAddIncome amountManagerAddIncome = new AmountManagerAddIncome(incomeTypeManager);
+            AmountManagerAdd amountManagerAdd = new AmountManagerAdd(amountService, amountManagerAddExpense, amountManagerAddIncome);
+            AmountManagerRemoveExpense amountManagerRemoveExpense = new AmountManagerRemoveExpense(amountService, amountManager);
+            AmountManagerRemoveIncome amountManagerRemoveIncome = new AmountManagerRemoveIncome(amountService, amountManager);
+            AmountManagerRemove amountManagerRemove = new AmountManagerRemove(amountManagerRemoveExpense, amountManagerRemoveIncome);
             AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus(actionService, amountService);
             BudgetStatusExpensesManager budgetStatusExpensesManager = new BudgetStatusExpensesManager(amountService, amountManagerBudgetStatus, amountManager);
             BudgetStatusIncomesManager budgetStatusIncomesManager = new BudgetStatusIncomesManager(amountService, amountManagerBudgetStatus, amountManager);
