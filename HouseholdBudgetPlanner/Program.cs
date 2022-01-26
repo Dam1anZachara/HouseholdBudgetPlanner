@@ -27,7 +27,9 @@ namespace HouseholdBudgetPlanner
             BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new BudgetStatusExpensesManagerMonth(amountService, amountManagerBudgetStatus);
             BudgetStatusExpensesManagerRange budgetStatusExpensesManagerRange = new BudgetStatusExpensesManagerRange(amountService, amountManagerBudgetStatus, amountManager);
             BudgetStatusExpensesManager budgetStatusExpensesManager = new BudgetStatusExpensesManager(budgetStatusExpensesManagerMonth, budgetStatusExpensesManagerRange);
-            BudgetStatusIncomesManager budgetStatusIncomesManager = new BudgetStatusIncomesManager(amountService, amountManagerBudgetStatus, amountManager);
+            BudgetStatusIncomesManagerMonth budgetStatusIncomesManagerMonth = new BudgetStatusIncomesManagerMonth(amountService, amountManagerBudgetStatus);
+            BudgetStatusIncomesManagerRange budgetStatusIncomesManagerRange = new BudgetStatusIncomesManagerRange(amountService, amountManagerBudgetStatus, amountManager);
+            BudgetStatusIncomesManager budgetStatusIncomesManager = new BudgetStatusIncomesManager(budgetStatusIncomesManagerMonth, budgetStatusIncomesManagerRange);
             BudgetStatusBalanceManager budgetStatusBalanceManager = new BudgetStatusBalanceManager(amountService, amountManagerBudgetStatus);
             BudgetStatusExecuteManager budgetStatusExecuteManager = new BudgetStatusExecuteManager(budgetStatusExpensesManager, budgetStatusIncomesManager, budgetStatusBalanceManager);
 

@@ -1,8 +1,4 @@
-﻿using HouseholdBudgetPlanner.App.Abstract;
-using HouseholdBudgetPlanner.Domain.Entity;
-using HouseholdBudgetPlanner.Helpers;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
