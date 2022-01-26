@@ -53,7 +53,6 @@ namespace HouseholdBudgetPlanner.App.Managers
             Console.WriteLine($"\r\nExpenses status this month: {amountSumAllExpenses}{ValueTypes.PLN}");
             return amountSumAllExpenses;
         }
-
         internal decimal BudgetStatusAllIncomesMonth()
         {
             decimal amountSumAllIncomes = 0;
@@ -65,6 +64,32 @@ namespace HouseholdBudgetPlanner.App.Managers
                 }
             }
             Console.WriteLine($"\r\nIncomes status this month: {amountSumAllIncomes}{ValueTypes.PLN}");
+            return amountSumAllIncomes;
+        }
+        internal decimal BudgetStatusExpensesRangeDate(DateTime dateStartEntered, DateTime dateEndEntered)
+        {
+            decimal amountSumAllExpenses = 0;
+            foreach (var amount in _amountsGetList)
+            {
+                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
+                {
+                    amountSumAllExpenses += amount.Value;
+                }
+            }
+            Console.WriteLine($"\r\nExpenses status since {dateStartEntered} to {dateEndEntered}: {amountSumAllExpenses}{ValueTypes.PLN}\r\n");
+            return amountSumAllExpenses;
+        }
+        internal decimal BudgetStatusIncomesRangeDate(DateTime dateStartEntered, DateTime dateEndEntered)
+        {
+            decimal amountSumAllIncomes = 0;
+            foreach (var amount in _amountsGetList)
+            {
+                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
+                {
+                    amountSumAllIncomes += amount.Value;
+                }
+            }
+            Console.WriteLine($"\r\nIncomes status since {dateStartEntered} to {dateEndEntered}: {amountSumAllIncomes}{ValueTypes.PLN}\r\n");
             return amountSumAllIncomes;
         }
     }

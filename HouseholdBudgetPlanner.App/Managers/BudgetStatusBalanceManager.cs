@@ -37,24 +37,8 @@ namespace HouseholdBudgetPlanner.App.Managers
                     var dateEnd = Console.ReadLine();
                     DateTime dateEndEntered;
                     dateEndEntered = DateSelect(dateEnd);
-                    decimal amountSumAllExpensesDate = 0;
-                    foreach (var amount in _amountsGetList)
-                    {
-                        if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
-                        {
-                            amountSumAllExpensesDate += amount.Value;
-                        }
-                    }
-                    Console.WriteLine($"\r\nExpenses status since {dateStartEntered} to {dateEndEntered}: {amountSumAllExpensesDate}{ValueTypes.PLN}");
-                    decimal amountSumAllIncomesDate = 0;
-                    foreach (var amount in _amountsGetList)
-                    {
-                        if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
-                        {
-                            amountSumAllIncomesDate += amount.Value;
-                        }
-                    }
-                    Console.WriteLine($"\r\nIncomes status since {dateStartEntered} to {dateEndEntered}: {amountSumAllIncomesDate}{ValueTypes.PLN}");
+                    var amountSumAllExpensesDate = _amountManagerBudgetStatus.BudgetStatusExpensesRangeDate(dateStartEntered, dateEndEntered);
+                    var amountSumAllIncomesDate = _amountManagerBudgetStatus.BudgetStatusIncomesRangeDate(dateStartEntered, dateEndEntered);
                     Console.WriteLine($"\r\nBudget balance since {dateStartEntered} to {dateEndEntered}: {amountSumAllIncomesDate - amountSumAllExpensesDate}{ValueTypes.PLN}\r\n");
                     break;
                 default:

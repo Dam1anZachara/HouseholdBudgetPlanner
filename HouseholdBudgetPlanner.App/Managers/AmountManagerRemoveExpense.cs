@@ -18,42 +18,6 @@ namespace HouseholdBudgetPlanner.App.Managers
             _amountsGetList = amountService.GetAllItems();
             _amountManager = amountManager;
         }
-
-        public void RemoveAmountExpenseSelect()
-        {
-            Console.WriteLine("\r\nYou selected from expenses!");
-            Console.WriteLine("\r\nPlease select a date range of removed expense");
-            Console.Write("\r\nWrite a starting date in format \"dd/mm/yyyy\" and press \"Enter\": ");
-            var dateStart = Console.ReadLine();
-            DateTime dateStartEntered;
-            dateStartEntered = DateSelect(dateStart);
-            Console.Write("\r\nWrite an ending date in format \"dd/mm/yyyy\" and press \"Enter\": ");
-            var dateEnd = Console.ReadLine();
-            DateTime dateEndEntered;
-            dateEndEntered = DateSelect(dateEnd);
-            bool expenseInAmountByDateExist = _amountManager.ExpenseInAmountByDateExist(dateStartEntered, dateEndEntered);
-            if (expenseInAmountByDateExist)
-            {
-                ExpenseInAmountByDateList(dateStartEntered, dateEndEntered);
-                Console.Write("\r\nWrite a name of an expense to remove and press \"Enter\": ");
-                var nameOfRemoveAmount = Console.ReadLine();
-                Console.Write($"\r\nPlease write value of an expense to remove {ValueTypes.PLN}: ");
-                decimal valueInDecimal = EnterValue();
-                bool selectedExpenseInAmountExist = SelectedExpenseInAmountExist(dateStartEntered, dateEndEntered, nameOfRemoveAmount, valueInDecimal);
-                if (selectedExpenseInAmountExist)
-                {
-                    RemoveChosenAmountExpense(dateStartEntered, dateEndEntered, nameOfRemoveAmount, valueInDecimal);
-                }
-                else
-                {
-                    Console.WriteLine($"\r\nExpense by name and value you've selected does not exist!");
-                }
-            }
-            else
-            {
-                Console.WriteLine($"\r\nExpenses in selected date range do not exist!");
-            }
-        }
         private void ExpenseInAmountByDateList(DateTime dateStartEntered, DateTime dateEndEntered)
         {
             Console.WriteLine($"\r\nYour expenses since {dateStartEntered} to {dateEndEntered}\r\n");
@@ -105,6 +69,42 @@ namespace HouseholdBudgetPlanner.App.Managers
                         Console.WriteLine("\r\nExpense has not been removed!");
                     }
                 }
+            }
+        }
+
+        internal void RemoveAmountExpenseSelect()
+        {
+            Console.WriteLine("\r\nYou selected from expenses!");
+            Console.WriteLine("\r\nPlease select a date range of removed expense");
+            Console.Write("\r\nWrite a starting date in format \"dd/mm/yyyy\" and press \"Enter\": ");
+            var dateStart = Console.ReadLine();
+            DateTime dateStartEntered;
+            dateStartEntered = DateSelect(dateStart);
+            Console.Write("\r\nWrite an ending date in format \"dd/mm/yyyy\" and press \"Enter\": ");
+            var dateEnd = Console.ReadLine();
+            DateTime dateEndEntered;
+            dateEndEntered = DateSelect(dateEnd);
+            bool expenseInAmountByDateExist = _amountManager.ExpenseInAmountByDateExist(dateStartEntered, dateEndEntered);
+            if (expenseInAmountByDateExist)
+            {
+                ExpenseInAmountByDateList(dateStartEntered, dateEndEntered);
+                Console.Write("\r\nWrite a name of an expense to remove and press \"Enter\": ");
+                var nameOfRemoveAmount = Console.ReadLine();
+                Console.Write($"\r\nPlease write value of an expense to remove {ValueTypes.PLN}: ");
+                decimal valueInDecimal = EnterValue();
+                bool selectedExpenseInAmountExist = SelectedExpenseInAmountExist(dateStartEntered, dateEndEntered, nameOfRemoveAmount, valueInDecimal);
+                if (selectedExpenseInAmountExist)
+                {
+                    RemoveChosenAmountExpense(dateStartEntered, dateEndEntered, nameOfRemoveAmount, valueInDecimal);
+                }
+                else
+                {
+                    Console.WriteLine($"\r\nExpense by name and value you've selected does not exist!");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"\r\nExpenses in selected date range do not exist!");
             }
         }
     }

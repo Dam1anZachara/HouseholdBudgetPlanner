@@ -49,6 +49,67 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
+        private void BudgetStatusAllIncomesMonthList()
+        {
+            Console.WriteLine($"\r\nYour incomes this month:\r\n");
+            foreach (var amount in _amountsGetList)
+            {
+                if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0)
+                {
+                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
+                }
+            }
+        }
+        private void BudgetStatusIncomesMonthByName(bool monthIncomeInAmountByNameExist, string name)
+        {
+            if (monthIncomeInAmountByNameExist)
+            {
+                decimal amountSumNameIncomes = 0;
+                foreach (var amount in _amountsGetList)
+                {
+                    if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0 && amount.Name == name)
+                    {
+                        amountSumNameIncomes += amount.Value;
+                    }
+                }
+                Console.WriteLine($"\r\nIncomes status this month with the name {name}: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
+            }
+            else
+            {
+                Console.WriteLine("\r\nIncome type with this name does not exist.\r\n");
+            }
+        }
+        private void BudgetStatusIncomesRangeDateList(DateTime dateStartEntered, DateTime dateEndEntered)
+        {
+            Console.WriteLine($"\r\nYour incomes since {dateStartEntered} to {dateEndEntered}.\r\n");
+            foreach (var amount in _amountsGetList)
+            {
+                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
+                {
+                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
+                }
+            }
+        }
+        private void BudgetStatusIncomesRangeDateByName(bool rangeIncomeInAmountByNameExist, DateTime dateStartEntered, DateTime dateEndEntered, string name)
+        {
+            if (rangeIncomeInAmountByNameExist)
+            {
+                decimal amountSumNameIncomes = 0;
+                foreach (var amount in _amountsGetList)
+                {
+                    if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered) && (amount.Name == name))
+                    {
+                        amountSumNameIncomes += amount.Value;
+                    }
+                }
+                Console.WriteLine($"\r\nIncomes status with the name {name} since {dateStartEntered} to {dateEndEntered}: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
+            }
+            else
+            {
+                Console.WriteLine("\r\nIncomes type with this name does not exist.\r\n");
+            }
+        }
+
         internal void BudgetStatusIncomesMethod()
         {
             Console.WriteLine($"\r\nStatus of incomes. Select the time interval: \r\n");
@@ -64,34 +125,11 @@ namespace HouseholdBudgetPlanner.App.Managers
                             _amountManagerBudgetStatus.BudgetStatusAllIncomesMonth();
                             break;
                         case '2':
-                            Console.WriteLine($"\r\nYour incomes this month:\r\n");
-                            foreach (var amount in _amountsGetList)
-                            {
-                                if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0)
-                                {
-                                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
-                                }
-                            }
+                            BudgetStatusAllIncomesMonthList();
                             Console.Write("\r\nWrite the name of the selected income type to sort by a name and press \"Enter\": ");
                             string name = Console.ReadLine();
                             bool monthIncomeInAmountByNameExist = MonthIncomeInAmountByNameExist(name);
-                            if (monthIncomeInAmountByNameExist)
-                            {
-                                decimal amountSumNameIncomes = 0;
-                                foreach (var amount in _amountsGetList)
-                                {
-                                    if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0 && amount.Name == name)
-                                    {
-                                        amountSumNameIncomes += amount.Value;
-                                    }
-                                }
-                                Console.WriteLine($"\r\nIncomes status this month with the name {name}: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("\r\nIncome type with this name does not exist.\r\n");
-                            }
+                            BudgetStatusIncomesMonthByName(monthIncomeInAmountByNameExist, name);
                             break;
                         default:
                             Console.WriteLine("\r\nAction you entered does not exist\r\n");
@@ -114,45 +152,14 @@ namespace HouseholdBudgetPlanner.App.Managers
                         switch (keyInfoStatusIncomeRangeName.KeyChar)
                         {
                             case '1':
-                                decimal amountSumAllIncomes = 0;
-                                foreach (var amount in _amountsGetList)
-                                {
-                                    if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
-                                    {
-                                        amountSumAllIncomes += amount.Value;
-                                    }
-                                }
-                                Console.WriteLine($"\r\nIncomes status since {dateStartEntered} to {dateEndEntered}: {amountSumAllIncomes}{ValueTypes.PLN}\r\n");
+                                _amountManagerBudgetStatus.BudgetStatusIncomesRangeDate(dateStartEntered, dateEndEntered);
                                 break;
                             case '2':
-                                Console.WriteLine($"\r\nYour incomes since {dateStartEntered} to {dateEndEntered}.\r\n");
-                                foreach (var amount in _amountsGetList)
-                                {
-                                    if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
-                                    {
-                                        Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
-                                    }
-                                }
+                                BudgetStatusIncomesRangeDateList(dateStartEntered, dateEndEntered);
                                 Console.Write("\r\nWrite the name of the selected income type to sort by a name and press \"Enter\": ");
                                 string name = Console.ReadLine();
                                 bool rangeIncomeInAmountByNameExist = RangeIncomeInAmountByNameExist(dateStartEntered, dateEndEntered, name);
-                                if (rangeIncomeInAmountByNameExist)
-                                {
-                                    decimal amountSumNameIncomes = 0;
-                                    foreach (var amount in _amountsGetList)
-                                    {
-                                        if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered) && (amount.Name == name))
-                                        {
-                                            amountSumNameIncomes += amount.Value;
-                                        }
-                                    }
-                                    Console.WriteLine($"\r\nIncomes status with the name {name} since {dateStartEntered} to {dateEndEntered}: {amountSumNameIncomes}{ValueTypes.PLN}\r\n");
-                                    break;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("\r\nIncomes type with this name does not exist.\r\n");
-                                }
+                                BudgetStatusIncomesRangeDateByName(rangeIncomeInAmountByNameExist, dateStartEntered, dateEndEntered, name);
                                 break;
                             default:
                                 Console.WriteLine("\r\nAction you entered does not exist\r\n");
