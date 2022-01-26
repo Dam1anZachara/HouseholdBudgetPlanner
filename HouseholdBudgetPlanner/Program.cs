@@ -30,7 +30,7 @@ namespace HouseholdBudgetPlanner
             BudgetStatusIncomesManagerMonth budgetStatusIncomesManagerMonth = new BudgetStatusIncomesManagerMonth(amountService, amountManagerBudgetStatus);
             BudgetStatusIncomesManagerRange budgetStatusIncomesManagerRange = new BudgetStatusIncomesManagerRange(amountService, amountManagerBudgetStatus, amountManager);
             BudgetStatusIncomesManager budgetStatusIncomesManager = new BudgetStatusIncomesManager(budgetStatusIncomesManagerMonth, budgetStatusIncomesManagerRange);
-            BudgetStatusBalanceManager budgetStatusBalanceManager = new BudgetStatusBalanceManager(amountService, amountManagerBudgetStatus);
+            BudgetStatusBalanceManager budgetStatusBalanceManager = new BudgetStatusBalanceManager(amountManagerBudgetStatus);
             BudgetStatusExecuteManager budgetStatusExecuteManager = new BudgetStatusExecuteManager(budgetStatusExpensesManager, budgetStatusIncomesManager, budgetStatusBalanceManager);
 
             Console.WriteLine("Welcome to the Household Budget Planner app!\r\n");

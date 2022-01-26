@@ -1,20 +1,13 @@
-﻿using HouseholdBudgetPlanner.App.Abstract;
-using HouseholdBudgetPlanner.Domain.Entity;
-using HouseholdBudgetPlanner.Helpers;
+﻿using HouseholdBudgetPlanner.Helpers;
 using System;
-using System.Collections.Generic;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
     public class BudgetStatusBalanceManager : AmountManagerBudgetStatus
     {
-        private IService<Amount> _amountService;
-        private List<Amount> _amountsGetList;
         private readonly AmountManagerBudgetStatus _amountManagerBudgetStatus;
-        public BudgetStatusBalanceManager(IService<Amount> amountService, AmountManagerBudgetStatus amountManagerBudgetStatus)
+        public BudgetStatusBalanceManager(AmountManagerBudgetStatus amountManagerBudgetStatus)
         {
-            _amountService = amountService;
-            _amountsGetList = amountService.GetAllItems();
             _amountManagerBudgetStatus = amountManagerBudgetStatus;
         }
         internal void BudgetStatusBalanceMethod()
