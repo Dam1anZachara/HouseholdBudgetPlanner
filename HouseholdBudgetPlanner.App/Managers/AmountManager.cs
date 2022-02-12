@@ -45,17 +45,17 @@ namespace HouseholdBudgetPlanner.App.Managers
             var operation = Console.ReadKey();
             return operation;
         }
-        protected DateTime DateSelect(string date)
+        public DateTime DateSelect(string date) //protected
         {
             DateTime dateEntered;
-            while (!DateTime.TryParseExact(date, "dd/mm/yyyy", null, System.Globalization.DateTimeStyles.None, out dateEntered))
+            while (!DateTime.TryParseExact(date, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out dateEntered))
             {
                 Console.WriteLine("\r\nInvalid date format, please retry in format \"dd/mm/yyyy\" and press \"Enter\": ");
                 date = Console.ReadLine();
             }
             return dateEntered;
         }
-        protected decimal EnterValue()
+        public decimal EnterValue() //protected
         {
             var valueString = Console.ReadLine();
             decimal valueInDecimal;
@@ -67,7 +67,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return Decimal.Round(decimal.Parse(String.Format("{0:0.00}", valueInDecimal)), 2);
         }
-        internal bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
+        public bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered) //internal
         {
             foreach (var amount in _amountsGetList)
             {
@@ -78,7 +78,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
-        internal bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered)
+        public bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered) //internal
         {
             foreach (var amount in _amountsGetList)
             {

@@ -1,0 +1,4 @@
+﻿Build started...
+1>------ Build started: Project: HouseholdBudgetPlanner.Tests, Configuration: Debug Any CPU ------
+1>HouseholdBudgetPlanner.Tests -> C:\Users\Damian\Source\Repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner.Tests\bin\Debug\net5.0\HouseholdBudgetPlanner.Tests.dll
+========== Build: 1 succeeded, 0 failed, 2 up-to-date, 0 skipped ==========

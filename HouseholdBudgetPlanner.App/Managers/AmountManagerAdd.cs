@@ -36,7 +36,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 Console.WriteLine("\r\nAction you entered does not exist\r\n");
             }
         }
-        private void AddAmountExpenseAprove(Amount addedAmount)
+        private void AddAmountExpenseAprove(Amount addedAmount) //private
         {
             Console.WriteLine($"\r\nDo you want to assign a new expense {addedAmount.Value}{ValueTypes.PLN} to the type: {addedAmount.Name}, with a date: {addedAmount.Date}\r\n");
             Console.WriteLine("1. Yes");
@@ -57,7 +57,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                     break;
             }
         }
-        private void AddAmountIncomeAprove(Amount addedAmount)
+        private void AddAmountIncomeAprove(Amount addedAmount) // private
         {
             Console.WriteLine($"\r\nDo you want to assign the new income {addedAmount.Value}{ValueTypes.PLN} to the type: {addedAmount.Name}, with a date: {addedAmount.Date}\r\n");
             Console.WriteLine("1. Yes");

@@ -33,7 +33,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             string name = Console.ReadLine();
             return name;
         }
-        private bool IncomeTypeExist(string name)
+        public bool IncomeTypeExist(string name) //private
         {
             foreach (var incomeType in _incomeTypesGetList)
             {
@@ -84,7 +84,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 Console.WriteLine("\r\nIncome type with this name does not exist. General incomes can not be removed!\r\n");
             }
         }
-        internal IncomeType GetIncomeToAmountByName(string name)
+        public IncomeType GetIncomeToAmountByName(string name) //internal
         {
             var incomeType = _IncomeTypeService.GetItemByName(name);
             return incomeType;

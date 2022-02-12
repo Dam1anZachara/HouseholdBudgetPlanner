@@ -32,7 +32,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             string name = Console.ReadLine();
             return name;
         }
-        private bool ExpanseTypeExist(string name)
+        public bool ExpanseTypeExist(string name)//private
         {
             foreach (var expenseType in _expenseTypesGetList)
             {
@@ -83,7 +83,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 Console.WriteLine("\r\nExpense type with this name does not exist. General expenses can not be removed!\r\n");
             }
         }
-        internal ExpenseType GetExpenseToAmountByName (string name)
+        public ExpenseType GetExpenseToAmountByName (string name) // internal
         {
             var expenseType = _expenseTypeService.GetItemByName(name);
             return expenseType;
