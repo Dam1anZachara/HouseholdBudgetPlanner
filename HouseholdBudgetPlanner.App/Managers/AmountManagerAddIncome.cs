@@ -11,7 +11,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         {
             _incomeTypeManager = incomeTypeManager;
         }
-        internal Amount AddAmountIncome()
+        public Amount AddAmountIncome() //internal
         {
             Amount addedAmount = new Amount();
             Console.WriteLine("\r\nYou selected as income!");

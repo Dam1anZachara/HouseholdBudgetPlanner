@@ -40,7 +40,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             var keyInfoStatusDate = Console.ReadKey();
             return keyInfoStatusDate;
         }
-        internal decimal BudgetStatusAllExpensesMonth()
+        public decimal BudgetStatusAllExpensesMonth() // internal
         {
             decimal amountSumAllExpenses = 0;
             foreach (var amount in _amountsGetList)
@@ -53,7 +53,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             Console.WriteLine($"\r\nExpenses status this month: {amountSumAllExpenses}{ValueTypes.PLN}");
             return amountSumAllExpenses;
         }
-        internal decimal BudgetStatusAllIncomesMonth()
+        public decimal BudgetStatusAllIncomesMonth() // internal
         {
             decimal amountSumAllIncomes = 0;
             foreach (var amount in _amountsGetList)
@@ -66,7 +66,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             Console.WriteLine($"\r\nIncomes status this month: {amountSumAllIncomes}{ValueTypes.PLN}");
             return amountSumAllIncomes;
         }
-        internal decimal BudgetStatusExpensesRangeDate(DateTime dateStartEntered, DateTime dateEndEntered)
+        public decimal BudgetStatusExpensesRangeDate(DateTime dateStartEntered, DateTime dateEndEntered) // internal
         {
             decimal amountSumAllExpenses = 0;
             foreach (var amount in _amountsGetList)
@@ -79,7 +79,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             Console.WriteLine($"\r\nExpenses status since {dateStartEntered} to {dateEndEntered}: {amountSumAllExpenses}{ValueTypes.PLN}\r\n");
             return amountSumAllExpenses;
         }
-        internal decimal BudgetStatusIncomesRangeDate(DateTime dateStartEntered, DateTime dateEndEntered)
+        public decimal BudgetStatusIncomesRangeDate(DateTime dateStartEntered, DateTime dateEndEntered) // internal
         {
             decimal amountSumAllIncomes = 0;
             foreach (var amount in _amountsGetList)

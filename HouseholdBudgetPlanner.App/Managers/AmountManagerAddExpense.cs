@@ -11,7 +11,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         {
             _expenseTypeManager = expenseTypeManager;
         }
-        internal Amount AddAmountExpense()
+        public Amount AddAmountExpense() //internal
         {
             Amount addedAmount = new Amount();
             Console.WriteLine("\r\nYou selected as expense!");
