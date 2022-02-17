@@ -17,7 +17,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             _amountsGetList = amountService.GetAllItems();
             _amountManager = amountManager;
         }
-        private void IncomeInAmountByDateList(DateTime dateStartEntered, DateTime dateEndEntered)
+        public void IncomeInAmountByDateList(DateTime dateStartEntered, DateTime dateEndEntered) //private
         {
             Console.WriteLine($"\r\nYour incomes since {dateStartEntered} to {dateEndEntered}\r\n");
             foreach (var amount in _amountsGetList)
@@ -28,7 +28,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 }
             }
         }
-        private bool SelectedIncomeInAmountExist(DateTime dateStartEntered, DateTime dateEndEntered, string nameOfRemoveAmount, decimal valueInDecimal)
+        public bool SelectedIncomeInAmountExist(DateTime dateStartEntered, DateTime dateEndEntered, string nameOfRemoveAmount, decimal valueInDecimal) //private
         {
             foreach (var amount in _amountsGetList)
             {

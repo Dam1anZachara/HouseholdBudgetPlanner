@@ -19,14 +19,14 @@ namespace HouseholdBudgetPlanner.Tests
             ExpenseTypeService expenseTypeService = new ExpenseTypeService();
             var manager = new ExpenseTypeManager(expenseTypeService);
             var expectedOutputPattern = "\r\nAll your expense types are:\r\n" + "\r\n1. General expenses\r\n";
-            var testOutput = new StringWriter();
-            Console.SetOut(testOutput); 
+            var expenseTypeViewOut = new StringWriter();
+            Console.SetOut(expenseTypeViewOut); 
             //Act
             manager.ExpenseTypeView();
-            var testOutputToString = testOutput.ToString();
+            var expenseTypeViewOutString = expenseTypeViewOut.ToString();
             //Assert
             manager.Should().NotBeNull();
-            testOutputToString.Should().Contain(expectedOutputPattern);
+            expenseTypeViewOutString.Should().Contain(expectedOutputPattern);
         }
         [Fact]
         public void AddNewExpenseTypeViewTest()
@@ -92,14 +92,14 @@ namespace HouseholdBudgetPlanner.Tests
             var mock = new Mock<IService<ExpenseType>>();
             var expectedInputPattern = "TestName";
             var manager = new ExpenseTypeManager(mock.Object);
-            var testInput = new StringReader("TestName");
-            Console.SetIn(testInput);
+            var removeExpenseTypeViewInput = new StringReader("TestName");
+            Console.SetIn(removeExpenseTypeViewInput);
             //Act
-            var returnedString = manager.RemoveExpenseTypeView();
+            var removeExpenseTypeViewInputString = manager.RemoveExpenseTypeView();
             //Assert
-            returnedString.Should().NotBeEmpty();
-            returnedString.Should().BeOfType(typeof(string));
-            returnedString.Should().BeSameAs(expectedInputPattern);
+            removeExpenseTypeViewInputString.Should().NotBeEmpty();
+            removeExpenseTypeViewInputString.Should().BeOfType(typeof(string));
+            removeExpenseTypeViewInputString.Should().BeSameAs(expectedInputPattern);
         }
         [Fact]
         public void RemoveExpanseTypeTest()

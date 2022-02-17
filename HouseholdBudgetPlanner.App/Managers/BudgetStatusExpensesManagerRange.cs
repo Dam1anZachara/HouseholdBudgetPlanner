@@ -26,7 +26,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
                 {
-                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
+                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, Value: {amount.Value}{ValueTypes.PLN}");
                 }
             }
         }

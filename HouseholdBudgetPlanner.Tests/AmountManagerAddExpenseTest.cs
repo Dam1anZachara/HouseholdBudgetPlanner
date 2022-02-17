@@ -17,8 +17,8 @@ namespace HouseholdBudgetPlanner.Tests
             var expenseTypeService = new ExpenseTypeService();
             var expenseTypeManager = new ExpenseTypeManager(expenseTypeService);
             var expenseTypeManagerAdd = new AmountManagerAddExpense(expenseTypeManager);
-            var testInputFirst = new StringReader("" + "\r\n" + "" + "\r\n" + "200");
-            Console.SetIn(testInputFirst);
+            var addAmountExpenseInput = new StringReader("" + "\r\n" + "" + "\r\n" + "200");
+            Console.SetIn(addAmountExpenseInput);
             //Act
             var addAmountExpense = expenseTypeManagerAdd.AddAmountExpense();
             //Assert

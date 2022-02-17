@@ -19,14 +19,14 @@ namespace HouseholdBudgetPlanner.Tests
             IncomeTypeService incomeTypeService = new IncomeTypeService();
             var manager = new IncomeTypeManager(incomeTypeService);
             var expectedOutputPattern = "\r\nAll your income types are:\r\n" + "\r\n1. General incomes\r\n";
-            var testOutput = new StringWriter();
-            Console.SetOut(testOutput); 
+            var incomeTypeViewOut = new StringWriter();
+            Console.SetOut(incomeTypeViewOut); 
             //Act
             manager.IncomeTypeView();
-            var testOutputToString = testOutput.ToString();
+            var incomeTypeViewOutString = incomeTypeViewOut.ToString();
             //Assert
             manager.Should().NotBeNull();
-            testOutputToString.Should().Contain(expectedOutputPattern);
+            incomeTypeViewOutString.Should().Contain(expectedOutputPattern);
         }
         [Fact]
         public void AddNewIncomeTypeViewTest()
@@ -92,8 +92,8 @@ namespace HouseholdBudgetPlanner.Tests
             var mock = new Mock<IService<IncomeType>>();
             var expectedInputPattern = "TestName";
             var manager = new IncomeTypeManager(mock.Object);
-            var testInput = new StringReader("TestName");
-            Console.SetIn(testInput);
+            var removeIncomeTypeViewInput = new StringReader("TestName");
+            Console.SetIn(removeIncomeTypeViewInput);
             //Act
             var returnedString = manager.RemoveIncomeTypeView();
             //Assert

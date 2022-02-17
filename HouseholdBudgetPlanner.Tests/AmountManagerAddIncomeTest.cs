@@ -17,8 +17,8 @@ namespace HouseholdBudgetPlanner.Tests
             var incomeTypeService = new IncomeTypeService();
             var incomeTypeManager = new IncomeTypeManager(incomeTypeService);
             var incomeTypeManagerAdd = new AmountManagerAddIncome(incomeTypeManager);
-            var testInputFirst = new StringReader("" + "\r\n" + "" + "\r\n" + "100");
-            Console.SetIn(testInputFirst);
+            var addAmountIncomeInput = new StringReader("" + "\r\n" + "" + "\r\n" + "100");
+            Console.SetIn(addAmountIncomeInput);
             //Act
             var addAmountIncome = incomeTypeManagerAdd.AddAmountIncome();
             //Assert

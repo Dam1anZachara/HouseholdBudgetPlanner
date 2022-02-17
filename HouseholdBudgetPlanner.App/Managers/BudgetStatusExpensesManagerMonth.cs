@@ -17,18 +17,18 @@ namespace HouseholdBudgetPlanner.App.Managers
             _amountsGetList = amountService.GetAllItems();
             _amountManagerBudgetStatus = amountManagerBudgetStatus;
         }
-        private void BudgetStatusAllExpensesMonthList()
+        public void BudgetStatusAllExpensesMonthList() //private
         {
             Console.WriteLine($"\r\nYour expenses this month:\r\n");
             foreach (var amount in _amountsGetList)
             {
                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0)
                 {
-                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
+                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, Value: {amount.Value}{ValueTypes.PLN}");
                 }
             }
         }
-        private bool MonthExpenseInAmountByNameExist(string name)
+        public bool MonthExpenseInAmountByNameExist(string name) //private
         {
             foreach (var amount in _amountsGetList)
             {
@@ -39,7 +39,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
-        private void BudgetStatusExpensesMonthByName(bool monthExpenseInAmountByNameExist, string name)
+        public void BudgetStatusExpensesMonthByName(bool monthExpenseInAmountByNameExist, string name) //private
         {
             if (monthExpenseInAmountByNameExist)
             {
