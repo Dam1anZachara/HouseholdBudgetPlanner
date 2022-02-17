@@ -19,7 +19,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             _amountManagerBudgetStatus = amountManagerBudgetStatus;
             _amountManager = amountManager;
         }
-        private void BudgetStatusExpensesRangeDateList(DateTime dateStartEntered, DateTime dateEndEntered)
+        public void BudgetStatusExpensesRangeDateList(DateTime dateStartEntered, DateTime dateEndEntered) // private
         {
             Console.WriteLine($"\r\nYour expenses since {dateStartEntered} to {dateEndEntered}.\r\n");
             foreach (var amount in _amountsGetList)
@@ -30,7 +30,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 }
             }
         }
-        private bool RangeExpenseInAmountByNameExist(DateTime dateStartEntered, DateTime dateEndEntered, string name)
+        public bool RangeExpenseInAmountByNameExist(DateTime dateStartEntered, DateTime dateEndEntered, string name) // private
         {
             foreach (var amount in _amountsGetList)
             {
@@ -41,7 +41,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
-        private void BudgetStatusExpensesRangeDateByName(bool rangeExpenseInAmountByNameExist, DateTime dateStartEntered, DateTime dateEndEntered, string name)
+        public void BudgetStatusExpensesRangeDateByName(bool rangeExpenseInAmountByNameExist, DateTime dateStartEntered, DateTime dateEndEntered, string name) //private
         {
             if (rangeExpenseInAmountByNameExist)
             {

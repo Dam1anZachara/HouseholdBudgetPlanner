@@ -23,7 +23,7 @@ namespace HouseholdBudgetPlanner.Tests
             amountService.AddItem(amountExpenseTwo);
             var dateStart = new DateTime(2022, 02, 1);
             var dateEnd = new DateTime(2022, 02, 4);
-            var expectedOutputPattern = $"\r\nYour expenses since {dateStart} to {dateEnd}\r\n\r\n" + "02.02.2022 00:00:00; Name: General expenses; Value: 55,00PLN\r\n" + "03.02.2022 00:00:00; Name: General expenses; Value: 45,00PLN";
+            var expectedOutputPattern = $"\r\nYour expenses since {dateStart} to {dateEnd}\r\n\r\n" + $"{amountExpenseOne.Date}; Name: {amountExpenseOne.Name}; Value: {amountExpenseOne.Value}PLN\r\n" + $"{amountExpenseTwo.Date}; Name: {amountExpenseTwo.Name}; Value: {amountExpenseTwo.Value}PLN";
             var expenseInAmountByDateListOut = new StringWriter();
             Console.SetOut(expenseInAmountByDateListOut);
             //Act
