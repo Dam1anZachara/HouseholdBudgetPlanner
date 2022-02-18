@@ -20,18 +20,18 @@ namespace HouseholdBudgetPlanner.App.Managers
             _amountManager = amountManager;
         }
 
-        private void BudgetStatusIncomesRangeDateList(DateTime dateStartEntered, DateTime dateEndEntered)
+        public void BudgetStatusIncomesRangeDateList(DateTime dateStartEntered, DateTime dateEndEntered) //private
         {
             Console.WriteLine($"\r\nYour incomes since {dateStartEntered} to {dateEndEntered}.\r\n");
             foreach (var amount in _amountsGetList)
             {
                 if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
                 {
-                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
+                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, Value: {amount.Value}{ValueTypes.PLN}");
                 }
             }
         }
-        private bool RangeIncomeInAmountByNameExist(DateTime dateStartEntered, DateTime dateEndEntered, string name)
+        public bool RangeIncomeInAmountByNameExist(DateTime dateStartEntered, DateTime dateEndEntered, string name) //private
         {
             foreach (var amount in _amountsGetList)
             {
@@ -42,7 +42,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
-        private void BudgetStatusIncomesRangeDateByName(bool rangeIncomeInAmountByNameExist, DateTime dateStartEntered, DateTime dateEndEntered, string name)
+        public void BudgetStatusIncomesRangeDateByName(bool rangeIncomeInAmountByNameExist, DateTime dateStartEntered, DateTime dateEndEntered, string name) //private
         {
             if (rangeIncomeInAmountByNameExist)
             {

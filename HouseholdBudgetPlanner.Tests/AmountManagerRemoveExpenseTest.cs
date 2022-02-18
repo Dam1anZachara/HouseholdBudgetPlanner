@@ -2,6 +2,7 @@
 using HouseholdBudgetPlanner.App;
 using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
+using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.IO;
 using Xunit;
@@ -23,7 +24,7 @@ namespace HouseholdBudgetPlanner.Tests
             amountService.AddItem(amountExpenseTwo);
             var dateStart = new DateTime(2022, 02, 1);
             var dateEnd = new DateTime(2022, 02, 4);
-            var expectedOutputPattern = $"\r\nYour expenses since {dateStart} to {dateEnd}\r\n\r\n" + $"{amountExpenseOne.Date}; Name: {amountExpenseOne.Name}; Value: {amountExpenseOne.Value}PLN\r\n" + $"{amountExpenseTwo.Date}; Name: {amountExpenseTwo.Name}; Value: {amountExpenseTwo.Value}PLN";
+            var expectedOutputPattern = $"\r\nYour expenses since {dateStart} to {dateEnd}\r\n\r\n" + $"{amountExpenseOne.Date}; Name: {amountExpenseOne.Name}; Value: {amountExpenseOne.Value}{ValueTypes.PLN}\r\n" + $"{amountExpenseTwo.Date}; Name: {amountExpenseTwo.Name}; Value: {amountExpenseTwo.Value}{ValueTypes.PLN}";
             var expenseInAmountByDateListOut = new StringWriter();
             Console.SetOut(expenseInAmountByDateListOut);
             //Act

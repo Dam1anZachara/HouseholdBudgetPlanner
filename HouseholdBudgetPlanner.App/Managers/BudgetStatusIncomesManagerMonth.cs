@@ -18,18 +18,18 @@ namespace HouseholdBudgetPlanner.App.Managers
             _amountManagerBudgetStatus = amountManagerBudgetStatus;
         }
         
-        private void BudgetStatusAllIncomesMonthList()
+        public void BudgetStatusAllIncomesMonthList() //private
         {
             Console.WriteLine($"\r\nYour incomes this month:\r\n");
             foreach (var amount in _amountsGetList)
             {
                 if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0)
                 {
-                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, value: {amount.Value}{ValueTypes.PLN}");
+                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, Value: {amount.Value}{ValueTypes.PLN}");
                 }
             }
         }
-        private bool MonthIncomeInAmountByNameExist(string name)
+        public bool MonthIncomeInAmountByNameExist(string name) //private
         {
             foreach (var amount in _amountsGetList)
             {
@@ -40,7 +40,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
-        private void BudgetStatusIncomesMonthByName(bool monthIncomeInAmountByNameExist, string name)
+        public void BudgetStatusIncomesMonthByName(bool monthIncomeInAmountByNameExist, string name) //private
         {
             if (monthIncomeInAmountByNameExist)
             {

@@ -2,6 +2,7 @@
 using HouseholdBudgetPlanner.App;
 using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
+using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.IO;
 using Xunit;
@@ -65,8 +66,8 @@ namespace HouseholdBudgetPlanner.Tests
             amountService.AddItem(amountExpenseOne);
             amountService.AddItem(amountExpenseTwo);
             var nameTrue = "General expenses";
-            var amountExpenseExist = true;
-            var expectedOutputTruePattern = "Expenses status this month with the name General expenses: 100,00PLN";
+            var amountExpenseExist = budgetStatusExpensesManagerMonth.MonthExpenseInAmountByNameExist(nameTrue);
+            var expectedOutputTruePattern = $"Expenses status this month with the name {nameTrue}: {amountExpenseOne.Value + amountExpenseTwo.Value}{ValueTypes.PLN}";
             var budgetStatusExpensesMonthByNameOut = new StringWriter();
             Console.SetOut(budgetStatusExpensesMonthByNameOut);
             //Act
@@ -86,15 +87,15 @@ namespace HouseholdBudgetPlanner.Tests
             AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
             BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new BudgetStatusExpensesManagerMonth(amountService, amountManagerBudgetStatus);
             var nameFalse = "Wrong name";
-            var amountExpenseNotExist = false;
-            var expectedOutputTruePattern = "Expense type with this name does not exist.";
+            var amountExpenseExist = budgetStatusExpensesManagerMonth.MonthExpenseInAmountByNameExist(nameFalse);
+            var expectedOutputFalsePattern = "Expense type with this name does not exist.";
             var budgetStatusExpensesMonthByNameOut = new StringWriter();
             Console.SetOut(budgetStatusExpensesMonthByNameOut);
             //Act
-            budgetStatusExpensesManagerMonth.BudgetStatusExpensesMonthByName(amountExpenseNotExist, nameFalse);
+            budgetStatusExpensesManagerMonth.BudgetStatusExpensesMonthByName(amountExpenseExist, nameFalse);
             var budgetStatusExpensesMonthByNameOutString = budgetStatusExpensesMonthByNameOut.ToString();
             //Assert
-            budgetStatusExpensesMonthByNameOutString.Should().Contain(expectedOutputTruePattern);
+            budgetStatusExpensesMonthByNameOutString.Should().Contain(expectedOutputFalsePattern);
         }
     }
 }

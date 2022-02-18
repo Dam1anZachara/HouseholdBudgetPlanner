@@ -33,7 +33,8 @@ namespace HouseholdBudgetPlanner.Tests
             string dateEnteredTestCorrect = "05/02/2022";
             string dateEnteredTestIncorrect = "wrongFormatString";
             DateTime expectedDateTime = new DateTime(2022, 02, 05);
-            var dateEnteredTestCorrected = new StringReader("05/02/2022");
+            DateTime expectedDateTimeCorrected = new DateTime(2021, 03, 10);
+            var dateEnteredTestCorrected = new StringReader("10/03/2021");
             Console.SetIn(dateEnteredTestCorrected);
             //Act
             var returnedDateCorrectString = amountManager.DateSelect(dateEnteredTestCorrect);
@@ -43,10 +44,10 @@ namespace HouseholdBudgetPlanner.Tests
             returnedDateCorrectString.Should().HaveMonth(02);
             returnedDateCorrectString.Should().HaveYear(2022);
             returnedDateCorrectString.Should().BeSameDateAs(expectedDateTime);
-            returnedDateIncorrectString.Should().HaveDay(05);
-            returnedDateIncorrectString.Should().HaveMonth(02);
-            returnedDateIncorrectString.Should().HaveYear(2022);
-            returnedDateIncorrectString.Should().BeSameDateAs(expectedDateTime);
+            returnedDateIncorrectString.Should().HaveDay(10);
+            returnedDateIncorrectString.Should().HaveMonth(03);
+            returnedDateIncorrectString.Should().HaveYear(2021);
+            returnedDateIncorrectString.Should().BeSameDateAs(expectedDateTimeCorrected);
         }
         [Fact]
         public void EnterValueTest()
