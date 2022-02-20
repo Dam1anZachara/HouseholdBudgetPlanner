@@ -22,7 +22,9 @@ namespace HouseholdBudgetPlanner.Tests
             Amount amountExpenseTwo = new Amount() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 45.00m };
             amountService.AddItem(amountExpenseOne);
             amountService.AddItem(amountExpenseTwo);
-            var expectedOutputPattern = $"\r\nYour expenses this month:\r\n\r\n" + $"{amountExpenseOne.Date}, Name: General expenses, Value: 55,00PLN\r\n" + $"{amountExpenseTwo.Date}, Name: General expenses, Value: 45,00PLN";
+            var expectedOutputPattern = $"\r\nYour expenses this month:\r\n\r\n" + 
+                $"{amountExpenseOne.Date}, Name: General expenses, Value: 55,00PLN\r\n" + 
+                $"{amountExpenseTwo.Date}, Name: General expenses, Value: 45,00PLN";
             var budgetStatusAllExpensesMonthOut = new StringWriter();
             Console.SetOut(budgetStatusAllExpensesMonthOut);
             //Act

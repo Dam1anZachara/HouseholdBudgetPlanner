@@ -41,7 +41,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             return false;
         }
-        public void RemoveChosenAmountExpense(DateTime dateStartEntered, DateTime dateEndEntered, string nameOfRemoveAmount, decimal valueInDecimal) //private
+        private void RemoveChosenAmountExpense(DateTime dateStartEntered, DateTime dateEndEntered, string nameOfRemoveAmount, decimal valueInDecimal) //private
         {
             foreach (var amount in _amountsGetList)
             {
@@ -72,7 +72,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
         }
 
-        internal void RemoveAmountExpenseSelect() //internal
+        public void RemoveAmountExpenseSelect() //internal
         {
             Console.WriteLine("\r\nYou selected from expenses!");
             Console.WriteLine("\r\nPlease select a date range of removed expense");

@@ -3,7 +3,6 @@ using HouseholdBudgetPlanner.App;
 using HouseholdBudgetPlanner.App.Concrete;
 using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
-using Moq;
 using System;
 using System.IO;
 using Xunit;
@@ -12,19 +11,6 @@ namespace HouseholdBudgetPlanner.Tests
 {
     public class AmountManagerTest
     {
-        //[Fact]
-        //public void AddAmountViewTest()
-        //{
-        //    //Arrange
-        //    MenuActionService menuActionService = new MenuActionService();
-        //    AmountService amountService = new AmountService();
-        //    var amountManager = new AmountManager(menuActionService, amountService);
-        //    var expectedInputPattern = ConsoleKey.D1;
-        //    //Act
-        //    var returnedKeyInfo = amountManager.AddAmountView();
-        //    //Assert
-        //    returnedKeyInfo.Should().BeSameAs(expectedInputPattern);
-        //}
         [Fact]
         public void DateSelectTest()
         {
@@ -54,14 +40,13 @@ namespace HouseholdBudgetPlanner.Tests
         {
             //Arrange
             var amountManager = new AmountManager();
-            decimal x = 100.49m;
             var valueEnteredTestCorrect = new StringReader("100,49");
             Console.SetIn(valueEnteredTestCorrect);
             //Act
             var returnedValueCorrectFormat = amountManager.EnterValue();
             //Assert
             returnedValueCorrectFormat.Should().BeOfType(typeof(decimal));
-            returnedValueCorrectFormat.Should().Be(x);
+            returnedValueCorrectFormat.Should().Be(100.49m);
         }
         [Fact]
         public void ExpenseInAmountByDateExistTest()
@@ -70,11 +55,7 @@ namespace HouseholdBudgetPlanner.Tests
             var menuActionService = new MenuActionService();
             var amountService = new AmountService();
             var amountManager = new AmountManager(menuActionService, amountService);
-            var amountExpense = new Amount();
-            amountExpense.Id = 2;
-            amountExpense.Name = "ExpenseTest";
-            amountExpense.Value = 19.99m;
-            amountExpense.Date = new DateTime(2022, 02, 05);
+            var amountExpense = new Amount() { Id = 2, Name = "ExpenseTest", Value = 19.99m, Date = new DateTime(2022, 02, 05) };
             amountService.AddItem(amountExpense);
             var dateStartTrue = new DateTime(2022, 02, 04);
             var dateEndTrue = new DateTime(2022, 02, 06);
@@ -88,7 +69,7 @@ namespace HouseholdBudgetPlanner.Tests
             expenseNotExist.Should().BeFalse();
             //Clean
             amountService.RemoveItem(amountExpense);
-            
+
         }
         [Fact]
         public void IncomeInAmountByDateExistTest()
@@ -97,11 +78,7 @@ namespace HouseholdBudgetPlanner.Tests
             var menuActionService = new MenuActionService();
             var amountService = new AmountService();
             var amountManager = new AmountManager(menuActionService, amountService);
-            var amountIncome = new Amount();
-            amountIncome.Id = -2;
-            amountIncome.Name = "IncomeTest";
-            amountIncome.Value = 19.99m;
-            amountIncome.Date = new DateTime(2022, 02, 05);
+            var amountIncome = new Amount() { Id = -2, Name = "IncomeTest", Value = 19.99m, Date = new DateTime(2022, 02, 05) };
             amountService.AddItem(amountIncome);
             var dateStartTrue = new DateTime(2022, 02, 04);
             var dateEndTrue = new DateTime(2022, 02, 06);

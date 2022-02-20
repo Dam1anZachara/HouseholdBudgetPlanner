@@ -24,7 +24,9 @@ namespace HouseholdBudgetPlanner.Tests
             amountService.AddItem(amountExpenseTwo);
             var dateStart = new DateTime(2022, 02, 1);
             var dateEnd = new DateTime(2022, 02, 4);
-            var expectedOutputPattern = $"\r\nYour expenses since {dateStart} to {dateEnd}\r\n\r\n" + $"{amountExpenseOne.Date}; Name: {amountExpenseOne.Name}; Value: {amountExpenseOne.Value}{ValueTypes.PLN}\r\n" + $"{amountExpenseTwo.Date}; Name: {amountExpenseTwo.Name}; Value: {amountExpenseTwo.Value}{ValueTypes.PLN}";
+            var expectedOutputPattern = $"\r\nYour expenses since {dateStart} to {dateEnd}\r\n\r\n" +
+                $"{amountExpenseOne.Date}; Name: {amountExpenseOne.Name}; Value: {amountExpenseOne.Value}{ValueTypes.PLN}\r\n" +
+                $"{amountExpenseTwo.Date}; Name: {amountExpenseTwo.Name}; Value: {amountExpenseTwo.Value}{ValueTypes.PLN}";
             var expenseInAmountByDateListOut = new StringWriter();
             Console.SetOut(expenseInAmountByDateListOut);
             //Act
@@ -67,6 +69,21 @@ namespace HouseholdBudgetPlanner.Tests
             amountExpenseFalseFour.Should().BeFalse();
             //Clean
             amountService.RemoveItem(amountExpenseOne);
+        }
+        [Fact]
+        public void RemoveAmountExpenseSelectTest_First()
+        {
+            //Arrange
+            AmountService amountService = new AmountService();
+            AmountManager amountManager = new AmountManager();
+            AmountManagerRemoveExpense amountManagerRemoveExpense = new AmountManagerRemoveExpense(amountService, amountManager);
+            Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 2), Value = 55.00m };
+            amountService.AddItem(amountExpenseOne);
+            var dateStartTrue = new DateTime(2022, 02, 1);
+            var dateEndTrue = new DateTime(2022, 02, 3);
+            var nameTrue = "General expenses";
+            //Act
+            //Assert
         }
     }
 }

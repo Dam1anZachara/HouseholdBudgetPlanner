@@ -24,7 +24,9 @@ namespace HouseholdBudgetPlanner.Tests
             amountService.AddItem(amountIncomeTwo);
             var dateStart = new DateTime(2022, 02, 1);
             var dateEnd = new DateTime(2022, 02, 4);
-            var expectedOutputPattern = $"\r\nYour incomes since {dateStart} to {dateEnd}\r\n\r\n" + $"{amountIncomeOne.Date}; Name: {amountIncomeOne.Name}; Value: {amountIncomeOne.Value}{ValueTypes.PLN}\r\n" + $"{amountIncomeTwo.Date}; Name: {amountIncomeTwo.Name}; Value: {amountIncomeTwo.Value}{ValueTypes.PLN}";
+            var expectedOutputPattern = $"\r\nYour incomes since {dateStart} to {dateEnd}\r\n\r\n" + 
+                $"{amountIncomeOne.Date}; Name: {amountIncomeOne.Name}; Value: {amountIncomeOne.Value}{ValueTypes.PLN}\r\n" + 
+                $"{amountIncomeTwo.Date}; Name: {amountIncomeTwo.Name}; Value: {amountIncomeTwo.Value}{ValueTypes.PLN}";
             var incomeInAmountByDateListOut = new StringWriter();
             Console.SetOut(incomeInAmountByDateListOut);
             //Act

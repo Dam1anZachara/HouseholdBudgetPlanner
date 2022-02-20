@@ -58,7 +58,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             }
             else
             {
-                Console.WriteLine("\r\nIncomes type with this name does not exist.\r\n");
+                Console.WriteLine("\r\nIncome type with this name does not exist.\r\n");
             }
         }
         internal void BudgetStatusIncomesMethodRange()

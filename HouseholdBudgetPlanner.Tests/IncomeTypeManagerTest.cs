@@ -114,13 +114,7 @@ namespace HouseholdBudgetPlanner.Tests
             manager.RemoveIncomeType(incomeType.Name);
             var incomeTypeAfterRemove = incomeTypeService.GetItemByName("Work");
             //Assert
-            //incomeTypeAfterAdd.Should().NotBeNull();
-            //incomeTypeAfterAdd.Should().BeOfType(typeof(ExpenseType));
-            //incomeTypeAfterAdd.Name.Should().BeOfType(typeof(string));
             incomeTypeAfterAdd.Name.Should().Contain("Work");
-            //incomeTypeAfterRemove.Should().NotBeNull();
-            //incomeTypeAfterRemove.Should().BeOfType(typeof(ExpenseType));
-            //incomeTypeAfterRemove.Should().NotBeOfType(typeof(string));
             incomeTypeAfterRemove.Name.Should().NotContain("Work");
         }
         [Fact]

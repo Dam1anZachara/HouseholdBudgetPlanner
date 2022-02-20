@@ -114,13 +114,7 @@ namespace HouseholdBudgetPlanner.Tests
             manager.RemoveExpanseType(expenseType.Name);
             var expenseTypeAfterRemove = expenseTypeService.GetItemByName("Home");
             //Assert
-            //expenseTypeAfterAdd.Should().NotBeNull();
-            //expenseTypeAfterAdd.Should().BeOfType(typeof(ExpenseType));
-            //expenseTypeAfterAdd.Name.Should().BeOfType(typeof(string));
             expenseTypeAfterAdd.Name.Should().Contain("Home");
-            //expenseTypeAfterRemove.Should().NotBeNull();
-            //expenseTypeAfterRemove.Should().BeOfType(typeof(ExpenseType));
-            //expenseTypeAfterRemove.Should().NotBeOfType(typeof(string));
             expenseTypeAfterRemove.Name.Should().NotContain("Home");
         }
         [Fact]

@@ -22,7 +22,9 @@ namespace HouseholdBudgetPlanner.Tests
             Amount amountIncomeTwo = new Amount() { Id = -1, Name = "General incomes", Date = DateTime.Now, Value = 4500.00m };
             amountService.AddItem(amountIncomeOne);
             amountService.AddItem(amountIncomeTwo);
-            var expectedOutputPattern = $"\r\nYour incomes this month:\r\n\r\n" + $"{amountIncomeOne.Date}, Name: {amountIncomeOne.Name}, Value: {amountIncomeOne.Value}{ValueTypes.PLN}\r\n" + $"{amountIncomeTwo.Date}, Name: {amountIncomeTwo.Name}, Value: {amountIncomeTwo.Value}{ValueTypes.PLN}";
+            var expectedOutputPattern = $"\r\nYour incomes this month:\r\n\r\n" + 
+                $"{amountIncomeOne.Date}, Name: {amountIncomeOne.Name}, Value: {amountIncomeOne.Value}{ValueTypes.PLN}\r\n" + 
+                $"{amountIncomeTwo.Date}, Name: {amountIncomeTwo.Name}, Value: {amountIncomeTwo.Value}{ValueTypes.PLN}";
             var budgetStatusAllIncomesMonthOut = new StringWriter();
             Console.SetOut(budgetStatusAllIncomesMonthOut);
             //Act
