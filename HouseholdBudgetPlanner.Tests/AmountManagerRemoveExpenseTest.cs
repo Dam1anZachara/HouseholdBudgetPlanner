@@ -70,20 +70,5 @@ namespace HouseholdBudgetPlanner.Tests
             //Clean
             amountService.RemoveItem(amountExpenseOne);
         }
-        [Fact]
-        public void RemoveAmountExpenseSelectTest_First()
-        {
-            //Arrange
-            AmountService amountService = new AmountService();
-            AmountManager amountManager = new AmountManager();
-            AmountManagerRemoveExpense amountManagerRemoveExpense = new AmountManagerRemoveExpense(amountService, amountManager);
-            Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 2), Value = 55.00m };
-            amountService.AddItem(amountExpenseOne);
-            var dateStartTrue = new DateTime(2022, 02, 1);
-            var dateEndTrue = new DateTime(2022, 02, 3);
-            var nameTrue = "General expenses";
-            //Act
-            //Assert
-        }
     }
 }
