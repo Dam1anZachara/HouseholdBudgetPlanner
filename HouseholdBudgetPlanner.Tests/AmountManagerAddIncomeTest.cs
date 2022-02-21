@@ -24,6 +24,7 @@ namespace HouseholdBudgetPlanner.Tests
             //Act
             var addAmountIncome = incomeTypeManagerAdd.AddAmountIncome();
             //Assert
+            addAmountIncome.Should().NotBeNull();
             addAmountIncome.Should().BeOfType(typeof(Amount));
             addAmountIncome.Name.Should().Be("Work");
             addAmountIncome.Id.Should().Be(-2);
@@ -44,6 +45,7 @@ namespace HouseholdBudgetPlanner.Tests
             //Act
             var addAmountIncome = incomeTypeManagerAdd.AddAmountIncome();
             //Assert
+            addAmountIncome.Should().NotBeNull();
             addAmountIncome.Should().BeOfType(typeof(Amount));
             addAmountIncome.Name.Should().Be("General incomes");
             addAmountIncome.Id.Should().Be(-1);
@@ -62,6 +64,7 @@ namespace HouseholdBudgetPlanner.Tests
             //Act
             var addAmountIncome = incomeTypeManagerAdd.AddAmountIncome();
             //Assert
+            addAmountIncome.Should().NotBeNull();
             addAmountIncome.Should().BeOfType(typeof(Amount));
             addAmountIncome.Name.Should().Be("General incomes");
             addAmountIncome.Id.Should().Be(-1);

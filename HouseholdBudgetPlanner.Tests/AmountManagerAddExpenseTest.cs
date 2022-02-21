@@ -24,6 +24,7 @@ namespace HouseholdBudgetPlanner.Tests
             //Act
             var addAmountExpense = expenseTypeManagerAdd.AddAmountExpense();
             //Assert
+            addAmountExpense.Should().NotBeNull();
             addAmountExpense.Should().BeOfType(typeof(Amount));
             addAmountExpense.Name.Should().Be("Home");
             addAmountExpense.Id.Should().Be(2);
@@ -44,6 +45,7 @@ namespace HouseholdBudgetPlanner.Tests
             //Act
             var addAmountExpense = expenseTypeManagerAdd.AddAmountExpense();
             //Assert
+            addAmountExpense.Should().NotBeNull();
             addAmountExpense.Should().BeOfType(typeof(Amount));
             addAmountExpense.Name.Should().Be("General expenses");
             addAmountExpense.Id.Should().Be(1);
@@ -62,6 +64,7 @@ namespace HouseholdBudgetPlanner.Tests
             //Act
             var addAmountExpense = expenseTypeManagerAdd.AddAmountExpense();
             //Assert
+            addAmountExpense.Should().NotBeNull();
             addAmountExpense.Should().BeOfType(typeof(Amount));
             addAmountExpense.Name.Should().Be("General expenses");
             addAmountExpense.Id.Should().Be(1);
