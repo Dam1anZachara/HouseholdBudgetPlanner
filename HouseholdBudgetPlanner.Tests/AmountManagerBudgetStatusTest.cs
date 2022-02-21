@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using HouseholdBudgetPlanner.App;
+using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Concrete;
 using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
@@ -15,7 +16,7 @@ namespace HouseholdBudgetPlanner.Tests
         {
             //Arrange
             MenuActionService menuActionService = new MenuActionService();
-            AmountService amountService = new AmountService();
+            IService<Amount> amountService = new AmountService();
             var amountManagerBudgetStatus = new AmountManagerBudgetStatus(menuActionService, amountService);
             Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 55.00m };
             Amount amountExpenseTwo = new Amount() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 45.00m };
@@ -39,7 +40,7 @@ namespace HouseholdBudgetPlanner.Tests
         {
             //Arrange
             MenuActionService menuActionService = new MenuActionService();
-            AmountService amountService = new AmountService();
+            IService<Amount> amountService = new AmountService();
             var amountManagerBudgetStatus = new AmountManagerBudgetStatus(menuActionService, amountService);
             Amount amountIncomeOne = new Amount() { Id = -1, Name = "General incomes", Date = DateTime.Now, Value = 95.00m };
             Amount amountIncomeTwo = new Amount() { Id = -1, Name = "General incomes", Date = DateTime.Now, Value = 55.00m };
@@ -63,7 +64,7 @@ namespace HouseholdBudgetPlanner.Tests
         {
             //Arrange
             MenuActionService menuActionService = new MenuActionService();
-            AmountService amountService = new AmountService();
+            IService<Amount> amountService = new AmountService();
             var amountManagerBudgetStatus = new AmountManagerBudgetStatus(menuActionService, amountService);
             Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 10), Value = 55.00m };
             Amount amountExpenseTwo = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 9), Value = 45.00m };
@@ -89,7 +90,7 @@ namespace HouseholdBudgetPlanner.Tests
         {
             //Arrange
             MenuActionService menuActionService = new MenuActionService();
-            AmountService amountService = new AmountService();
+            IService<Amount> amountService = new AmountService();
             var amountManagerBudgetStatus = new AmountManagerBudgetStatus(menuActionService, amountService);
             Amount amountIncomeOne = new Amount() { Id = -1, Name = "General incomes", Date = new DateTime(2022, 02, 10), Value = 95.00m };
             Amount amountIncomeTwo = new Amount() { Id = -1, Name = "General incomes", Date = new DateTime(2022, 02, 9), Value = 55.00m };

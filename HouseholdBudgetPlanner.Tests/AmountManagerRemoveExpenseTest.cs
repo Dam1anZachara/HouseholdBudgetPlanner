@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using HouseholdBudgetPlanner.App;
+using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
@@ -15,7 +16,7 @@ namespace HouseholdBudgetPlanner.Tests
         public void ExpenseInAmountByDateListTest()
         {
             //Arrange
-            AmountService amountService = new AmountService();
+            IService<Amount> amountService = new AmountService();
             AmountManager amountManager = new AmountManager();
             AmountManagerRemoveExpense amountManagerRemoveExpense = new AmountManagerRemoveExpense(amountService, amountManager);
             Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 2), Value = 55.00m };
@@ -42,7 +43,7 @@ namespace HouseholdBudgetPlanner.Tests
         public void SelectedExpenseInAmountExistTest()
         {
             //Arrange
-            AmountService amountService = new AmountService();
+            IService<Amount> amountService = new AmountService();
             AmountManager amountManager = new AmountManager();
             AmountManagerRemoveExpense amountManagerRemoveExpense = new AmountManagerRemoveExpense(amountService, amountManager);
             Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 2), Value = 55.00m };

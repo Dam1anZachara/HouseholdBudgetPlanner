@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Concrete;
 using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
@@ -14,7 +15,7 @@ namespace HouseholdBudgetPlanner.Tests
         public void AddAmountExpenseTest_First()
         {
             //Arrange
-            var expenseTypeService = new ExpenseTypeService();
+            IService<ExpenseType> expenseTypeService = new ExpenseTypeService();
             ExpenseType expenseType = new ExpenseType() { Id = 2, Name = "Home" };
             expenseTypeService.AddItem(expenseType);
             var expenseTypeManager = new ExpenseTypeManager(expenseTypeService);
@@ -37,7 +38,7 @@ namespace HouseholdBudgetPlanner.Tests
         public void AddAmountExpenseTest_Second()
         {
             //Arrange
-            var expenseTypeService = new ExpenseTypeService();
+            IService<ExpenseType> expenseTypeService = new ExpenseTypeService();
             var expenseTypeManager = new ExpenseTypeManager(expenseTypeService);
             var expenseTypeManagerAdd = new AmountManagerAddExpense(expenseTypeManager);
             var addAmountExpenseInputSecond = new StringReader("" + "\r\n" + "18/02/2022" + "\r\n" + "299,245");
@@ -56,7 +57,7 @@ namespace HouseholdBudgetPlanner.Tests
         public void AddAmountExpenseTest_Third()
         {
             //Arrange
-            var expenseTypeService = new ExpenseTypeService();
+            IService<ExpenseType> expenseTypeService = new ExpenseTypeService();
             var expenseTypeManager = new ExpenseTypeManager(expenseTypeService);
             var expenseTypeManagerAdd = new AmountManagerAddExpense(expenseTypeManager);
             var addAmountExpenseInputThird = new StringReader("WrongName" + "\r\n" + "06/02/2022" + "\r\n" + "50,00");

@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Concrete;
 using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
@@ -14,7 +15,7 @@ namespace HouseholdBudgetPlanner.Tests
         public void AddAmountIncomeTest_First()
         {
             //Arrange
-            var incomeTypeService = new IncomeTypeService();
+            IService<IncomeType> incomeTypeService = new IncomeTypeService();
             IncomeType incomeType = new IncomeType() { Id = -2, Name = "Work" };
             incomeTypeService.AddItem(incomeType);
             var incomeTypeManager = new IncomeTypeManager(incomeTypeService);
@@ -37,7 +38,7 @@ namespace HouseholdBudgetPlanner.Tests
         public void AddAmountIncomeTest_Second()
         {
             //Arrange
-            var incomeTypeService = new IncomeTypeService();
+            IService<IncomeType> incomeTypeService = new IncomeTypeService();
             var incomeTypeManager = new IncomeTypeManager(incomeTypeService);
             var incomeTypeManagerAdd = new AmountManagerAddIncome(incomeTypeManager);
             var addAmountIncomeInputSecond = new StringReader("" + "\r\n" + "18/02/2022" + "\r\n" + "3299,249");
@@ -56,7 +57,7 @@ namespace HouseholdBudgetPlanner.Tests
         public void AddAmountIncomeTest_Third()
         {
             //Arrange
-            var incomeTypeService = new IncomeTypeService();
+            IService<IncomeType> incomeTypeService = new IncomeTypeService();
             var incomeTypeManager = new IncomeTypeManager(incomeTypeService);
             var incomeTypeManagerAdd = new AmountManagerAddIncome(incomeTypeManager);
             var addAmountIncomeInputThird = new StringReader("WrongName" + "\r\n" + "06/02/2022" + "\r\n" + "250,00");
