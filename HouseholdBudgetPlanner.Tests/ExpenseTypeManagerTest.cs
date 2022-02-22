@@ -16,16 +16,15 @@ namespace HouseholdBudgetPlanner.Tests
         public void ExpenseTypeViewTest()
         {
             //Arrange
-            ExpenseTypeService expenseTypeService = new ExpenseTypeService();
-            var manager = new ExpenseTypeManager(expenseTypeService);
+            IService<ExpenseType> expenseTypeService = new ExpenseTypeService();
+            ExpenseTypeManager expenseTypeManager = new(expenseTypeService);
             var expectedOutputPattern = "\r\nAll your expense types are:\r\n" + "\r\n1. General expenses\r\n";
             var expenseTypeViewOut = new StringWriter();
             Console.SetOut(expenseTypeViewOut); 
             //Act
-            manager.ExpenseTypeView();
+            expenseTypeManager.ExpenseTypeView();
             var expenseTypeViewOutString = expenseTypeViewOut.ToString();
             //Assert
-            manager.Should().NotBeNull();
             expenseTypeViewOutString.Should().Contain(expectedOutputPattern);
         }
         [Fact]
@@ -34,11 +33,11 @@ namespace HouseholdBudgetPlanner.Tests
             //Arrange
             var mock = new Mock<IService<ExpenseType>>();
             var expectedInputPattern = "TestName";
-            var manager = new ExpenseTypeManager(mock.Object);
-            var testInput = new StringReader("TestName");
-            Console.SetIn(testInput);
+            ExpenseTypeManager expenseTypeManager = new(mock.Object);
+            var addNewExpenseTypeVievInput = new StringReader("TestName");
+            Console.SetIn(addNewExpenseTypeVievInput);
             //Act
-            var returnedString = manager.AddNewExpenseTypeView();
+            var returnedString = expenseTypeManager.AddNewExpenseTypeView();
             //Assert
             returnedString.Should().BeOfType(typeof(string));
             returnedString.Should().NotBeEmpty();
@@ -48,40 +47,38 @@ namespace HouseholdBudgetPlanner.Tests
         public void ExpenseTypeExistTest()
         {
             //Arrange
-            ExpenseTypeService expenseTypeService = new ExpenseTypeService();
-            var manager = new ExpenseTypeManager(expenseTypeService);
-            ExpenseType expenseType = new ExpenseType() { Id = 2, Name = "Home" };
+            IService<ExpenseType> expenseTypeService = new ExpenseTypeService();
+            ExpenseTypeManager expenseTypeManager = new(expenseTypeService);
+            ExpenseType expenseType = new() { Id = 2, Name = "Home" };
             expenseTypeService.AddItem(expenseType);
             //Act
-            var returnedExpenseTypeTrue = manager.ExpanseTypeExist("Home");
-            var returnedExpenseTypeFalseOne = manager.ExpanseTypeExist("General expenses");
-            var returnedExpenseTypeFalseTwo = manager.ExpanseTypeExist("Food");
-            var returnedExpenseTypeFaleThree = manager.ExpanseTypeExist("Ho me");
+            var returnedExpenseTypeTrue = expenseTypeManager.ExpanseTypeExist("Home");
+            var returnedExpenseTypeFalseOne = expenseTypeManager.ExpanseTypeExist("General expenses");
+            var returnedExpenseTypeFalseTwo = expenseTypeManager.ExpanseTypeExist("Food");
+            var returnedExpenseTypeFaleThree = expenseTypeManager.ExpanseTypeExist("Ho me");
             //Assert
-            expenseTypeService.Should().NotBeNull();
-            manager.Should().NotBeNull();
             returnedExpenseTypeTrue.Should().BeTrue();
             returnedExpenseTypeFalseOne.Should().BeFalse();
             returnedExpenseTypeFalseTwo.Should().BeFalse();
             returnedExpenseTypeFaleThree.Should().BeFalse();
-            //clean
+            //Clean
             expenseTypeService.RemoveItem(expenseType);
         }
         [Fact]
         public void AddNewExpanseTypeTest()
         {
             //Arrange
-            ExpenseTypeService expenseTypeService = new ExpenseTypeService();
-            var manager = new ExpenseTypeManager(expenseTypeService);
+            IService<ExpenseType> expenseTypeService = new ExpenseTypeService();
+            ExpenseTypeManager expenseTypeManager = new(expenseTypeService);
             //Act
-            manager.AddNewExpanseType("Home");
+            expenseTypeManager.AddNewExpanseType("Home");
             var listAfterAdd = expenseTypeService.GetAllItems();
             //Assert
             listAfterAdd.Should().NotBeNull();
             listAfterAdd.Should().NotBeEmpty();
             listAfterAdd.Should().AllBeOfType(typeof(ExpenseType));
             listAfterAdd.Should().HaveCount(2);
-            //clean
+            //Clean
             var expenseTypeToClean = expenseTypeService.GetItemByName("Home");
             expenseTypeService.RemoveItem(expenseTypeToClean);
         }
@@ -91,11 +88,11 @@ namespace HouseholdBudgetPlanner.Tests
             //Arrange
             var mock = new Mock<IService<ExpenseType>>();
             var expectedInputPattern = "TestName";
-            var manager = new ExpenseTypeManager(mock.Object);
+            ExpenseTypeManager expenseTypeManager = new(mock.Object);
             var removeExpenseTypeViewInput = new StringReader("TestName");
             Console.SetIn(removeExpenseTypeViewInput);
             //Act
-            var removeExpenseTypeViewInputString = manager.RemoveExpenseTypeView();
+            var removeExpenseTypeViewInputString = expenseTypeManager.RemoveExpenseTypeView();
             //Assert
             removeExpenseTypeViewInputString.Should().NotBeEmpty();
             removeExpenseTypeViewInputString.Should().BeOfType(typeof(string));
@@ -105,13 +102,13 @@ namespace HouseholdBudgetPlanner.Tests
         public void RemoveExpanseTypeTest()
         {
             //Arrange
-            ExpenseTypeService expenseTypeService = new ExpenseTypeService();
-            var manager = new ExpenseTypeManager(expenseTypeService);
-            ExpenseType expenseType = new ExpenseType() { Id = 2, Name = "Home" };
+            IService<ExpenseType> expenseTypeService = new ExpenseTypeService();
+            ExpenseTypeManager expenseTypeManager = new(expenseTypeService);
+            ExpenseType expenseType = new() { Id = 2, Name = "Home" };
             expenseTypeService.AddItem(expenseType);
             var expenseTypeAfterAdd = expenseTypeService.GetItemByName("Home");
             //Act
-            manager.RemoveExpanseType(expenseType.Name);
+            expenseTypeManager.RemoveExpanseType(expenseType.Name);
             var expenseTypeAfterRemove = expenseTypeService.GetItemByName("Home");
             //Assert
             expenseTypeAfterAdd.Name.Should().Contain("Home");
@@ -121,14 +118,12 @@ namespace HouseholdBudgetPlanner.Tests
         public void GetExpenseToAmountByNameTest()
         {
             //Arrange
-            ExpenseType expenseType = new ExpenseType();
-            expenseType.Id = 2;
-            expenseType.Name = "Home";
+            ExpenseType expenseType = new() { Id = 2, Name = "Home" };
             var mock = new Mock<IService<ExpenseType>>();
             mock.Setup(s => s.GetItemByName("Home")).Returns(expenseType);
-            var manager = new ExpenseTypeManager(mock.Object);
+            ExpenseTypeManager expenseTypeManager = new(mock.Object);
             //Act
-            var returnedExpenseType = manager.GetExpenseToAmountByName(expenseType.Name);
+            var returnedExpenseType = expenseTypeManager.GetExpenseToAmountByName(expenseType.Name);
             //Assert
             returnedExpenseType.Should().BeOfType(typeof(ExpenseType));
             returnedExpenseType.Should().NotBeNull();

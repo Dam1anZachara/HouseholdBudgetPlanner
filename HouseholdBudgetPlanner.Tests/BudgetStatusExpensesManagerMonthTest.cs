@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using HouseholdBudgetPlanner.App;
+using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
@@ -15,17 +16,17 @@ namespace HouseholdBudgetPlanner.Tests
         public void BudgetStatusAllExpensesMonthListTest()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
             BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new BudgetStatusExpensesManagerMonth(amountService, amountManagerBudgetStatus);
-            Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 55.00m };
-            Amount amountExpenseTwo = new Amount() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 45.00m };
+            Amount amountExpenseOne = new() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 55.00m };
+            Amount amountExpenseTwo = new() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 45.00m };
             amountService.AddItem(amountExpenseOne);
             amountService.AddItem(amountExpenseTwo);
             var expectedOutputPattern = $"\r\nYour expenses this month:\r\n\r\n" + 
                 $"{amountExpenseOne.Date}, Name: General expenses, Value: 55,00PLN\r\n" + 
                 $"{amountExpenseTwo.Date}, Name: General expenses, Value: 45,00PLN";
-            var budgetStatusAllExpensesMonthOut = new StringWriter();
+            StringWriter budgetStatusAllExpensesMonthOut = new();
             Console.SetOut(budgetStatusAllExpensesMonthOut);
             //Act
             budgetStatusExpensesManagerMonth.BudgetStatusAllExpensesMonthList();
@@ -40,10 +41,10 @@ namespace HouseholdBudgetPlanner.Tests
         public void MonthExpenseInAmountByNameExistTest()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
-            BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new BudgetStatusExpensesManagerMonth(amountService, amountManagerBudgetStatus);
-            Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 2), Value = 55.00m };
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
+            BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new(amountService, amountManagerBudgetStatus);
+            Amount amountExpenseOne = new() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 2), Value = 55.00m };
             amountService.AddItem(amountExpenseOne);
             var nameTrue = "General expenses";
             var nameFalse = "Wrong name";
@@ -60,17 +61,17 @@ namespace HouseholdBudgetPlanner.Tests
         public void BudgetStatusExpensesMonthByNameTest_True()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
-            BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new BudgetStatusExpensesManagerMonth(amountService, amountManagerBudgetStatus);
-            Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 55.00m };
-            Amount amountExpenseTwo = new Amount() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 45.00m };
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
+            BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new(amountService, amountManagerBudgetStatus);
+            Amount amountExpenseOne = new() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 55.00m };
+            Amount amountExpenseTwo = new() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 45.00m };
             amountService.AddItem(amountExpenseOne);
             amountService.AddItem(amountExpenseTwo);
             var nameTrue = "General expenses";
             var amountExpenseExist = budgetStatusExpensesManagerMonth.MonthExpenseInAmountByNameExist(nameTrue);
             var expectedOutputTruePattern = $"Expenses status this month with the name {nameTrue}: {amountExpenseOne.Value + amountExpenseTwo.Value}{ValueTypes.PLN}";
-            var budgetStatusExpensesMonthByNameOut = new StringWriter();
+            StringWriter budgetStatusExpensesMonthByNameOut = new();
             Console.SetOut(budgetStatusExpensesMonthByNameOut);
             //Act
             budgetStatusExpensesManagerMonth.BudgetStatusExpensesMonthByName(amountExpenseExist, nameTrue);
@@ -85,13 +86,13 @@ namespace HouseholdBudgetPlanner.Tests
         public void BudgetStatusExpensesMonthByNameTest_False()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
-            BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new BudgetStatusExpensesManagerMonth(amountService, amountManagerBudgetStatus);
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
+            BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new(amountService, amountManagerBudgetStatus);
             var nameFalse = "Wrong name";
             var amountExpenseExist = budgetStatusExpensesManagerMonth.MonthExpenseInAmountByNameExist(nameFalse);
             var expectedOutputFalsePattern = "Expense type with this name does not exist.";
-            var budgetStatusExpensesMonthByNameOut = new StringWriter();
+            StringWriter budgetStatusExpensesMonthByNameOut = new();
             Console.SetOut(budgetStatusExpensesMonthByNameOut);
             //Act
             budgetStatusExpensesManagerMonth.BudgetStatusExpensesMonthByName(amountExpenseExist, nameFalse);

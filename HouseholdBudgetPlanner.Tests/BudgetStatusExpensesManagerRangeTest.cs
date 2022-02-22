@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using HouseholdBudgetPlanner.App;
+using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
@@ -15,12 +16,12 @@ namespace HouseholdBudgetPlanner.Tests
         public void BudgetStatusExpensesRangeDateListTest()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
-            AmountManager amountManager = new AmountManager();
-            BudgetStatusExpensesManagerRange budgetStatusExpensesManagerRange = new BudgetStatusExpensesManagerRange(amountService, amountManagerBudgetStatus, amountManager);
-            Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2021, 02, 01), Value = 55.00m };
-            Amount amountExpenseTwo = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 01), Value = 45.00m };
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
+            AmountManager amountManager = new();
+            BudgetStatusExpensesManagerRange budgetStatusExpensesManagerRange = new(amountService, amountManagerBudgetStatus, amountManager);
+            Amount amountExpenseOne = new() { Id = 1, Name = "General expenses", Date = new DateTime(2021, 02, 01), Value = 55.00m };
+            Amount amountExpenseTwo = new() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 01), Value = 45.00m };
             amountService.AddItem(amountExpenseOne);
             amountService.AddItem(amountExpenseTwo);
             var dateStart = new DateTime(2021, 01, 01);
@@ -43,12 +44,12 @@ namespace HouseholdBudgetPlanner.Tests
         public void RangeExpenseInAmountByNameExistTest()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
-            AmountManager amountManager = new AmountManager();
-            BudgetStatusExpensesManagerRange budgetStatusExpensesManagerRange = new BudgetStatusExpensesManagerRange(amountService, amountManagerBudgetStatus, amountManager);
-            Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2021, 02, 01), Value = 55.00m };
-            Amount amountExpenseTwo = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 01), Value = 45.00m };
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
+            AmountManager amountManager = new();
+            BudgetStatusExpensesManagerRange budgetStatusExpensesManagerRange = new(amountService, amountManagerBudgetStatus, amountManager);
+            Amount amountExpenseOne = new() { Id = 1, Name = "General expenses", Date = new DateTime(2021, 02, 01), Value = 55.00m };
+            Amount amountExpenseTwo = new() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 01), Value = 45.00m };
             amountService.AddItem(amountExpenseOne);
             amountService.AddItem(amountExpenseTwo);
             var dateStartTrue = new DateTime(2021, 01, 01);
@@ -65,17 +66,20 @@ namespace HouseholdBudgetPlanner.Tests
             rangeExpenseInAmountByNameExistTrue.Should().BeTrue();
             rangeExpenseInAmountByNameExistFalseOne.Should().BeFalse();
             rangeExpenseInAmountByNameExistFalseTwo.Should().BeFalse();
+            //Clean
+            amountService.RemoveItem(amountExpenseOne);
+            amountService.RemoveItem(amountExpenseTwo);
         }
         [Fact]
         public void BudgetStatusExpensesRangeDateByNameTest_True()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
-            AmountManager amountManager = new AmountManager();
-            BudgetStatusExpensesManagerRange budgetStatusExpensesManagerRange = new BudgetStatusExpensesManagerRange(amountService, amountManagerBudgetStatus, amountManager);
-            Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2021, 02, 01), Value = 55.00m };
-            Amount amountExpenseTwo = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 01), Value = 45.00m };
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
+            AmountManager amountManager = new();
+            BudgetStatusExpensesManagerRange budgetStatusExpensesManagerRange = new(amountService, amountManagerBudgetStatus, amountManager);
+            Amount amountExpenseOne = new() { Id = 1, Name = "General expenses", Date = new DateTime(2021, 02, 01), Value = 55.00m };
+            Amount amountExpenseTwo = new() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 01), Value = 45.00m };
             amountService.AddItem(amountExpenseOne);
             amountService.AddItem(amountExpenseTwo);
             var dateStartTrue = new DateTime(2021, 01, 01);
@@ -98,10 +102,10 @@ namespace HouseholdBudgetPlanner.Tests
         public void BudgetStatusExpensesRangeDateByNameTest_False()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
-            AmountManager amountManager = new AmountManager();
-            BudgetStatusExpensesManagerRange budgetStatusExpensesManagerRange = new BudgetStatusExpensesManagerRange(amountService, amountManagerBudgetStatus, amountManager);
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
+            AmountManager amountManager = new();
+            BudgetStatusExpensesManagerRange budgetStatusExpensesManagerRange = new(amountService, amountManagerBudgetStatus, amountManager);
             var dateStartFalse = new DateTime(2021, 01, 01);
             var dateEndFalse = new DateTime(2022, 02, 10);
             var nameFalse = "Wrong name";
@@ -114,7 +118,6 @@ namespace HouseholdBudgetPlanner.Tests
             var budgetStatusExpensesRangeDateByNameOutString = budgetStatusExpensesRangeDateByNameOut.ToString();
             //Assert
             budgetStatusExpensesRangeDateByNameOutString.Should().Contain(expectedOutputFalsePattern);
-            //Clean
         }
     }
 }

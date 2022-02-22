@@ -17,18 +17,18 @@ namespace HouseholdBudgetPlanner.Tests
         {
             //Arrange
             IService<Amount> amountService = new AmountService();
-            AmountManager amountManager = new AmountManager();
-            AmountManagerRemoveExpense amountManagerRemoveExpense = new AmountManagerRemoveExpense(amountService, amountManager);
-            Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 2), Value = 55.00m };
-            Amount amountExpenseTwo = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 3), Value = 45.00m };
+            AmountManager amountManager = new();
+            AmountManagerRemoveExpense amountManagerRemoveExpense = new(amountService, amountManager);
+            Amount amountExpenseOne = new() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 2), Value = 55.00m };
+            Amount amountExpenseTwo = new() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 3), Value = 45.00m };
             amountService.AddItem(amountExpenseOne);
             amountService.AddItem(amountExpenseTwo);
-            var dateStart = new DateTime(2022, 02, 1);
-            var dateEnd = new DateTime(2022, 02, 4);
+            DateTime dateStart = new(2022, 02, 1);
+            DateTime dateEnd = new(2022, 02, 4);
             var expectedOutputPattern = $"\r\nYour expenses since {dateStart} to {dateEnd}\r\n\r\n" +
                 $"{amountExpenseOne.Date}; Name: {amountExpenseOne.Name}; Value: {amountExpenseOne.Value}{ValueTypes.PLN}\r\n" +
                 $"{amountExpenseTwo.Date}; Name: {amountExpenseTwo.Name}; Value: {amountExpenseTwo.Value}{ValueTypes.PLN}";
-            var expenseInAmountByDateListOut = new StringWriter();
+            StringWriter expenseInAmountByDateListOut = new();
             Console.SetOut(expenseInAmountByDateListOut);
             //Act
             amountManagerRemoveExpense.ExpenseInAmountByDateList(dateStart, dateEnd);
@@ -44,16 +44,16 @@ namespace HouseholdBudgetPlanner.Tests
         {
             //Arrange
             IService<Amount> amountService = new AmountService();
-            AmountManager amountManager = new AmountManager();
-            AmountManagerRemoveExpense amountManagerRemoveExpense = new AmountManagerRemoveExpense(amountService, amountManager);
-            Amount amountExpenseOne = new Amount() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 2), Value = 55.00m };
+            AmountManager amountManager = new();
+            AmountManagerRemoveExpense amountManagerRemoveExpense = new(amountService, amountManager);
+            Amount amountExpenseOne = new() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 2), Value = 55.00m };
             amountService.AddItem(amountExpenseOne);
-            var dateStartTrue = new DateTime(2022, 02, 1);
-            var dateEndTrue = new DateTime(2022, 02, 3);
+            DateTime dateStartTrue = new(2022, 02, 1);
+            DateTime dateEndTrue = new(2022, 02, 3);
             var nameTrue = "General expenses";
             var valueTrue = 55.00m;
-            var dateStartFalse = new DateTime(2021, 02, 01);
-            var dateEndFalse = new DateTime(2021, 02, 03);
+            DateTime dateStartFalse = new(2021, 02, 01);
+            DateTime dateEndFalse = new(2021, 02, 03);
             var nameFalse = "Wrong name";
             var valueFalse = 49.99m;
             //Act

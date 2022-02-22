@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using HouseholdBudgetPlanner.App;
+using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
@@ -15,11 +16,11 @@ namespace HouseholdBudgetPlanner.Tests
         public void BudgetStatusAllIncomesMonthListTest()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
-            BudgetStatusIncomesManagerMonth budgetStatusIncomesManagerMonth = new BudgetStatusIncomesManagerMonth(amountService, amountManagerBudgetStatus);
-            Amount amountIncomeOne = new Amount() { Id = -1, Name = "General incomes", Date = DateTime.Now, Value = 5500.00m };
-            Amount amountIncomeTwo = new Amount() { Id = -1, Name = "General incomes", Date = DateTime.Now, Value = 4500.00m };
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
+            BudgetStatusIncomesManagerMonth budgetStatusIncomesManagerMonth = new(amountService, amountManagerBudgetStatus);
+            Amount amountIncomeOne = new() { Id = -1, Name = "General incomes", Date = DateTime.Now, Value = 5500.00m };
+            Amount amountIncomeTwo = new() { Id = -1, Name = "General incomes", Date = DateTime.Now, Value = 4500.00m };
             amountService.AddItem(amountIncomeOne);
             amountService.AddItem(amountIncomeTwo);
             var expectedOutputPattern = $"\r\nYour incomes this month:\r\n\r\n" + 
@@ -40,10 +41,10 @@ namespace HouseholdBudgetPlanner.Tests
         public void MonthIncomeInAmountByNameExistTest()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
-            BudgetStatusIncomesManagerMonth budgetStatusIncomesManagerMonth = new BudgetStatusIncomesManagerMonth(amountService, amountManagerBudgetStatus);
-            Amount amountIncomeOne = new Amount() { Id = -1, Name = "General incomes", Date = new DateTime(2022, 02, 2), Value = 4500.00m };
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
+            BudgetStatusIncomesManagerMonth budgetStatusIncomesManagerMonth = new(amountService, amountManagerBudgetStatus);
+            Amount amountIncomeOne = new() { Id = -1, Name = "General incomes", Date = new DateTime(2022, 02, 2), Value = 4500.00m };
             amountService.AddItem(amountIncomeOne);
             var nameTrue = "General incomes";
             var nameFalse = "Wrong name";
@@ -60,11 +61,11 @@ namespace HouseholdBudgetPlanner.Tests
         public void BudgetStatusIncomesMonthByNameTest_True()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
-            BudgetStatusIncomesManagerMonth budgetStatusIncomesManagerMonth = new BudgetStatusIncomesManagerMonth(amountService, amountManagerBudgetStatus);
-            Amount amountIncomeOne = new Amount() { Id = -1, Name = "General incomes", Date = DateTime.Now, Value = 5500.00m };
-            Amount amountIncomeTwo = new Amount() { Id = -1, Name = "General incomes", Date = DateTime.Now, Value = 4500.00m };
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
+            BudgetStatusIncomesManagerMonth budgetStatusIncomesManagerMonth = new(amountService, amountManagerBudgetStatus);
+            Amount amountIncomeOne = new() { Id = -1, Name = "General incomes", Date = DateTime.Now, Value = 5500.00m };
+            Amount amountIncomeTwo = new() { Id = -1, Name = "General incomes", Date = DateTime.Now, Value = 4500.00m };
             amountService.AddItem(amountIncomeOne);
             amountService.AddItem(amountIncomeTwo);
             var nameTrue = "General incomes";
@@ -85,9 +86,9 @@ namespace HouseholdBudgetPlanner.Tests
         public void BudgetStatusIncomesMonthByNameTest_False()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus();
-            BudgetStatusIncomesManagerMonth budgetStatusIncomesManagerMonth = new BudgetStatusIncomesManagerMonth(amountService, amountManagerBudgetStatus);
+            IService<Amount> amountService = new AmountService();
+            AmountManagerBudgetStatus amountManagerBudgetStatus = new();
+            BudgetStatusIncomesManagerMonth budgetStatusIncomesManagerMonth = new(amountService, amountManagerBudgetStatus);
             var nameFalse = "Wrong name";
             var amountIncomeExist = budgetStatusIncomesManagerMonth.MonthIncomeInAmountByNameExist(nameFalse);
             var expectedOutputFalsePattern = "Income type with this name does not exist.";

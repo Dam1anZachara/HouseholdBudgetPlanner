@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using HouseholdBudgetPlanner.App;
+using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
@@ -15,19 +16,19 @@ namespace HouseholdBudgetPlanner.Tests
         public void IncomeInAmountByDateListTest()
         {
             //Arrange
-            AmountService amountService = new AmountService();
-            AmountManager amountManager = new AmountManager();
-            AmountManagerRemoveIncome amountManagerRemoveIncome = new AmountManagerRemoveIncome(amountService, amountManager);
-            Amount amountIncomeOne = new Amount() { Id = -1, Name = "General incomes", Date = new DateTime(2022, 02, 2), Value = 4500.00m };
-            Amount amountIncomeTwo = new Amount() { Id = -1, Name = "General incomes", Date = new DateTime(2022, 02, 3), Value = 2500.00m };
+            IService<Amount> amountService = new AmountService();
+            AmountManager amountManager = new();
+            AmountManagerRemoveIncome amountManagerRemoveIncome = new(amountService, amountManager);
+            Amount amountIncomeOne = new() { Id = -1, Name = "General incomes", Date = new DateTime(2022, 02, 2), Value = 4500.00m };
+            Amount amountIncomeTwo = new() { Id = -1, Name = "General incomes", Date = new DateTime(2022, 02, 3), Value = 2500.00m };
             amountService.AddItem(amountIncomeOne);
             amountService.AddItem(amountIncomeTwo);
-            var dateStart = new DateTime(2022, 02, 1);
-            var dateEnd = new DateTime(2022, 02, 4);
+            DateTime dateStart = new(2022, 02, 1);
+            DateTime dateEnd = new(2022, 02, 4);
             var expectedOutputPattern = $"\r\nYour incomes since {dateStart} to {dateEnd}\r\n\r\n" + 
                 $"{amountIncomeOne.Date}; Name: {amountIncomeOne.Name}; Value: {amountIncomeOne.Value}{ValueTypes.PLN}\r\n" + 
                 $"{amountIncomeTwo.Date}; Name: {amountIncomeTwo.Name}; Value: {amountIncomeTwo.Value}{ValueTypes.PLN}";
-            var incomeInAmountByDateListOut = new StringWriter();
+            StringWriter incomeInAmountByDateListOut = new();
             Console.SetOut(incomeInAmountByDateListOut);
             //Act
             amountManagerRemoveIncome.IncomeInAmountByDateList(dateStart, dateEnd);
@@ -41,17 +42,17 @@ namespace HouseholdBudgetPlanner.Tests
         [Fact]
         public void SelectedIncomeInAmountExistTest()
         {
-            AmountService amountService = new AmountService();
-            AmountManager amountManager = new AmountManager();
-            AmountManagerRemoveIncome amountManagerRemoveIncome = new AmountManagerRemoveIncome(amountService, amountManager);
-            Amount amountIncomeOne = new Amount() { Id = -1, Name = "General incomes", Date = new DateTime(2022, 02, 2), Value = 4500.00m };
+            IService<Amount> amountService = new AmountService();
+            AmountManager amountManager = new();
+            AmountManagerRemoveIncome amountManagerRemoveIncome = new(amountService, amountManager);
+            Amount amountIncomeOne = new() { Id = -1, Name = "General incomes", Date = new DateTime(2022, 02, 2), Value = 4500.00m };
             amountService.AddItem(amountIncomeOne);
-            var dateStartTrue = new DateTime(2022, 02, 1);
-            var dateEndTrue = new DateTime(2022, 02, 3);
+            DateTime dateStartTrue = new(2022, 02, 1);
+            DateTime dateEndTrue = new(2022, 02, 3);
             var nameTrue = "General incomes";
             var valueTrue = 4500.00m;
-            var dateStartFalse = new DateTime(2021, 02, 01);
-            var dateEndFalse = new DateTime(2021, 02, 03);
+            DateTime dateStartFalse = new(2021, 02, 01);
+            DateTime dateEndFalse = new(2021, 02, 03);
             var nameFalse = "Wrong name";
             var valueFalse = 449.99m;
             //Act

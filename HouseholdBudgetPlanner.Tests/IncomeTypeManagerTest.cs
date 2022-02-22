@@ -16,16 +16,15 @@ namespace HouseholdBudgetPlanner.Tests
         public void IncomeTypeViewTest()
         {
             //Arrange
-            IncomeTypeService incomeTypeService = new IncomeTypeService();
-            var manager = new IncomeTypeManager(incomeTypeService);
+            IService<IncomeType> incomeTypeService = new IncomeTypeService();
+            IncomeTypeManager incomeTypeManager = new(incomeTypeService);
             var expectedOutputPattern = "\r\nAll your income types are:\r\n" + "\r\n1. General incomes\r\n";
             var incomeTypeViewOut = new StringWriter();
-            Console.SetOut(incomeTypeViewOut); 
+            Console.SetOut(incomeTypeViewOut);
             //Act
-            manager.IncomeTypeView();
+            incomeTypeManager.IncomeTypeView();
             var incomeTypeViewOutString = incomeTypeViewOut.ToString();
             //Assert
-            manager.Should().NotBeNull();
             incomeTypeViewOutString.Should().Contain(expectedOutputPattern);
         }
         [Fact]
@@ -34,11 +33,11 @@ namespace HouseholdBudgetPlanner.Tests
             //Arrange
             var mock = new Mock<IService<IncomeType>>();
             var expectedInputPattern = "TestName";
-            var manager = new IncomeTypeManager(mock.Object);
-            var testInput = new StringReader("TestName");
-            Console.SetIn(testInput);
+            IncomeTypeManager incomeTypeManager = new(mock.Object);
+            var addNewIncomeTypeViewInput = new StringReader("TestName");
+            Console.SetIn(addNewIncomeTypeViewInput);
             //Act
-            var returnedString = manager.AddNewIncomeTypeView();
+            var returnedString = incomeTypeManager.AddNewIncomeTypeView();
             //Assert
             returnedString.Should().BeOfType(typeof(string));
             returnedString.Should().NotBeEmpty();
@@ -48,18 +47,16 @@ namespace HouseholdBudgetPlanner.Tests
         public void IncomeTypeExistTest()
         {
             //Arrange
-            IncomeTypeService incomeTypeService = new IncomeTypeService();
-            var manager = new IncomeTypeManager(incomeTypeService);
-            IncomeType incomeType = new IncomeType() { Id = -2, Name = "Work" };
+            IService<IncomeType> incomeTypeService = new IncomeTypeService();
+            IncomeTypeManager incomeTypeManager = new(incomeTypeService);
+            IncomeType incomeType = new() { Id = -2, Name = "Work" };
             incomeTypeService.AddItem(incomeType);
             //Act
-            var returnedIncomeTypeTrue = manager.IncomeTypeExist("Work");
-            var returnedIncomeTypeFalseOne = manager.IncomeTypeExist("General expenses");
-            var returnedIncomeTypeFalseTwo = manager.IncomeTypeExist("SecondWork");
-            var returnedIncomeTypeFaleThree = manager.IncomeTypeExist("Wo rk");
+            var returnedIncomeTypeTrue = incomeTypeManager.IncomeTypeExist("Work");
+            var returnedIncomeTypeFalseOne = incomeTypeManager.IncomeTypeExist("General expenses");
+            var returnedIncomeTypeFalseTwo = incomeTypeManager.IncomeTypeExist("SecondWork");
+            var returnedIncomeTypeFaleThree = incomeTypeManager.IncomeTypeExist("Wo rk");
             //Assert
-            incomeTypeService.Should().NotBeNull();
-            manager.Should().NotBeNull();
             returnedIncomeTypeTrue.Should().BeTrue();
             returnedIncomeTypeFalseOne.Should().BeFalse();
             returnedIncomeTypeFalseTwo.Should().BeFalse();
@@ -71,10 +68,10 @@ namespace HouseholdBudgetPlanner.Tests
         public void AddNewIncomeTypeTest()
         {
             //Arrange
-            IncomeTypeService incomeTypeService = new IncomeTypeService();
-            var manager = new IncomeTypeManager(incomeTypeService);
+            IService<IncomeType> incomeTypeService = new IncomeTypeService();
+            IncomeTypeManager incomeTypeManager = new(incomeTypeService);
             //Act
-            manager.AddNewIncomeType("Work");
+            incomeTypeManager.AddNewIncomeType("Work");
             var listAfterAdd = incomeTypeService.GetAllItems();
             //Assert
             listAfterAdd.Should().NotBeNull();
@@ -91,11 +88,11 @@ namespace HouseholdBudgetPlanner.Tests
             //Arrange
             var mock = new Mock<IService<IncomeType>>();
             var expectedInputPattern = "TestName";
-            var manager = new IncomeTypeManager(mock.Object);
+            IncomeTypeManager incomeTypeManager = new(mock.Object);
             var removeIncomeTypeViewInput = new StringReader("TestName");
             Console.SetIn(removeIncomeTypeViewInput);
             //Act
-            var returnedString = manager.RemoveIncomeTypeView();
+            var returnedString = incomeTypeManager.RemoveIncomeTypeView();
             //Assert
             returnedString.Should().NotBeEmpty();
             returnedString.Should().BeOfType(typeof(string));
@@ -105,13 +102,13 @@ namespace HouseholdBudgetPlanner.Tests
         public void RemoveIncomeTypeTest()
         {
             //Arrange
-            IncomeTypeService incomeTypeService = new IncomeTypeService();
-            var manager = new IncomeTypeManager(incomeTypeService);
-            IncomeType incomeType = new IncomeType() { Id = -2, Name = "Work" };
+            IService<IncomeType> incomeTypeService = new IncomeTypeService();
+            IncomeTypeManager incomeTypeManager = new(incomeTypeService);
+            IncomeType incomeType = new() { Id = -2, Name = "Work" };
             incomeTypeService.AddItem(incomeType);
             var incomeTypeAfterAdd = incomeTypeService.GetItemByName("Work");
             //Act
-            manager.RemoveIncomeType(incomeType.Name);
+            incomeTypeManager.RemoveIncomeType(incomeType.Name);
             var incomeTypeAfterRemove = incomeTypeService.GetItemByName("Work");
             //Assert
             incomeTypeAfterAdd.Name.Should().Contain("Work");
@@ -121,14 +118,12 @@ namespace HouseholdBudgetPlanner.Tests
         public void GetIncomeToAmountByNameTest()
         {
             //Arrange
-            IncomeType incomeType = new IncomeType();
-            incomeType.Id = -2;
-            incomeType.Name = "Work";
+            IncomeType incomeType = new() { Id = -2, Name = "Work"};
             var mock = new Mock<IService<IncomeType>>();
             mock.Setup(s => s.GetItemByName("Work")).Returns(incomeType);
-            var manager = new IncomeTypeManager(mock.Object);
+            IncomeTypeManager incomeTypeManager = new(mock.Object);
             //Act
-            var returnedIncomeType = manager.GetIncomeToAmountByName(incomeType.Name);
+            var returnedIncomeType = incomeTypeManager.GetIncomeToAmountByName(incomeType.Name);
             //Assert
             returnedIncomeType.Should().BeOfType(typeof(IncomeType));
             returnedIncomeType.Should().NotBeNull();

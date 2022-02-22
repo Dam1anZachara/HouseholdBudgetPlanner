@@ -16,11 +16,11 @@ namespace HouseholdBudgetPlanner.Tests
         {
             //Arrange
             IService<IncomeType> incomeTypeService = new IncomeTypeService();
-            IncomeType incomeType = new IncomeType() { Id = -2, Name = "Work" };
+            IncomeType incomeType = new() { Id = -2, Name = "Work" };
             incomeTypeService.AddItem(incomeType);
-            var incomeTypeManager = new IncomeTypeManager(incomeTypeService);
-            var incomeTypeManagerAdd = new AmountManagerAddIncome(incomeTypeManager);
-            var addAmountIncomeInputFirst = new StringReader("Work" + "\r\n" + "" + "\r\n" + "6340,49");
+            IncomeTypeManager incomeTypeManager = new(incomeTypeService);
+            AmountManagerAddIncome incomeTypeManagerAdd = new(incomeTypeManager);
+            StringReader addAmountIncomeInputFirst = new("Work" + "\r\n" + "" + "\r\n" + "6340,49");
             Console.SetIn(addAmountIncomeInputFirst);
             //Act
             var addAmountIncome = incomeTypeManagerAdd.AddAmountIncome();
@@ -39,9 +39,9 @@ namespace HouseholdBudgetPlanner.Tests
         {
             //Arrange
             IService<IncomeType> incomeTypeService = new IncomeTypeService();
-            var incomeTypeManager = new IncomeTypeManager(incomeTypeService);
-            var incomeTypeManagerAdd = new AmountManagerAddIncome(incomeTypeManager);
-            var addAmountIncomeInputSecond = new StringReader("" + "\r\n" + "18/02/2022" + "\r\n" + "3299,249");
+            IncomeTypeManager incomeTypeManager = new(incomeTypeService);
+            AmountManagerAddIncome incomeTypeManagerAdd = new(incomeTypeManager);
+            StringReader addAmountIncomeInputSecond = new("" + "\r\n" + "18/02/2022" + "\r\n" + "3299,249");
             Console.SetIn(addAmountIncomeInputSecond);
             //Act
             var addAmountIncome = incomeTypeManagerAdd.AddAmountIncome();
@@ -58,9 +58,9 @@ namespace HouseholdBudgetPlanner.Tests
         {
             //Arrange
             IService<IncomeType> incomeTypeService = new IncomeTypeService();
-            var incomeTypeManager = new IncomeTypeManager(incomeTypeService);
-            var incomeTypeManagerAdd = new AmountManagerAddIncome(incomeTypeManager);
-            var addAmountIncomeInputThird = new StringReader("WrongName" + "\r\n" + "06/02/2022" + "\r\n" + "250,00");
+            IncomeTypeManager incomeTypeManager = new(incomeTypeService);
+            AmountManagerAddIncome incomeTypeManagerAdd = new(incomeTypeManager);
+            StringReader addAmountIncomeInputThird = new("WrongName" + "\r\n" + "06/02/2022" + "\r\n" + "250,00");
             Console.SetIn(addAmountIncomeInputThird);
             //Act
             var addAmountIncome = incomeTypeManagerAdd.AddAmountIncome();
