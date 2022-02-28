@@ -3,6 +3,7 @@ using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -21,13 +22,16 @@ namespace HouseholdBudgetPlanner.App.Managers
         public void ExpenseInAmountByDateList(DateTime dateStartEntered, DateTime dateEndEntered) //private
         {
             Console.WriteLine($"\r\nYour expenses since {dateStartEntered} to {dateEndEntered}\r\n");
-            foreach (var amount in _amountsGetList)
-            {
-                if (amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0)
-                {
-                    Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
-                }
-            }
+            _amountsGetList.AsQueryable()
+                .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0);
+                //.Select(amount => { Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN) });
+            //foreach (var amount in _amountsGetList)
+            //{
+            //    if (amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0)
+            //    {
+            //        Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
+            //    }
+            //}
         }
         public bool SelectedExpenseInAmountExist(DateTime dateStartEntered, DateTime dateEndEntered, string name, decimal valueInDecimal) //private
         {

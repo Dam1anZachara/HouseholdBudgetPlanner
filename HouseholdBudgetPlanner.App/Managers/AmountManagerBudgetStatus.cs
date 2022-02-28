@@ -4,6 +4,7 @@ using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -42,53 +43,33 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         public decimal BudgetStatusAllExpensesMonth() // internal
         {
-            decimal amountSumAllExpenses = 0;
-            foreach (var amount in _amountsGetList)
-            {
-                if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0)
-                {
-                    amountSumAllExpenses += amount.Value;
-                }
-            }
+            decimal amountSumAllExpenses = _amountsGetList.AsQueryable()
+                .Where(amount => DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0)
+                .Sum(amountSumAllExpenses => amountSumAllExpenses.Value);
             Console.WriteLine($"\r\nExpenses status this month: {amountSumAllExpenses}{ValueTypes.PLN}");
             return amountSumAllExpenses;
         }
         public decimal BudgetStatusAllIncomesMonth() // internal
         {
-            decimal amountSumAllIncomes = 0;
-            foreach (var amount in _amountsGetList)
-            {
-                if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0)
-                {
-                    amountSumAllIncomes += amount.Value;
-                }
-            }
+            decimal amountSumAllIncomes = _amountsGetList.AsQueryable()
+                .Where(amount => DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0)
+                .Sum(amountSumAllIncomes => amountSumAllIncomes.Value);
             Console.WriteLine($"\r\nIncomes status this month: {amountSumAllIncomes}{ValueTypes.PLN}");
             return amountSumAllIncomes;
         }
         public decimal BudgetStatusExpensesRangeDate(DateTime dateStartEntered, DateTime dateEndEntered) // internal
         {
-            decimal amountSumAllExpenses = 0;
-            foreach (var amount in _amountsGetList)
-            {
-                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
-                {
-                    amountSumAllExpenses += amount.Value;
-                }
-            }
+            decimal amountSumAllExpenses = _amountsGetList.AsQueryable()
+                .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0 && dateStartEntered < dateEndEntered)
+                .Sum(amountSumAllExpenses => amountSumAllExpenses.Value);
             Console.WriteLine($"\r\nExpenses status since {dateStartEntered} to {dateEndEntered}: {amountSumAllExpenses}{ValueTypes.PLN}\r\n");
             return amountSumAllExpenses;
         }
         public decimal BudgetStatusIncomesRangeDate(DateTime dateStartEntered, DateTime dateEndEntered) // internal
         {
-            decimal amountSumAllIncomes = 0;
-            foreach (var amount in _amountsGetList)
-            {
-                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id < 0) && (dateStartEntered < dateEndEntered))
-                {
-                    amountSumAllIncomes += amount.Value;
-                }
-            }
+            decimal amountSumAllIncomes = _amountsGetList.AsQueryable()
+                .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id < 0 && dateStartEntered < dateEndEntered)
+                .Sum(amountSumAllIncomes => amountSumAllIncomes.Value);
             Console.WriteLine($"\r\nIncomes status since {dateStartEntered} to {dateEndEntered}: {amountSumAllIncomes}{ValueTypes.PLN}\r\n");
             return amountSumAllIncomes;
         }
