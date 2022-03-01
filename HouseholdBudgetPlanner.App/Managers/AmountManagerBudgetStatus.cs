@@ -45,7 +45,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         {
             decimal amountSumAllExpenses = _amountsGetList.AsQueryable()
                 .Where(amount => DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0)
-                .Sum(amountSumAllExpenses => amountSumAllExpenses.Value);
+                .Sum(amount => amount.Value);
             Console.WriteLine($"\r\nExpenses status this month: {amountSumAllExpenses}{ValueTypes.PLN}");
             return amountSumAllExpenses;
         }
@@ -53,7 +53,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         {
             decimal amountSumAllIncomes = _amountsGetList.AsQueryable()
                 .Where(amount => DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id < 0)
-                .Sum(amountSumAllIncomes => amountSumAllIncomes.Value);
+                .Sum(amount => amount.Value);
             Console.WriteLine($"\r\nIncomes status this month: {amountSumAllIncomes}{ValueTypes.PLN}");
             return amountSumAllIncomes;
         }
@@ -61,7 +61,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         {
             decimal amountSumAllExpenses = _amountsGetList.AsQueryable()
                 .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0 && dateStartEntered < dateEndEntered)
-                .Sum(amountSumAllExpenses => amountSumAllExpenses.Value);
+                .Sum(amount => amount.Value);
             Console.WriteLine($"\r\nExpenses status since {dateStartEntered} to {dateEndEntered}: {amountSumAllExpenses}{ValueTypes.PLN}\r\n");
             return amountSumAllExpenses;
         }
@@ -69,7 +69,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         {
             decimal amountSumAllIncomes = _amountsGetList.AsQueryable()
                 .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id < 0 && dateStartEntered < dateEndEntered)
-                .Sum(amountSumAllIncomes => amountSumAllIncomes.Value);
+                .Sum(amount => amount.Value);
             Console.WriteLine($"\r\nIncomes status since {dateStartEntered} to {dateEndEntered}: {amountSumAllIncomes}{ValueTypes.PLN}\r\n");
             return amountSumAllIncomes;
         }

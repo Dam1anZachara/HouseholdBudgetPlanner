@@ -2,6 +2,7 @@
 using HouseholdBudgetPlanner.Domain.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -34,14 +35,8 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         public bool ExpanseTypeExist(string name)//private
         {
-            foreach (var expenseType in _expenseTypesGetList)
-            {
-                if (expenseType.Name == name && expenseType.Name != "General expenses")
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _expenseTypesGetList.AsQueryable()
+                .Where(expenseType => expenseType.Name == name && expenseType.Name != "General expenses").Any();
         }
         public void AddNewExpanseType(string name)
         {

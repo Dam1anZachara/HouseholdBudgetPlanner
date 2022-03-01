@@ -40,14 +40,9 @@ namespace HouseholdBudgetPlanner.App.Managers
         {
             if (rangeExpenseInAmountByNameExist)
             {
-                decimal amountSumNameExpenses = 0;
-                foreach (var amount in _amountsGetList)
-                {
-                    if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered) && (amount.Name == name))
-                    {
-                        amountSumNameExpenses += amount.Value;
-                    }
-                }
+                decimal amountSumNameExpenses = _amountsGetList.AsQueryable()
+                    .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0 && dateStartEntered < dateEndEntered && amount.Name == name)
+                    .Sum(amount => amount.Value);
                 Console.WriteLine($"\r\nExpenses status with the name {name} since {dateStartEntered} to {dateEndEntered}: {amountSumNameExpenses}{ValueTypes.PLN}\r\n");
             }
             else

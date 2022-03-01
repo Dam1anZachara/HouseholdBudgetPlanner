@@ -41,7 +41,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 decimal amountSumNameExpenses = _amountsGetList.AsQueryable()
                     .Where(amount => DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0 && amount.Name == name)
-                    .Sum(amountSumNameExpenses => amountSumNameExpenses.Value);
+                    .Sum(amount => amount.Value);
                 Console.WriteLine($"\r\nExpenses status this month with the name {name}: {amountSumNameExpenses}{ValueTypes.PLN}\r\n");
             }
             else
