@@ -22,57 +22,43 @@ namespace HouseholdBudgetPlanner.App.Managers
         public void ExpenseInAmountByDateList(DateTime dateStartEntered, DateTime dateEndEntered) //private
         {
             Console.WriteLine($"\r\nYour expenses since {dateStartEntered} to {dateEndEntered}\r\n");
-            _amountsGetList.AsQueryable()
-                .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0);
-                //.Select(amount => { Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN) });
-            //foreach (var amount in _amountsGetList)
-            //{
-            //    if (amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0)
-            //    {
-            //        Console.WriteLine(amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
-            //    }
-            //}
+            var expenseListString = _amountsGetList.AsQueryable()
+                .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0)
+                .Select(amount => $"{amount.Date}; Name: {amount.Name}; Value: {amount.Value}{ValueTypes.PLN}");
+            foreach (var expenseString in expenseListString)
+            {
+                Console.WriteLine(expenseString);
+            }
         }
         public bool SelectedExpenseInAmountExist(DateTime dateStartEntered, DateTime dateEndEntered, string name, decimal valueInDecimal) //private
         {
-            foreach (var amount in _amountsGetList)
-            {
-                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) &&
-                        (amount.Name == name) && (amount.Value == valueInDecimal))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _amountsGetList.AsQueryable()
+                .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0 &&
+                amount.Name == name && amount.Value == valueInDecimal).Any();
         }
         private void RemoveChosenAmountExpense(DateTime dateStartEntered, DateTime dateEndEntered, string nameOfRemoveAmount, decimal valueInDecimal) //private
         {
-            foreach (var amount in _amountsGetList)
+            var amountExpense = _amountsGetList.AsQueryable()
+                .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0 &&
+                amount.Name == nameOfRemoveAmount && amount.Value == valueInDecimal).FirstOrDefault();
+            Console.WriteLine("\r\nYou selected: " + amountExpense.Date + "; Name: " + amountExpense.Name + "; Value: " + amountExpense.Value + ValueTypes.PLN);
+            Console.WriteLine($"\r\nDo you want to remove this expense?\r\n");
+            Console.WriteLine("1. Yes");
+            Console.WriteLine("2. No");
+            var keyInfoRemoveExpense = Console.ReadKey();
+            if (keyInfoRemoveExpense.KeyChar == '1')
             {
-                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) &&
-                    (amount.Name == nameOfRemoveAmount) && (amount.Value == valueInDecimal))
-                {
-                    Console.WriteLine("\r\nYou selected: " + amount.Date + "; Name: " + amount.Name + "; Value: " + amount.Value + ValueTypes.PLN);
-                    Console.WriteLine($"\r\nDo you want to remove this expense?\r\n");
-                    Console.WriteLine("1. Yes");
-                    Console.WriteLine("2. No");
-                    var keyInfoRemoveExpense = Console.ReadKey();
-                    if (keyInfoRemoveExpense.KeyChar == '1')
-                    {
-                        _amountService.RemoveItem(amount);
-                        Console.WriteLine("\r\nExpense has been removed!");
-                        break;
-                    }
-                    else if (keyInfoRemoveExpense.KeyChar == '2')
-                    {
-                        Console.WriteLine("\r\nExpense has not been removed!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("\r\nAction you entered does not exist\r\n");
-                        Console.WriteLine("\r\nExpense has not been removed!");
-                    }
-                }
+                _amountService.RemoveItem(amountExpense);
+                Console.WriteLine("\r\nExpense has been removed!");
+            }
+            else if (keyInfoRemoveExpense.KeyChar == '2')
+            {
+                Console.WriteLine("\r\nExpense has not been removed!");
+            }
+            else
+            {
+                Console.WriteLine("\r\nAction you entered does not exist\r\n");
+                Console.WriteLine("\r\nExpense has not been removed!");
             }
         }
 

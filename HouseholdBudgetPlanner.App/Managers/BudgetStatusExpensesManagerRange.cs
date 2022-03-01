@@ -3,6 +3,7 @@ using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -22,24 +23,18 @@ namespace HouseholdBudgetPlanner.App.Managers
         public void BudgetStatusExpensesRangeDateList(DateTime dateStartEntered, DateTime dateEndEntered) // private
         {
             Console.WriteLine($"\r\nYour expenses since {dateStartEntered} to {dateEndEntered}.\r\n");
-            foreach (var amount in _amountsGetList)
+            var expenseListString = _amountsGetList.AsQueryable()
+                .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0 && dateStartEntered < dateEndEntered)
+                .Select(amount => $"{amount.Date}, Name: {amount.Name}, Value: {amount.Value}{ValueTypes.PLN}");
+            foreach (var expenseString in expenseListString)
             {
-                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered))
-                {
-                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, Value: {amount.Value}{ValueTypes.PLN}");
-                }
+                Console.WriteLine(expenseString);
             }
         }
         public bool RangeExpenseInAmountByNameExist(DateTime dateStartEntered, DateTime dateEndEntered, string name) // private
         {
-            foreach (var amount in _amountsGetList)
-            {
-                if ((amount.Date > dateStartEntered) && (amount.Date < dateEndEntered) && (amount.Id > 0) && (dateStartEntered < dateEndEntered) && (amount.Name == name))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _amountsGetList.AsQueryable()
+                .Where(amount => amount.Date > dateStartEntered && amount.Date < dateEndEntered && amount.Id > 0 && dateStartEntered < dateEndEntered && amount.Name == name).Any();
         }
         public void BudgetStatusExpensesRangeDateByName(bool rangeExpenseInAmountByNameExist, DateTime dateStartEntered, DateTime dateEndEntered, string name) //private
         {

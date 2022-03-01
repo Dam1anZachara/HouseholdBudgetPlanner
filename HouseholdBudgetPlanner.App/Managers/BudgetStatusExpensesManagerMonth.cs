@@ -3,6 +3,7 @@ using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -20,37 +21,27 @@ namespace HouseholdBudgetPlanner.App.Managers
         public void BudgetStatusAllExpensesMonthList() //private
         {
             Console.WriteLine($"\r\nYour expenses this month:\r\n");
-            foreach (var amount in _amountsGetList)
+            var expenseListString = _amountsGetList.AsQueryable()
+                .Where(amount => DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0)
+                .Select(amount => $"{amount.Date}, Name: {amount.Name}, Value: {amount.Value}{ValueTypes.PLN}");
+            foreach (var expenseString in expenseListString)
             {
-                if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0)
-                {
-                    Console.WriteLine($"{amount.Date}, Name: {amount.Name}, Value: {amount.Value}{ValueTypes.PLN}");
-                }
+                Console.WriteLine(expenseString);
             }
         }
         public bool MonthExpenseInAmountByNameExist(string name) //private
         {
-            foreach (var amount in _amountsGetList)
-            {
-                if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0 && amount.Name == name)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _amountsGetList.AsQueryable()
+                .Where(amount => DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && 
+                amount.Id > 0 && amount.Name == name).Any();
         }
         public void BudgetStatusExpensesMonthByName(bool monthExpenseInAmountByNameExist, string name) //private
         {
             if (monthExpenseInAmountByNameExist)
             {
-                decimal amountSumNameExpenses = 0;
-                foreach (var amount in _amountsGetList)
-                {
-                    if (DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0 && amount.Name == name)
-                    {
-                        amountSumNameExpenses += amount.Value;
-                    }
-                }
+                decimal amountSumNameExpenses = _amountsGetList.AsQueryable()
+                    .Where(amount => DateTime.Now.Month == amount.Date.Month && DateTime.Now.Year == amount.Date.Year && amount.Id > 0 && amount.Name == name)
+                    .Sum(amountSumNameExpenses => amountSumNameExpenses.Value);
                 Console.WriteLine($"\r\nExpenses status this month with the name {name}: {amountSumNameExpenses}{ValueTypes.PLN}\r\n");
             }
             else

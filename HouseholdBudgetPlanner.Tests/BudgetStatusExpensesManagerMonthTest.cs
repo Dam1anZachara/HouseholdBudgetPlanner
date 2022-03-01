@@ -44,7 +44,7 @@ namespace HouseholdBudgetPlanner.Tests
             IService<Amount> amountService = new AmountService();
             AmountManagerBudgetStatus amountManagerBudgetStatus = new();
             BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new(amountService, amountManagerBudgetStatus);
-            Amount amountExpenseOne = new() { Id = 1, Name = "General expenses", Date = new DateTime(2022, 02, 2), Value = 55.00m };
+            Amount amountExpenseOne = new() { Id = 1, Name = "General expenses", Date = DateTime.Now, Value = 55.00m };
             amountService.AddItem(amountExpenseOne);
             var nameTrue = "General expenses";
             var nameFalse = "Wrong name";
