@@ -1,0 +1,5 @@
+1,General expenses
+2,Home
+1,General expenses
+2,Home
+5,Food

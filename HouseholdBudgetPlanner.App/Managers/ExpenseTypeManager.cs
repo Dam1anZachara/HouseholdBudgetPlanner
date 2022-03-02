@@ -2,6 +2,7 @@
 using HouseholdBudgetPlanner.Domain.Entity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace HouseholdBudgetPlanner.App.Managers
@@ -10,14 +11,36 @@ namespace HouseholdBudgetPlanner.App.Managers
     {
         private IService<ExpenseType> _expenseTypeService;
         private List<ExpenseType> _expenseTypesGetList;
+        private List<string> _expenseTypesGetFileList;
+        public List<string> _expenseTypesSetFileList = new List<string>();
         private int i;
+        string filePath = @"C:\Users\DZachara\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\expenseType.txt";
 
         public ExpenseTypeManager(IService<ExpenseType> expenseTypeService)
         {
             _expenseTypeService = expenseTypeService;
-            ExpenseType expenseTypeGeneral = new ExpenseType() { Id = 1, Name = "General expenses" };
-            _expenseTypeService.AddItem(expenseTypeGeneral);
             _expenseTypesGetList = _expenseTypeService.GetAllItems();
+            ExpenseTypeReadFile();
+            
+        }
+        public void ExpenseTypeReadFile()
+        {
+            _expenseTypesGetFileList = File.ReadAllLines(filePath).ToList();
+            foreach (var expenseType in _expenseTypesGetFileList)
+            {
+                string[] expenseText = expenseType.Split(',');
+                ExpenseType expenseTypeFile = new ExpenseType();
+                expenseTypeFile.Id = int.Parse(expenseText[0]);
+                expenseTypeFile.Name = expenseText[1];
+                _expenseTypesGetList.Add(expenseTypeFile);
+
+            }
+            if (!_expenseTypesGetFileList.AsQueryable().Where(expenseType => expenseType == "1,General expenses").Any())
+            {
+                ExpenseType expenseTypeGeneral = new ExpenseType() { Id = 1, Name = "General expenses" };
+                _expenseTypeService.AddItem(expenseTypeGeneral);
+                File.WriteAllLines(filePath, _expenseTypesSetFileList);
+            }
         }
         public void ExpenseTypeView()
         {
@@ -46,6 +69,13 @@ namespace HouseholdBudgetPlanner.App.Managers
                 ExpenseType expenseTypeToAdd = new ExpenseType() { Id = i + 1, Name = name };
                 _expenseTypeService.AddItem(expenseTypeToAdd);
                 Console.WriteLine($"\r\nExpense type {name} has been added.");
+
+                foreach (var expenseType in _expenseTypesGetList)
+                {
+                    _expenseTypesSetFileList.Add($"{expenseType.Id},{expenseType.Name}");
+                }
+                File.WriteAllLines(filePath, _expenseTypesSetFileList);
+
             }
             else
             {
