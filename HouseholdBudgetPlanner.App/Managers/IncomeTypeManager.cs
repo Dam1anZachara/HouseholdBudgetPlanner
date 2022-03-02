@@ -2,6 +2,7 @@
 using HouseholdBudgetPlanner.Domain.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HouseholdBudgetPlanner.App.Managers
 {
@@ -35,14 +36,8 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         public bool IncomeTypeExist(string name) //private
         {
-            foreach (var incomeType in _incomeTypesGetList)
-            {
-                if (incomeType.Name == name && incomeType.Name != "General incomes")
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _incomeTypesGetList.AsQueryable()
+                .Where(incomeType => incomeType.Name == name && incomeType.Name != "General incomes").Any();
         }
         public void AddNewIncomeType(string name)
         {
@@ -69,15 +64,9 @@ namespace HouseholdBudgetPlanner.App.Managers
             bool incomeTypeExist = IncomeTypeExist(name);
             if (incomeTypeExist)
             {
-                foreach (var incomeType in _incomeTypesGetList)
-                {
-                    if (incomeType.Name == name)
-                    {
-                        _IncomeTypeService.RemoveItem(incomeType);
-                        Console.WriteLine($"\r\nIncome type {name} has been removed.\r\n");
-                        break;
-                    }
-                }
+                var incomeType = _incomeTypesGetList.AsQueryable().Where(incomeType => incomeType.Name == name).FirstOrDefault();
+                _IncomeTypeService.RemoveItem(incomeType);
+                Console.WriteLine($"\r\nIncome type {name} has been removed.\r\n");
             }
             else
             {

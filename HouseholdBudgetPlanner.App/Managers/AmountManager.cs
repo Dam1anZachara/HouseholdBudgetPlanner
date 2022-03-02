@@ -70,13 +70,13 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         public bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered) //internal
         {
-            return (_amountsGetList.AsQueryable().Where(amount => amount.Date > dateStartEntered && 
-            amount.Date < dateEndEntered && amount.Id > 0 && dateStartEntered < dateEndEntered).Any());
+            return _amountsGetList.AsQueryable().Where(amount => amount.Date > dateStartEntered && 
+            amount.Date < dateEndEntered && amount.Id > 0 && dateStartEntered < dateEndEntered).Any();
         }
         public bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered) //internal
         {
-            return (_amountsGetList.AsQueryable().Where(amount => amount.Date > dateStartEntered &&
-            amount.Date < dateEndEntered && amount.Id < 0 && dateStartEntered < dateEndEntered).Any());
+            return _amountsGetList.AsQueryable().Where(amount => amount.Date > dateStartEntered &&
+            amount.Date < dateEndEntered && amount.Id < 0 && dateStartEntered < dateEndEntered).Any();
         }
     }
 }

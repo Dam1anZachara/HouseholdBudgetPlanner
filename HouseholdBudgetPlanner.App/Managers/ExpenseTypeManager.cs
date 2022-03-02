@@ -63,15 +63,9 @@ namespace HouseholdBudgetPlanner.App.Managers
             bool expanseTypeExist = ExpanseTypeExist(name);
             if (expanseTypeExist)
             {
-                foreach (var expenseType in _expenseTypesGetList)
-                {
-                    if (expenseType.Name == name)
-                    {
-                        _expenseTypeService.RemoveItem(expenseType);
-                        Console.WriteLine($"\r\nExpense type {name} has been removed.\r\n");
-                        break;
-                    }
-                }
+                var expenseType =_expenseTypesGetList.AsQueryable().Where(expenseType => expenseType.Name == name).FirstOrDefault();
+                _expenseTypeService.RemoveItem(expenseType);
+                Console.WriteLine($"\r\nExpense type {name} has been removed.\r\n");
             }
             else
             {
