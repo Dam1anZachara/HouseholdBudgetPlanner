@@ -4,6 +4,7 @@ using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace HouseholdBudgetPlanner.App.Managers
@@ -12,8 +13,10 @@ namespace HouseholdBudgetPlanner.App.Managers
     {
         private readonly MenuActionService _actionService;
         private readonly IService<Amount> _amountService;
-        private readonly List<Amount> _amountsGetList;
-       
+        private List<Amount> _amountsGetList;
+        private List<string> _amountsFileList;
+        private string filePath = @"C:\Users\DZachara\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\amounts.txt";
+
         public AmountManager(MenuActionService actionService, IService<Amount> amountService)
         {
             _amountService = amountService;
@@ -23,7 +26,33 @@ namespace HouseholdBudgetPlanner.App.Managers
         public AmountManager()
         {
         }
-
+        public void AmountsReadFile()
+        {
+            _amountsFileList = File.ReadAllLines(filePath).ToList();
+            foreach (var amount in _amountsFileList)
+            {
+                string[] amountText = amount.Split('/');
+                Amount amountFile = new Amount();
+                amountFile.Id = int.Parse(amountText[0]);
+                amountFile.Name = amountText[1];
+                amountFile.Value = decimal.Parse(amountText[2]);
+                amountFile.Date = DateTime.Parse(amountText[3]);
+                _amountService.AddItem(amountFile);
+            }
+        }
+        public void AmountsWriteFile(Amount amount)
+        {
+            if (_amountsGetList is null)
+            {
+                _amountsFileList.Add($"{amount.Id}/{amount.Name}/{amount.Value}/{amount.Date}");
+                File.WriteAllLines(filePath, _amountsFileList);
+            }
+            else
+            {
+                _amountsFileList.Remove($"{amount.Id}/{amount.Name}/{amount.Value}/{amount.Date}");
+                File.WriteAllLines(filePath, _amountsFileList);
+            }
+        }
         public ConsoleKeyInfo AddAmountView()
         {
             var addAmountMenu = _actionService.GetMenuActionsByMenuName("AddAmountMenu");

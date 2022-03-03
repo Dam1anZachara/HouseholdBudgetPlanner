@@ -50,6 +50,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 _amountService.RemoveItem(amountExpense);
                 Console.WriteLine("\r\nExpense has been removed!");
+                AmountsWriteFile(amountExpense);
             }
             else if (keyInfoRemoveExpense.KeyChar == '2')
             {
