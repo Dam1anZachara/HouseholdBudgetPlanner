@@ -18,6 +18,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             _actionService = actionService;
             _amountService = amountService;
             _amountsGetList = amountService.GetAllItems();
+
         }
         public AmountManagerBudgetStatus()
         {

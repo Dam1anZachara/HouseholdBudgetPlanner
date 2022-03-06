@@ -19,7 +19,7 @@ namespace HouseholdBudgetPlanner
             AmountManager amountManager = new AmountManager(actionService, amountService);
             AmountManagerAddExpense amountManagerAddExpense = new AmountManagerAddExpense(expenseTypeManager);
             AmountManagerAddIncome amountManagerAddIncome = new AmountManagerAddIncome(incomeTypeManager);
-            AmountManagerAdd amountManagerAdd = new AmountManagerAdd(amountService, amountManagerAddExpense, amountManagerAddIncome);
+            AmountManagerAdd amountManagerAdd = new AmountManagerAdd(amountService, amountManagerAddExpense, amountManagerAddIncome, amountManager);
             AmountManagerRemoveExpense amountManagerRemoveExpense = new AmountManagerRemoveExpense(amountService, amountManager);
             AmountManagerRemoveIncome amountManagerRemoveIncome = new AmountManagerRemoveIncome(amountService, amountManager);
             AmountManagerRemove amountManagerRemove = new AmountManagerRemove(amountManagerRemoveExpense, amountManagerRemoveIncome);

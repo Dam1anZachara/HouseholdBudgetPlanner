@@ -13,7 +13,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         private List<IncomeType> _incomeTypesGetList;
         private List<string> _incomeTypesFileList;
         private int i;
-        private string filePath = @"C:\Users\DZachara\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\incomeType.txt";
+        private string filePath = @"C:\Users\Damian\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\incomeType.txt";
 
         public IncomeTypeManager(IService<IncomeType> incomeTypeService)
         {

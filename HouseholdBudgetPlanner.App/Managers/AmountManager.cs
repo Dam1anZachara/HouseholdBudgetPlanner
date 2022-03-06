@@ -15,13 +15,14 @@ namespace HouseholdBudgetPlanner.App.Managers
         private readonly IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
         private List<string> _amountsFileList;
-        private string filePath = @"C:\Users\DZachara\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\amounts.txt";
+        private string filePath = @"C:\Users\Damian\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\amounts.txt";
 
         public AmountManager(MenuActionService actionService, IService<Amount> amountService)
         {
             _amountService = amountService;
             _actionService = actionService;
             _amountsGetList = _amountService.GetAllItems();
+            AmountsReadFile();
         }
         public AmountManager()
         {
@@ -29,6 +30,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         public void AmountsReadFile()
         {
             _amountsFileList = File.ReadAllLines(filePath).ToList();
+
             foreach (var amount in _amountsFileList)
             {
                 string[] amountText = amount.Split('/');
@@ -42,7 +44,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         public void AmountsWriteFile(Amount amount)
         {
-            if (_amountsGetList is null)
+            if (_amountsGetList.Contains(amount))
             {
                 _amountsFileList.Add($"{amount.Id}/{amount.Name}/{amount.Value}/{amount.Date}");
                 File.WriteAllLines(filePath, _amountsFileList);
@@ -53,6 +55,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 File.WriteAllLines(filePath, _amountsFileList);
             }
         }
+
         public ConsoleKeyInfo AddAmountView()
         {
             var addAmountMenu = _actionService.GetMenuActionsByMenuName("AddAmountMenu");

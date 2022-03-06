@@ -10,12 +10,13 @@ namespace HouseholdBudgetPlanner.App.Managers
         private IService<Amount> _amountService;
         private readonly AmountManagerAddExpense _amountManagerAddExpense;
         private readonly AmountManagerAddIncome _amountManagerAddIncome;
-        public AmountManagerAdd(IService<Amount> amountService, AmountManagerAddExpense amountManagerAddExpense, AmountManagerAddIncome amountManagerAddIncome)
+        private AmountManager _amountManager;
+        public AmountManagerAdd(IService<Amount> amountService, AmountManagerAddExpense amountManagerAddExpense, AmountManagerAddIncome amountManagerAddIncome, AmountManager amountManager)
         {
             _amountService = amountService;
             _amountManagerAddExpense = amountManagerAddExpense;
             _amountManagerAddIncome = amountManagerAddIncome;
-            AmountsReadFile();
+            _amountManager = amountManager;
         }
         public AmountManagerAdd()
         {
@@ -48,7 +49,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 case '1':
                     _amountService.AddItem(addedAmount);
                     Console.WriteLine("\r\nExpense has been added!");
-                    AmountsWriteFile(addedAmount);
+                    _amountManager.AmountsWriteFile(addedAmount);
                     break;
                 case '2':
                     Console.WriteLine("\r\nExpense has not been added!");
@@ -70,7 +71,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 case '1':
                     _amountService.AddItem(addedAmount);
                     Console.WriteLine("\r\nIncome has been added!");
-                    AmountsWriteFile(addedAmount);
+                    _amountManager.AmountsWriteFile(addedAmount);
                     break;
                 case '2':
                     Console.WriteLine("\r\nIncome has not been added!");

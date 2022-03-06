@@ -13,7 +13,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         private List<ExpenseType> _expenseTypesGetList;
         private List<string> _expenseTypesFileList;
         private int i;
-        private string filePath = @"C:\Users\DZachara\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\expenseType.txt";
+        private string filePath = @"C:\Users\Damian\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\expenseType.txt";
 
         public ExpenseTypeManager(IService<ExpenseType> expenseTypeService)
         {
