@@ -5,5 +5,6 @@ namespace HouseholdBudgetPlanner.App.Concrete
 {
     public class ExpenseTypeService : BaseService<ExpenseType>
     {
+        
     }
 }

@@ -4,5 +4,9 @@ namespace HouseholdBudgetPlanner.Domain.Entity
 {
     public class ExpenseType : BaseEntity
     {
+        public ExpenseType()
+        {
+
+        }
     }
 }

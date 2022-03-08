@@ -14,7 +14,8 @@ namespace HouseholdBudgetPlanner
             IncomeTypeService incomeTypeService = new IncomeTypeService();
             MenuActionService actionService = new MenuActionService();
             AmountService amountService = new AmountService();
-            ExpenseTypeManager expenseTypeManager = new ExpenseTypeManager(expenseTypeService);
+            ListService listService = new ListService();
+            ExpenseTypeManager expenseTypeManager = new ExpenseTypeManager(expenseTypeService, listService);
             IncomeTypeManager incomeTypeManager = new IncomeTypeManager(incomeTypeService);
             AmountManager amountManager = new AmountManager(actionService, amountService);
             AmountManagerAddExpense amountManagerAddExpense = new AmountManagerAddExpense(expenseTypeManager);

@@ -1,4 +1,5 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.App.Concrete;
 using HouseholdBudgetPlanner.Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -12,46 +13,49 @@ namespace HouseholdBudgetPlanner.App.Managers
         private IService<ExpenseType> _expenseTypeService;
         private List<ExpenseType> _expenseTypesGetList;
         private List<string> _expenseTypesFileList;
+        private ListService _listService;
         private int i;
-        private string filePath = @"C:\Users\Damian\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\expenseType.txt";
+        //private string filePath = @"C:\Users\Damian\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\expenseType.txt";
 
-        public ExpenseTypeManager(IService<ExpenseType> expenseTypeService)
+        public ExpenseTypeManager(IService<ExpenseType> expenseTypeService, ListService listService)
         {
             _expenseTypeService = expenseTypeService;
+            _listService = listService;
             _expenseTypesGetList = _expenseTypeService.GetAllItems();
-            ExpenseTypeReadFile();
+            _expenseTypesGetList = _listService.ExpenseTypeReadFile();
+            //ExpenseTypeReadFile();
         }
-        private void ExpenseTypeReadFile()
-        {
-            _expenseTypesFileList = File.ReadAllLines(filePath).ToList();
-            foreach (var expenseType in _expenseTypesFileList)
-            {
-                string[] expenseText = expenseType.Split(',');
-                ExpenseType expenseTypeFile = new ExpenseType();
-                expenseTypeFile.Id = int.Parse(expenseText[0]);
-                expenseTypeFile.Name = expenseText[1];
-                _expenseTypeService.AddItem(expenseTypeFile);
-            }
-            if (!_expenseTypesFileList.AsQueryable().Where(expenseType => expenseType == "1,General expenses").Any())
-            {
-                ExpenseType expenseTypeGeneral = new ExpenseType() { Id = 1, Name = "General expenses" };
-                _expenseTypeService.AddItem(expenseTypeGeneral);
-                ExpenseTypeWriteFile(expenseTypeGeneral);
-            }
-        }
-        private void ExpenseTypeWriteFile(ExpenseType expenseType)
-        {
-            if (_expenseTypesGetList.Contains(expenseType))
-            {
-                _expenseTypesFileList.Add($"{expenseType.Id},{expenseType.Name}");
-                File.WriteAllLines(filePath, _expenseTypesFileList);
-            }
-            else
-            {
-                _expenseTypesFileList.Remove($"{expenseType.Id},{expenseType.Name}");
-                File.WriteAllLines(filePath, _expenseTypesFileList);
-            }
-        }
+        //private void ExpenseTypeReadFile()
+        //{
+        //    _expenseTypesFileList = File.ReadAllLines(filePath).ToList();
+        //    foreach (var expenseType in _expenseTypesFileList)
+        //    {
+        //        string[] expenseText = expenseType.Split(',');
+        //        ExpenseType expenseTypeFile = new ExpenseType();
+        //        expenseTypeFile.Id = int.Parse(expenseText[0]);
+        //        expenseTypeFile.Name = expenseText[1];
+        //        _expenseTypeService.AddItem(expenseTypeFile);
+        //    }
+        //    if (!_expenseTypesFileList.AsQueryable().Where(expenseType => expenseType == "1,General expenses").Any())
+        //    {
+        //        ExpenseType expenseTypeGeneral = new ExpenseType() { Id = 1, Name = "General expenses" };
+        //        _expenseTypeService.AddItem(expenseTypeGeneral);
+        //        ExpenseTypeWriteFile(expenseTypeGeneral);
+        //    }
+        //}
+        //private void ExpenseTypeWriteFile(ExpenseType expenseType)
+        //{
+        //    if (_expenseTypesGetList.Contains(expenseType))
+        //    {
+        //        _expenseTypesFileList.Add($"{expenseType.Id},{expenseType.Name}");
+        //        File.WriteAllLines(filePath, _expenseTypesFileList);
+        //    }
+        //    else
+        //    {
+        //        _expenseTypesFileList.Remove($"{expenseType.Id},{expenseType.Name}");
+        //        File.WriteAllLines(filePath, _expenseTypesFileList);
+        //    }
+        //}
         public void ExpenseTypeView()
         {
             Console.WriteLine("\r\nAll your expense types are:\r\n");
@@ -79,7 +83,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 ExpenseType expenseTypeToAdd = new ExpenseType() { Id = i + 1, Name = name };
                 _expenseTypeService.AddItem(expenseTypeToAdd);
                 Console.WriteLine($"\r\nExpense type {name} has been added.");
-                ExpenseTypeWriteFile(expenseTypeToAdd);
+                //ExpenseTypeWriteFile(expenseTypeToAdd);
             }
             else
             {
@@ -101,7 +105,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 var expenseType =_expenseTypesGetList.AsQueryable().Where(expenseType => expenseType.Name == name).FirstOrDefault();
                 _expenseTypeService.RemoveItem(expenseType);
                 Console.WriteLine($"\r\nExpense type {name} has been removed.\r\n");
-                ExpenseTypeWriteFile(expenseType);
+                //ExpenseTypeWriteFile(expenseType);
             }
             else
             {
