@@ -12,7 +12,7 @@ namespace HouseholdBudgetPlanner.App.Managers
     {
         private IService<ExpenseType> _expenseTypeService;
         private List<ExpenseType> _expenseTypesGetList;
-        private List<string> _expenseTypesFileList;
+        //private List<string> _expenseTypesFileList;
         private ListService _listService;
         private int i;
         //private string filePath = @"C:\Users\Damian\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\expenseType.txt";
@@ -22,7 +22,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             _expenseTypeService = expenseTypeService;
             _listService = listService;
             _expenseTypesGetList = _expenseTypeService.GetAllItems();
-            _expenseTypesGetList = _listService.ExpenseTypeReadFile();
+            //_expenseTypesGetList = _listService.ExpenseTypeReadFile();
             //ExpenseTypeReadFile();
         }
         //private void ExpenseTypeReadFile()
@@ -83,7 +83,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 ExpenseType expenseTypeToAdd = new ExpenseType() { Id = i + 1, Name = name };
                 _expenseTypeService.AddItem(expenseTypeToAdd);
                 Console.WriteLine($"\r\nExpense type {name} has been added.");
-                //ExpenseTypeWriteFile(expenseTypeToAdd);
+                //_listService.ExpenseTypeWriteFile(_expenseTypesGetList);
             }
             else
             {

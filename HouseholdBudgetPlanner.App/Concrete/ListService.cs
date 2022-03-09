@@ -11,49 +11,38 @@ namespace HouseholdBudgetPlanner.App.Concrete
 {
     public class ListService
     {
+        List<ExpenseType> expenseTypes = new List<ExpenseType>();
+        string filePathExpenseTypes = (@"C:\Windows\Temp\ExpenseTypes.xml");
+        XmlRootAttribute rootExpense = new XmlRootAttribute();
+        public ListService()
+        {
+            rootExpense.ElementName = "ExpenseTypes";
+            rootExpense.IsNullable = true;
+        }
         public List<ExpenseType> ExpenseTypeReadFile()
         {
-            List<ExpenseType> expenseTypes = new List<ExpenseType>();
-            string filePath = (@"C:\Windows\Temp\ExpenseTypes.xml");
-            XmlRootAttribute root = new XmlRootAttribute();
-            root.ElementName = "ExpenseTypes";
-            root.IsNullable = true;
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ExpenseType>), root);
-            if (File.Exists(filePath))
+            
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ExpenseType>), rootExpense);
+            if (File.Exists(filePathExpenseTypes))
             {
-                string xml = File.ReadAllText(filePath);
-                
-
-                StringReader stringReader = new StringReader(xml);
-                var xmlExpense = (List<ExpenseType>)xmlSerializer.Deserialize(stringReader);
-                return xmlExpense;
-
+                string xmlExpenseString = File.ReadAllText(filePathExpenseTypes);
+                StringReader stringReaderExpense = new StringReader(xmlExpenseString);
+                var xmlExpenseTypes = (List<ExpenseType>)xmlSerializer.Deserialize(stringReaderExpense);
+                return xmlExpenseTypes;
             }
             else
             {
                 expenseTypes.Add(new ExpenseType() { Id = 1, Name = "General expenses" });
-                using StreamWriter sw = new StreamWriter(filePath);
-                xmlSerializer.Serialize(sw, expenseTypes);
+                using StreamWriter swExpense = new StreamWriter(filePathExpenseTypes);
+                xmlSerializer.Serialize(swExpense, expenseTypes);
                 return expenseTypes;
             }
         }
-        //private void ExpenseTypeReadFile()
-        //{
-        //    _expenseTypesFileList = File.ReadAllLines(filePath).ToList();
-        //    foreach (var expenseType in _expenseTypesFileList)
-        //    {
-        //        string[] expenseText = expenseType.Split(',');
-        //        ExpenseType expenseTypeFile = new ExpenseType();
-        //        expenseTypeFile.Id = int.Parse(expenseText[0]);
-        //        expenseTypeFile.Name = expenseText[1];
-        //        _expenseTypeService.AddItem(expenseTypeFile);
-        //    }
-        //    if (!_expenseTypesFileList.AsQueryable().Where(expenseType => expenseType == "1,General expenses").Any())
-        //    {
-        //        ExpenseType expenseTypeGeneral = new ExpenseType() { Id = 1, Name = "General expenses" };
-        //        _expenseTypeService.AddItem(expenseTypeGeneral);
-        //        ExpenseTypeWriteFile(expenseTypeGeneral);
-        //    }
-        //}
+        public void ExpenseTypeWriteFile(List<ExpenseType> expenseTypes)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ExpenseType>), rootExpense);
+            using StreamWriter swExpense = new StreamWriter(filePathExpenseTypes);
+            xmlSerializer.Serialize(swExpense, expenseTypes);
+        }
     }
 }
