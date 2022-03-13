@@ -1,4 +1,5 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.App.Concrete;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
@@ -10,13 +11,13 @@ namespace HouseholdBudgetPlanner.App.Managers
         private IService<Amount> _amountService;
         private readonly AmountManagerAddExpense _amountManagerAddExpense;
         private readonly AmountManagerAddIncome _amountManagerAddIncome;
-        private AmountManager _amountManager;
-        public AmountManagerAdd(IService<Amount> amountService, AmountManagerAddExpense amountManagerAddExpense, AmountManagerAddIncome amountManagerAddIncome, AmountManager amountManager)
+        private AmountListService _amountListService;
+        public AmountManagerAdd(IService<Amount> amountService, AmountManagerAddExpense amountManagerAddExpense, AmountManagerAddIncome amountManagerAddIncome, AmountListService amountListService)
         {
             _amountService = amountService;
             _amountManagerAddExpense = amountManagerAddExpense;
             _amountManagerAddIncome = amountManagerAddIncome;
-            _amountManager = amountManager;
+            _amountListService = amountListService;
         }
         public AmountManagerAdd()
         {
@@ -49,7 +50,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 case '1':
                     _amountService.AddItem(addedAmount);
                     Console.WriteLine("\r\nExpense has been added!");
-                    _amountManager.AmountsWriteFile(addedAmount);
+                    _amountListService.AmountWriteFile(addedAmount);
                     break;
                 case '2':
                     Console.WriteLine("\r\nExpense has not been added!");
@@ -71,7 +72,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 case '1':
                     _amountService.AddItem(addedAmount);
                     Console.WriteLine("\r\nIncome has been added!");
-                    _amountManager.AmountsWriteFile(addedAmount);
+                    _amountListService.AmountWriteFile(addedAmount);
                     break;
                 case '2':
                     Console.WriteLine("\r\nIncome has not been added!");

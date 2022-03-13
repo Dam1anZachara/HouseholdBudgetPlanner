@@ -1,3 +1,0 @@
-1,General expenses
-2,Home
-3,Food

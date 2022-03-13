@@ -14,50 +14,23 @@ namespace HouseholdBudgetPlanner.App.Managers
         private readonly MenuActionService _actionService;
         private readonly IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
-        private List<string> _amountsFileList;
-        private string filePath = @"C:\Users\Damian\source\repos\HouseholdBudgetPlanner\HouseholdBudgetPlanner\amounts.txt";
+        private AmountListService _amountListService;
 
-        public AmountManager(MenuActionService actionService, IService<Amount> amountService)
+        public AmountManager(MenuActionService actionService, IService<Amount> amountService, AmountListService amountListService)
         {
             _amountService = amountService;
             _actionService = actionService;
+            _amountListService = amountListService;
             _amountsGetList = _amountService.GetAllItems();
-            AmountsReadFile();
+            _amountsGetList = _amountListService.AmountReadFile();
         }
         public AmountManager()
         {
         }
-        public void AmountsReadFile()
-        {
-            _amountsFileList = File.ReadAllLines(filePath).ToList();
-
-            foreach (var amount in _amountsFileList)
-            {
-                string[] amountText = amount.Split('/');
-                Amount amountFile = new Amount();
-                amountFile.Id = int.Parse(amountText[0]);
-                amountFile.Name = amountText[1];
-                amountFile.Value = decimal.Parse(amountText[2]);
-                amountFile.Date = DateTime.Parse(amountText[3]);
-                _amountService.AddItem(amountFile);
-            }
-        }
-        public void AmountsWriteFile(Amount amount)
-        {
-            if (_amountsGetList.Contains(amount))
-            {
-                _amountsFileList.Add($"{amount.Id}/{amount.Name}/{amount.Value}/{amount.Date}");
-                File.WriteAllLines(filePath, _amountsFileList);
-            }
-            else
-            {
-                _amountsFileList.Remove($"{amount.Id}/{amount.Name}/{amount.Value}/{amount.Date}");
-                File.WriteAllLines(filePath, _amountsFileList);
-            }
-        }
-
+       
         public ConsoleKeyInfo AddAmountView()
         {
+            _amountsGetList = _amountListService.AmountReadFile();
             var addAmountMenu = _actionService.GetMenuActionsByMenuName("AddAmountMenu");
             Console.WriteLine("\r\n\r\nPlease select the assignment of the amount\r\n");
             for (int i = 0; i < addAmountMenu.Count; i++)

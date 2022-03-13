@@ -6,7 +6,7 @@ namespace HouseholdBudgetPlanner.Domain.Entity
 {
     public class Amount : BaseEntity
     {
-        [XmlElement("Name")]
+        [XmlElement("Value")]
         public decimal Value { get; set; }
         [XmlElement("Date")]
         public DateTime Date { get; set; }

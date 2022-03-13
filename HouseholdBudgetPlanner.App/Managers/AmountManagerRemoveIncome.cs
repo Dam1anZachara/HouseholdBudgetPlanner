@@ -49,7 +49,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 _amountService.RemoveItem(amountIncome);
                 Console.WriteLine("\r\nIncome has been removed!");
-                _amountManager.AmountsWriteFile(amountIncome);
+                //_amountManager.AmountsWriteFile(amountIncome);
             }
             else if (keyInfoRemoveIncome.KeyChar == '2')
             {
