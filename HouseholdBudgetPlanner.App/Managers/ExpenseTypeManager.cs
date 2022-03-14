@@ -18,9 +18,9 @@ namespace HouseholdBudgetPlanner.App.Managers
         {
             _expenseTypeService = expenseTypeService;
             _expenseTypeListService = expenseTypeListService;
-            _expenseTypeListService.ExpenseTypeReadFile();
             _expenseTypesGetList = _expenseTypeService.GetAllItems();
-
+            //_expenseTypesGetList = _expenseTypeListService.ExpenseTypeReadFile();
+            
         }
   
         public void ExpenseTypeView()
@@ -52,7 +52,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 ExpenseType expenseTypeToAdd = new ExpenseType() { Id = i + 1, Name = name };
                 _expenseTypeService.AddItem(expenseTypeToAdd);
                 Console.WriteLine($"\r\nExpense type {name} has been added.");
-                _expenseTypeListService.ExpenseTypeWriteFile(expenseTypeToAdd);
+                _expenseTypeListService.ExpenseTypeWriteFile(_expenseTypesGetList);
             }
             else
             {
