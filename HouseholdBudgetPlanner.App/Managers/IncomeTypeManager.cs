@@ -3,7 +3,6 @@ using HouseholdBudgetPlanner.App.Concrete;
 using HouseholdBudgetPlanner.Domain.Entity;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace HouseholdBudgetPlanner.App.Managers
@@ -24,9 +23,7 @@ namespace HouseholdBudgetPlanner.App.Managers
 
         public void IncomeTypeView()
         {
-            _incomeTypesGetList = _incomeTypeListService.IncomeTypeReadFile();
-            Console.WriteLine("\r\n\r\nAll your income types are:\r\n");
-
+            Console.WriteLine("\r\nAll your income types are:\r\n");
             for (i = 0; i < _incomeTypesGetList.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {_incomeTypesGetList[i].Name}");
@@ -50,8 +47,8 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 IncomeType incomeTypeToAdd = new IncomeType() { Id = (i + 1) * -1, Name = name };
                 _incomeTypeService.AddItem(incomeTypeToAdd);
+                _incomeTypeListService.IncomeTypeWriteFile();
                 Console.WriteLine($"\r\nIncome type {name} has been added.");
-                _incomeTypeListService.IncomeTypeWriteFile(incomeTypeToAdd);
             }
             else
             {
@@ -71,8 +68,8 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 var incomeType = _incomeTypesGetList.AsQueryable().Where(incomeType => incomeType.Name == name).FirstOrDefault();
                 _incomeTypeService.RemoveItem(incomeType);
+                _incomeTypeListService.IncomeTypeWriteFile();
                 Console.WriteLine($"\r\nIncome type {name} has been removed.\r\n");
-                _incomeTypeListService.IncomeTypeWriteFile(incomeType);
             }
             else
             {

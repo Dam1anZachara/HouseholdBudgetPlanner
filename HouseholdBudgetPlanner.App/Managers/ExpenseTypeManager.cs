@@ -13,19 +13,16 @@ namespace HouseholdBudgetPlanner.App.Managers
         private List<ExpenseType> _expenseTypesGetList;
         private ExpenseTypeListService _expenseTypeListService;
         private int i;
-        
+
         public ExpenseTypeManager(IService<ExpenseType> expenseTypeService, ExpenseTypeListService expenseTypeListService)
         {
             _expenseTypeService = expenseTypeService;
             _expenseTypeListService = expenseTypeListService;
             _expenseTypesGetList = _expenseTypeService.GetAllItems();
-            //_expenseTypesGetList = _expenseTypeListService.ExpenseTypeReadFile();
-            
         }
-  
+
         public void ExpenseTypeView()
         {
-            //_expenseTypesGetList = _expenseTypeListService.ExpenseTypeReadFile();
             Console.WriteLine("\r\nAll your expense types are:\r\n");
             for (i = 0; i < _expenseTypesGetList.Count; i++)
             {
@@ -51,14 +48,14 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 ExpenseType expenseTypeToAdd = new ExpenseType() { Id = i + 1, Name = name };
                 _expenseTypeService.AddItem(expenseTypeToAdd);
+                _expenseTypeListService.ExpenseTypeWriteFile();
                 Console.WriteLine($"\r\nExpense type {name} has been added.");
-                _expenseTypeListService.ExpenseTypeWriteFile(_expenseTypesGetList);
             }
             else
             {
                 Console.WriteLine("\r\nExpense type with this name exists, your name is empty or contains space.\r\n");
             }
-            
+
         }
         public string RemoveExpenseTypeView()
         {
@@ -71,17 +68,17 @@ namespace HouseholdBudgetPlanner.App.Managers
             bool expanseTypeExist = ExpanseTypeExist(name);
             if (expanseTypeExist)
             {
-                var expenseType =_expenseTypesGetList.AsQueryable().Where(expenseType => expenseType.Name == name).FirstOrDefault();
+                var expenseType = _expenseTypesGetList.AsQueryable().Where(expenseType => expenseType.Name == name).FirstOrDefault();
                 _expenseTypeService.RemoveItem(expenseType);
+                _expenseTypeListService.ExpenseTypeWriteFile();
                 Console.WriteLine($"\r\nExpense type {name} has been removed.\r\n");
-                //_expenseTypeListService.ExpenseTypeWriteFile(expenseType);
             }
             else
             {
                 Console.WriteLine("\r\nExpense type with this name does not exist. General expenses can not be removed!\r\n");
             }
         }
-        public ExpenseType GetExpenseToAmountByName (string name) // internal
+        public ExpenseType GetExpenseToAmountByName(string name) // internal
         {
             var expenseType = _expenseTypeService.GetItemByName(name);
             return expenseType;

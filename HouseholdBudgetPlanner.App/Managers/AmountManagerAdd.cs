@@ -50,7 +50,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 case '1':
                     _amountService.AddItem(addedAmount);
                     Console.WriteLine("\r\nExpense has been added!");
-                    _amountListService.AmountWriteFile(addedAmount);
+                    _amountListService.AmountWriteFile();
                     break;
                 case '2':
                     Console.WriteLine("\r\nExpense has not been added!");
@@ -72,7 +72,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 case '1':
                     _amountService.AddItem(addedAmount);
                     Console.WriteLine("\r\nIncome has been added!");
-                    _amountListService.AmountWriteFile(addedAmount);
+                    _amountListService.AmountWriteFile();
                     break;
                 case '2':
                     Console.WriteLine("\r\nIncome has not been added!");

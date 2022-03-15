@@ -1,57 +1,50 @@
-﻿using HouseholdBudgetPlanner.Domain.Entity;
+﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.App.Common;
+using HouseholdBudgetPlanner.Domain.Entity;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
 
 namespace HouseholdBudgetPlanner.App.Concrete
 {
-    public class IncomeTypeListService
+    public class IncomeTypeListService : BaseService<IncomeType>
     {
-        List<IncomeType> incomeTypes;
-        string filePathIncomeTypes = (@"C:\Windows\Temp\IncomeTypes.xml");
+        private IService<IncomeType> _incomeTypeService;
+        private List<IncomeType> _incomeTypesGetList;
+        string filePathIncomeTypes = (@"C:\Users\DZachara\Desktop\IncomeTypes.xml");
         XmlRootAttribute rootIncome = new XmlRootAttribute();
-        public IncomeTypeListService()
+        XmlSerializer xmlSerializer;
+        public IncomeTypeListService(IService<IncomeType> incomeTypeService)
         {
+            _incomeTypeService = incomeTypeService;
             rootIncome.ElementName = "IncomeTypes";
             rootIncome.IsNullable = true;
+            IncomeTypeReadFile();
+            _incomeTypesGetList = _incomeTypeService.GetAllItems();
+            xmlSerializer = new XmlSerializer(typeof(List<IncomeType>), rootIncome);
         }
-        public List<IncomeType> IncomeTypeReadFile()
+
+        public void IncomeTypeReadFile()
         {
-            
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<IncomeType>), rootIncome);
             if (File.Exists(filePathIncomeTypes))
             {
+
                 string xmlIncomeString = File.ReadAllText(filePathIncomeTypes);
                 StringReader stringReaderIncome = new StringReader(xmlIncomeString);
-                var xmlIncomeTypes = (List<IncomeType>)xmlSerializer.Deserialize(stringReaderIncome);
-                return xmlIncomeTypes;
+                _incomeTypeService.Items = (List<IncomeType>)xmlSerializer.Deserialize(stringReaderIncome);
             }
             else
             {
-                incomeTypes = new List<IncomeType>();
-                incomeTypes.Add(new IncomeType() { Id = -1, Name = "General incomes" });
+                _incomeTypeService.AddItem(new IncomeType() { Id = -1, Name = "General incomes" });
                 using StreamWriter swIncome = new StreamWriter(filePathIncomeTypes);
-                xmlSerializer.Serialize(swIncome, incomeTypes);
-                return incomeTypes;
+                xmlSerializer.Serialize(swIncome, _incomeTypesGetList);
             }
         }
-        public void IncomeTypeWriteFile(IncomeType incomeTypeSelect)
+        public void IncomeTypeWriteFile()
         {
-            incomeTypes = IncomeTypeReadFile();
-            var incomeExist = incomeTypes.AsQueryable().Where(incomeType => incomeType.Name == incomeTypeSelect.Name).Any();
-            if (!incomeExist)
-            {
-                incomeTypes.Add(incomeTypeSelect);
-            }
-            else
-            {
-                var incomeType = incomeTypes.AsQueryable().Where(incomeType => incomeType.Name == incomeTypeSelect.Name).FirstOrDefault();
-                incomeTypes.Remove(incomeType);
-            }
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<IncomeType>), rootIncome);
             using StreamWriter swIncome = new StreamWriter(filePathIncomeTypes);
-            xmlSerializer.Serialize(swIncome, incomeTypes);
+            xmlSerializer.Serialize(swIncome, _incomeTypeService.Items);
         }
     }
 }

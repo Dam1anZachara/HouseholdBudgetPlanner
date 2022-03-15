@@ -4,7 +4,6 @@ using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace HouseholdBudgetPlanner.App.Managers
@@ -14,23 +13,20 @@ namespace HouseholdBudgetPlanner.App.Managers
         private readonly MenuActionService _actionService;
         private readonly IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
-        private AmountListService _amountListService;
 
-        public AmountManager(MenuActionService actionService, IService<Amount> amountService, AmountListService amountListService)
+
+        public AmountManager(MenuActionService actionService, IService<Amount> amountService)
         {
             _amountService = amountService;
             _actionService = actionService;
-            _amountListService = amountListService;
             _amountsGetList = _amountService.GetAllItems();
-            _amountsGetList = _amountListService.AmountReadFile();
         }
         public AmountManager()
         {
         }
-       
+
         public ConsoleKeyInfo AddAmountView()
         {
-            _amountsGetList = _amountListService.AmountReadFile();
             var addAmountMenu = _actionService.GetMenuActionsByMenuName("AddAmountMenu");
             Console.WriteLine("\r\n\r\nPlease select the assignment of the amount\r\n");
             for (int i = 0; i < addAmountMenu.Count; i++)
@@ -75,7 +71,7 @@ namespace HouseholdBudgetPlanner.App.Managers
         }
         public bool ExpenseInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered) //internal
         {
-            return _amountsGetList.AsQueryable().Where(amount => amount.Date > dateStartEntered && 
+            return _amountsGetList.AsQueryable().Where(amount => amount.Date > dateStartEntered &&
             amount.Date < dateEndEntered && amount.Id > 0 && dateStartEntered < dateEndEntered).Any();
         }
         public bool IncomeInAmountByDateExist(DateTime dateStartEntered, DateTime dateEndEntered) //internal

@@ -1,4 +1,6 @@
-﻿using HouseholdBudgetPlanner.Domain.Entity;
+﻿using HouseholdBudgetPlanner.App.Abstract;
+using HouseholdBudgetPlanner.App.Common;
+using HouseholdBudgetPlanner.Domain.Entity;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,44 +8,44 @@ using System.Xml.Serialization;
 
 namespace HouseholdBudgetPlanner.App.Concrete
 {
-    public class AmountListService
+    public class AmountListService : BaseService<Amount>
     {
-        List<Amount> amounts;
-        string filePathAmounts = (@"C:\Windows\Temp\Amounts.xml");
+        private IService<Amount> _amountService;
+        private List<Amount> _amountsGetList;
+        string filePathAmounts = (@"C:\Users\DZachara\Desktop\Amounts.xml");
         XmlRootAttribute rootAmounts = new XmlRootAttribute();
-        public AmountListService()
+        XmlSerializer xmlSerializer;
+        public AmountListService(IService<Amount> amountService)
         {
+            _amountService = amountService;
             rootAmounts.ElementName = "Amounts";
             rootAmounts.IsNullable = true;
+            AmountReadFile();
+            _amountsGetList = _amountService.GetAllItems();
+            xmlSerializer = new XmlSerializer(typeof(List<Amount>), rootAmounts);
         }
-        public List<Amount> AmountReadFile()
+
+        public void AmountReadFile()
         {
-            XmlSerializer xmlSerializerAmount = new XmlSerializer(typeof(List<Amount>), rootAmounts);  
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Amount>), rootAmounts);
             if (File.Exists(filePathAmounts))
             {
-                string xmlAmountsString = File.ReadAllText(filePathAmounts);
-                StringReader stringReaderAmounts = new StringReader(xmlAmountsString);
-                var xmlAmounts = (List<Amount>)xmlSerializerAmount.Deserialize(stringReaderAmounts);
-                return xmlAmounts;
-            }
-            return null;
-        }
-        public void AmountWriteFile(Amount amountSelect)
-        {
-            amounts = AmountReadFile();
-            var amountExist = amounts.AsQueryable().Where(amount => amount.Name == amountSelect.Name).Any();
-            if (!amountExist)
-            {
-                amounts.Add(amountSelect);
+
+                string xmlAmountString = File.ReadAllText(filePathAmounts);
+                StringReader stringReaderAmount = new StringReader(xmlAmountString);
+                _amountService.Items = (List<Amount>)xmlSerializer.Deserialize(stringReaderAmount);
             }
             else
             {
-                var amount = amounts.AsQueryable().Where(amount => amount.Name == amountSelect.Name).FirstOrDefault();
-                amounts.Remove(amount);
+                using StreamWriter swAmount = new StreamWriter(filePathAmounts);
+                xmlSerializer.Serialize(swAmount, _amountsGetList);
             }
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Amount>), rootAmounts);
-            using StreamWriter swAmounts = new StreamWriter(filePathAmounts);
-            xmlSerializer.Serialize(swAmounts, amounts);
+        }
+        public void AmountWriteFile()
+        {
+            //XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Amount>), rootAmounts);
+            using StreamWriter swAmount = new StreamWriter(filePathAmounts);
+            xmlSerializer.Serialize(swAmount, _amountService.Items);
         }
     }
 }
