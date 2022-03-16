@@ -26,6 +26,8 @@ namespace HouseholdBudgetPlanner.App.Managers
                 case '3':
                     _budgetStatusBalanceManager.BudgetStatusBalanceMethod();
                     break;
+                case '4':
+                    break;
                 default:
                     Console.WriteLine("\r\nAction you entered does not exist\r\n");
                     break;

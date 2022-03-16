@@ -11,7 +11,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
     {
         private IService<ExpenseType> _expenseTypeService;
         private List<ExpenseType> _expenseTypesGetList;
-        string filePathExpenseTypes = (@"C:\Users\DZachara\Desktop\ExpenseTypes.xml");
+        string filePathExpenseTypes = (@"C:\Users\Damian\Desktop\ExpenseTypes.xml");
         XmlRootAttribute rootExpense = new XmlRootAttribute();
         XmlSerializer xmlSerializer;
         public ExpenseTypeListService(IService<ExpenseType> expenseTypeService)

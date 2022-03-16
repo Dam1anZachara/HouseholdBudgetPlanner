@@ -42,6 +42,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
             AddItem(new MenuAction (1, "Status of expenses", "BudgetStatusMenu"));
             AddItem(new MenuAction (2, "Status of incomes", "BudgetStatusMenu"));
             AddItem(new MenuAction (3, "Budget balance", "BudgetStatusMenu"));
+            AddItem(new MenuAction (4, "Generate raport", "BudgetStatusMenu"));
         }
     }
 }

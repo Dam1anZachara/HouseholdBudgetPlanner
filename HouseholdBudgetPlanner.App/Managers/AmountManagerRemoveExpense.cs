@@ -52,8 +52,8 @@ namespace HouseholdBudgetPlanner.App.Managers
             if (keyInfoRemoveExpense.KeyChar == '1')
             {
                 _amountService.RemoveItem(amountExpense);
-                Console.WriteLine("\r\nExpense has been removed!");
                 _amountListService.AmountWriteFile();
+                Console.WriteLine("\r\nExpense has been removed!");
             }
             else if (keyInfoRemoveExpense.KeyChar == '2')
             {

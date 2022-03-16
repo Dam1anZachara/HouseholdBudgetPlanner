@@ -11,7 +11,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
     {
         private IService<IncomeType> _incomeTypeService;
         private List<IncomeType> _incomeTypesGetList;
-        string filePathIncomeTypes = (@"C:\Users\DZachara\Desktop\IncomeTypes.xml");
+        string filePathIncomeTypes = (@"C:\Users\Damian\Desktop\IncomeTypes.xml");
         XmlRootAttribute rootIncome = new XmlRootAttribute();
         XmlSerializer xmlSerializer;
         public IncomeTypeListService(IService<IncomeType> incomeTypeService)

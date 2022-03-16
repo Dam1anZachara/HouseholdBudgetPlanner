@@ -12,7 +12,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
     {
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
-        string filePathAmounts = (@"C:\Users\DZachara\Desktop\Amounts.xml");
+        string filePathAmounts = (@"C:\Users\Damian\Desktop\Amounts.xml");
         XmlRootAttribute rootAmounts = new XmlRootAttribute();
         XmlSerializer xmlSerializer;
         public AmountListService(IService<Amount> amountService)
@@ -43,7 +43,6 @@ namespace HouseholdBudgetPlanner.App.Concrete
         }
         public void AmountWriteFile()
         {
-            //XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Amount>), rootAmounts);
             using StreamWriter swAmount = new StreamWriter(filePathAmounts);
             xmlSerializer.Serialize(swAmount, _amountService.Items);
         }
