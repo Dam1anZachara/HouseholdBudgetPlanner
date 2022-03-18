@@ -7,11 +7,13 @@ namespace HouseholdBudgetPlanner.App.Managers
         private readonly BudgetStatusExpensesManager _budgetStatusExpensesManager;
         private readonly BudgetStatusIncomesManager _budgetStatusIncomesManager;
         private readonly BudgetStatusBalanceManager _budgetStatusBalanceManager;
-        public BudgetStatusExecuteManager(BudgetStatusExpensesManager budgetStatusExpensesManager, BudgetStatusIncomesManager budgetStatusIncomesManager, BudgetStatusBalanceManager budgetStatusBalanceManager)
+        private readonly BudgetStatusRaportManager _budgetStatusRaportManager;
+        public BudgetStatusExecuteManager(BudgetStatusExpensesManager budgetStatusExpensesManager, BudgetStatusIncomesManager budgetStatusIncomesManager, BudgetStatusBalanceManager budgetStatusBalanceManager, BudgetStatusRaportManager budgetStatusRaportManager)
         {
             _budgetStatusExpensesManager = budgetStatusExpensesManager;
             _budgetStatusIncomesManager = budgetStatusIncomesManager;
             _budgetStatusBalanceManager = budgetStatusBalanceManager;
+            _budgetStatusRaportManager = budgetStatusRaportManager;
         }
         public void BudgetStatus(ConsoleKeyInfo keyInfoBudgetStatus)
         {
@@ -27,6 +29,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                     _budgetStatusBalanceManager.BudgetStatusBalanceMethod();
                     break;
                 case '4':
+                    _budgetStatusRaportManager.BudgetStatusRaportMethod();
                     break;
                 default:
                     Console.WriteLine("\r\nAction you entered does not exist\r\n");

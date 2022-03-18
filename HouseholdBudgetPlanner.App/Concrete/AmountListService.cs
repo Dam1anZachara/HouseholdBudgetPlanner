@@ -3,7 +3,6 @@ using HouseholdBudgetPlanner.App.Common;
 using HouseholdBudgetPlanner.Domain.Entity;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
 
 namespace HouseholdBudgetPlanner.App.Concrete
@@ -12,7 +11,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
     {
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
-        string filePathAmounts = (@"C:\Users\Damian\Desktop\Amounts.xml");
+        string filePathAmounts = (@"C:\Users\DZachara\Desktop\Amounts.xml");
         XmlRootAttribute rootAmounts = new XmlRootAttribute();
         XmlSerializer xmlSerializer;
         public AmountListService(IService<Amount> amountService)
@@ -30,7 +29,6 @@ namespace HouseholdBudgetPlanner.App.Concrete
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Amount>), rootAmounts);
             if (File.Exists(filePathAmounts))
             {
-
                 string xmlAmountString = File.ReadAllText(filePathAmounts);
                 StringReader stringReaderAmount = new StringReader(xmlAmountString);
                 _amountService.Items = (List<Amount>)xmlSerializer.Deserialize(stringReaderAmount);

@@ -27,6 +27,8 @@ namespace HouseholdBudgetPlanner
             AmountManagerRemoveIncome amountManagerRemoveIncome = new AmountManagerRemoveIncome(amountService, amountManager, amountListService);
             AmountManagerRemove amountManagerRemove = new AmountManagerRemove(amountManagerRemoveExpense, amountManagerRemoveIncome);
             AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus(actionService, amountService);
+            AmountRaportListService amountRaportListService = new AmountRaportListService(amountManagerBudgetStatus);
+            BudgetStatusRaportManager budgetStatusRaportManager = new BudgetStatusRaportManager(amountService, amountRaportListService);
             BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new BudgetStatusExpensesManagerMonth(amountService, amountManagerBudgetStatus);
             BudgetStatusExpensesManagerRange budgetStatusExpensesManagerRange = new BudgetStatusExpensesManagerRange(amountService, amountManagerBudgetStatus, amountManager);
             BudgetStatusExpensesManager budgetStatusExpensesManager = new BudgetStatusExpensesManager(budgetStatusExpensesManagerMonth, budgetStatusExpensesManagerRange);
@@ -34,7 +36,7 @@ namespace HouseholdBudgetPlanner
             BudgetStatusIncomesManagerRange budgetStatusIncomesManagerRange = new BudgetStatusIncomesManagerRange(amountService, amountManagerBudgetStatus, amountManager);
             BudgetStatusIncomesManager budgetStatusIncomesManager = new BudgetStatusIncomesManager(budgetStatusIncomesManagerMonth, budgetStatusIncomesManagerRange);
             BudgetStatusBalanceManager budgetStatusBalanceManager = new BudgetStatusBalanceManager(amountManagerBudgetStatus);
-            BudgetStatusExecuteManager budgetStatusExecuteManager = new BudgetStatusExecuteManager(budgetStatusExpensesManager, budgetStatusIncomesManager, budgetStatusBalanceManager);
+            BudgetStatusExecuteManager budgetStatusExecuteManager = new BudgetStatusExecuteManager(budgetStatusExpensesManager, budgetStatusIncomesManager, budgetStatusBalanceManager, budgetStatusRaportManager);
 
             Console.WriteLine("Welcome to the Household Budget Planner app!\r\n");
             
