@@ -15,7 +15,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
         {
             _amountManagerBudgetStatus = amountManagerBudgetStatus;
         }
-        string pathFileRaport = $@"C:\Users\DZachara\Desktop\{DateTime.Now.ToString("yyyy-MM-dd HHmmss")} BudgetBalanceRaport.csv";
+        string pathFileRaport = $@"C:\Users\Damian\Desktop\{DateTime.Now.ToString("yyyy-MM-dd HHmm")} BudgetBalanceRaport.csv";
         public void GenerateRaportMonthMethod(List<Amount> getListOfExpenses, List<Amount> getListOfIncomes)
         {
             using FileStream fs = File.Create(pathFileRaport);
@@ -52,33 +52,14 @@ namespace HouseholdBudgetPlanner.App.Concrete
         {
             foreach (var amountExpense in getListOfExpenses)
             {
-                if (30 - amountExpense.Name.Length > 0)
-                {
-                    string spaces = "";
-                    int numberOfSpaces = 30 - amountExpense.Name.Length;
-                    for (int i = 0; i < numberOfSpaces; i++)
-                    {
-                        spaces += "  ";
-                    }
-                    sw.WriteLine($"{amountExpense.Date} {amountExpense.Name},{spaces}{amountExpense.Value}{ValueTypes.PLN}");
-                }
+                sw.WriteLine($"{amountExpense.Date} {amountExpense.Name}: {amountExpense.Value}{ValueTypes.PLN}");
             }
         }
         private void IncomeWriteMethod(List<Amount> getListOfIncomes, StreamWriter sw)
         {
             foreach (var amountIncome in getListOfIncomes)
-            {
-                if (30 - amountIncome.Name.Length > 0)
-                {
-                    string spaces = "";
-
-                    int numberOfSpaces = 30 - amountIncome.Name.Length;
-                    for (int i = 0; i < numberOfSpaces; i++)
-                    {
-                        spaces += "  ";
-                    }
-                    sw.WriteLine($"{amountIncome.Date} {amountIncome.Name},{spaces}{amountIncome.Value}{ValueTypes.PLN}");
-                }
+            { 
+                sw.WriteLine($"{amountIncome.Date} {amountIncome.Name}: {amountIncome.Value}{ValueTypes.PLN}");
             }
         }
     }
