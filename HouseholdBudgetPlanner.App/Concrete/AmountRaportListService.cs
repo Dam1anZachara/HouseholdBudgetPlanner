@@ -1,4 +1,5 @@
-﻿using HouseholdBudgetPlanner.App.Managers;
+﻿using HouseholdBudgetPlanner.App.FileSupport;
+using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
@@ -10,15 +11,19 @@ namespace HouseholdBudgetPlanner.App.Concrete
     public class AmountRaportListService
     {
         AmountManagerBudgetStatus _amountManagerBudgetStatus;
+        private FilePath _filePath;
+        private string _pathFileRaport;
 
-        public AmountRaportListService(AmountManagerBudgetStatus amountManagerBudgetStatus)
+        public AmountRaportListService(AmountManagerBudgetStatus amountManagerBudgetStatus, FilePath filePath)
         {
             _amountManagerBudgetStatus = amountManagerBudgetStatus;
+            _filePath = filePath;
+            _pathFileRaport = _filePath.FilePathRaport();
         }
-        string pathFileRaport = $@"C:\Users\Damian\Desktop\{DateTime.Now.ToString("yyyy-MM-dd HHmm")} BudgetBalanceRaport.csv";
+        
         public void GenerateRaportMonthMethod(List<Amount> getListOfExpenses, List<Amount> getListOfIncomes)
         {
-            using FileStream fs = File.Create(pathFileRaport);
+            using FileStream fs = File.Create(_pathFileRaport);
             using StreamWriter sw = new StreamWriter(fs);
             sw.WriteLine($"Your Expenses in this month: {DateTime.Now.ToString("yyyy MMMM")}\r\n");
             ExpenseWriteMethod(getListOfExpenses, sw);
@@ -34,7 +39,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
         }
         public void GenerateRaportRangeDateMethod(List<Amount> getListOfExpenses, List<Amount> getListOfIncomes, DateTime dateStartEntered, DateTime dateEndEntered)
         {
-            using FileStream fs = File.Create(pathFileRaport);
+            using FileStream fs = File.Create(_pathFileRaport);
             using StreamWriter sw = new StreamWriter(fs);
             sw.WriteLine($"Your expenses since {dateStartEntered} to {dateEndEntered}.\r\n");
             ExpenseWriteMethod(getListOfExpenses, sw);
@@ -45,7 +50,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
             Console.WriteLine($"\r\nBudget balance since {dateStartEntered} to {dateEndEntered}: {amountSumAllIncomesDate - amountSumAllExpensesDate}{ValueTypes.PLN}\r\n");
             sw.WriteLine($"\r\nYour budget balance since {dateStartEntered} to {dateEndEntered}\r\n");
             sw.WriteLine($"Your all expenses: {amountSumAllExpensesDate}{ ValueTypes.PLN}\r\n");
-            sw.WriteLine($"Your all incomes: {amountSumAllExpensesDate}{ ValueTypes.PLN}\r\n");
+            sw.WriteLine($"Your all incomes: {amountSumAllIncomesDate}{ ValueTypes.PLN}\r\n");
             sw.WriteLine($"Budget balance: {amountSumAllIncomesDate - amountSumAllExpensesDate}{ ValueTypes.PLN}\r\n");
         }
         private void ExpenseWriteMethod(List<Amount> getListOfExpenses, StreamWriter sw)

@@ -1,5 +1,6 @@
 ﻿using HouseholdBudgetPlanner.App;
 using HouseholdBudgetPlanner.App.Concrete;
+using HouseholdBudgetPlanner.App.FileSupport;
 using HouseholdBudgetPlanner.App.Managers;
 using System;
 
@@ -7,18 +8,18 @@ namespace HouseholdBudgetPlanner
 {
     public class Program
     {
-        //const string FILE_NAME = "C:\\HouseholdBudgetPlannerFiles\\ImportFile.xlsx";
         static void Main(string[] args)
         {
+            FilePath filePath = new FilePath();
             ExpenseTypeService expenseTypeService = new ExpenseTypeService();
             IncomeTypeService incomeTypeService = new IncomeTypeService();
             MenuActionService actionService = new MenuActionService();
             AmountService amountService = new AmountService();
-            ExpenseTypeListService expenseTypeListService = new ExpenseTypeListService(expenseTypeService);
+            ExpenseTypeListService expenseTypeListService = new ExpenseTypeListService(expenseTypeService, filePath);
             ExpenseTypeManager expenseTypeManager = new ExpenseTypeManager(expenseTypeService, expenseTypeListService);
-            IncomeTypeListService incomeTypeListService = new IncomeTypeListService(incomeTypeService);
+            IncomeTypeListService incomeTypeListService = new IncomeTypeListService(incomeTypeService, filePath);
             IncomeTypeManager incomeTypeManager = new IncomeTypeManager(incomeTypeService, incomeTypeListService);
-            AmountListService amountListService = new AmountListService(amountService);
+            AmountListService amountListService = new AmountListService(amountService, filePath);
             AmountManager amountManager = new AmountManager(actionService, amountService);
             AmountManagerAddExpense amountManagerAddExpense = new AmountManagerAddExpense(expenseTypeManager);
             AmountManagerAddIncome amountManagerAddIncome = new AmountManagerAddIncome(incomeTypeManager);
@@ -27,7 +28,7 @@ namespace HouseholdBudgetPlanner
             AmountManagerRemoveIncome amountManagerRemoveIncome = new AmountManagerRemoveIncome(amountService, amountManager, amountListService);
             AmountManagerRemove amountManagerRemove = new AmountManagerRemove(amountManagerRemoveExpense, amountManagerRemoveIncome);
             AmountManagerBudgetStatus amountManagerBudgetStatus = new AmountManagerBudgetStatus(actionService, amountService);
-            AmountRaportListService amountRaportListService = new AmountRaportListService(amountManagerBudgetStatus);
+            AmountRaportListService amountRaportListService = new AmountRaportListService(amountManagerBudgetStatus, filePath);
             BudgetStatusRaportManager budgetStatusRaportManager = new BudgetStatusRaportManager(amountService, amountRaportListService);
             BudgetStatusExpensesManagerMonth budgetStatusExpensesManagerMonth = new BudgetStatusExpensesManagerMonth(amountService, amountManagerBudgetStatus);
             BudgetStatusExpensesManagerRange budgetStatusExpensesManagerRange = new BudgetStatusExpensesManagerRange(amountService, amountManagerBudgetStatus, amountManager);

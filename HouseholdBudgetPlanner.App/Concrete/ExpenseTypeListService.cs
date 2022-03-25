@@ -1,5 +1,6 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Common;
+using HouseholdBudgetPlanner.App.FileSupport;
 using HouseholdBudgetPlanner.Domain.Entity;
 using System.Collections.Generic;
 using System.IO;
@@ -11,12 +12,15 @@ namespace HouseholdBudgetPlanner.App.Concrete
     {
         private IService<ExpenseType> _expenseTypeService;
         private List<ExpenseType> _expenseTypesGetList;
-        string filePathExpenseTypes = (@"C:\Users\Damian\Desktop\ExpenseTypes.xml");
+        private FilePath _filePath;
+        private string _filePathExpenseTypes;
         XmlRootAttribute rootExpense = new XmlRootAttribute();
         XmlSerializer xmlSerializer;
-        public ExpenseTypeListService(IService<ExpenseType> expenseTypeService)
+        public ExpenseTypeListService(IService<ExpenseType> expenseTypeService, FilePath filePath)
         {
             _expenseTypeService = expenseTypeService;
+            _filePath = filePath;
+            _filePathExpenseTypes = _filePath.FilePathExpenseTypes();
             rootExpense.ElementName = "ExpenseTypes";
             rootExpense.IsNullable = true;
             ExpenseTypeReadFile();
@@ -27,23 +31,23 @@ namespace HouseholdBudgetPlanner.App.Concrete
         public void ExpenseTypeReadFile()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ExpenseType>), rootExpense);
-            if (File.Exists(filePathExpenseTypes))
+            if (File.Exists(_filePathExpenseTypes))
             {
 
-                string xmlExpenseString = File.ReadAllText(filePathExpenseTypes);
+                string xmlExpenseString = File.ReadAllText(_filePathExpenseTypes);
                 StringReader stringReaderExpense = new StringReader(xmlExpenseString);
                 _expenseTypeService.Items = (List<ExpenseType>)xmlSerializer.Deserialize(stringReaderExpense);
             }
             else
             {
                 _expenseTypeService.AddItem(new ExpenseType() { Id = 1, Name = "General expenses" });
-                using StreamWriter swExpense = new StreamWriter(filePathExpenseTypes);
+                using StreamWriter swExpense = new StreamWriter(_filePathExpenseTypes);
                 xmlSerializer.Serialize(swExpense, _expenseTypesGetList);
             }
         }
         public void ExpenseTypeWriteFile()
         {
-            using StreamWriter swExpense = new StreamWriter(filePathExpenseTypes);
+            using StreamWriter swExpense = new StreamWriter(_filePathExpenseTypes);
             xmlSerializer.Serialize(swExpense, _expenseTypeService.Items);
         }
     }
