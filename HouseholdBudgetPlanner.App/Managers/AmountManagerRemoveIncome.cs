@@ -1,5 +1,5 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
-using HouseholdBudgetPlanner.App.Concrete;
+using HouseholdBudgetPlanner.App.FileSupport;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
@@ -13,12 +13,12 @@ namespace HouseholdBudgetPlanner.App.Managers
         private readonly IService<Amount> _amountService;
         private readonly List<Amount> _amountsGetList;
         private readonly AmountManager _amountManager;
-        private AmountListService _amountListService;
-        public AmountManagerRemoveIncome(IService<Amount> amountService, AmountManager amountManager, AmountListService amountListService)
+        private AmountFileService _amountFileService;
+        public AmountManagerRemoveIncome(IService<Amount> amountService, AmountManager amountManager, AmountFileService amountFileService)
         {
             _amountService = amountService;
             _amountsGetList = amountService.GetAllItems();
-            _amountListService = amountListService;
+            _amountFileService = amountFileService;
             _amountManager = amountManager;
         }
         public void IncomeInAmountByDateList(DateTime dateStartEntered, DateTime dateEndEntered) //private
@@ -51,7 +51,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             if (keyInfoRemoveIncome.KeyChar == '1')
             {
                 _amountService.RemoveItem(amountIncome);
-                _amountListService.AmountWriteFile();
+                _amountFileService.AmountWriteFile();
                 Console.WriteLine("\r\nIncome has been removed!");
             }
             else if (keyInfoRemoveIncome.KeyChar == '2')

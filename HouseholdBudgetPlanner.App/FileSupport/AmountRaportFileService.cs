@@ -1,26 +1,25 @@
-﻿using HouseholdBudgetPlanner.App.FileSupport;
-using HouseholdBudgetPlanner.App.Managers;
+﻿using HouseholdBudgetPlanner.App.Managers;
 using HouseholdBudgetPlanner.Domain.Entity;
 using HouseholdBudgetPlanner.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace HouseholdBudgetPlanner.App.Concrete
+namespace HouseholdBudgetPlanner.App.FileSupport
 {
-    public class AmountRaportListService
+    public class AmountRaportFileService
     {
         AmountManagerBudgetStatus _amountManagerBudgetStatus;
         private FilePath _filePath;
         private string _pathFileRaport;
 
-        public AmountRaportListService(AmountManagerBudgetStatus amountManagerBudgetStatus, FilePath filePath)
+        public AmountRaportFileService(AmountManagerBudgetStatus amountManagerBudgetStatus, FilePath filePath)
         {
             _amountManagerBudgetStatus = amountManagerBudgetStatus;
             _filePath = filePath;
             _pathFileRaport = _filePath.FilePathRaport();
         }
-        
+
         public void GenerateRaportMonthMethod(List<Amount> getListOfExpenses, List<Amount> getListOfIncomes)
         {
             using FileStream fs = File.Create(_pathFileRaport);
@@ -63,7 +62,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
         private void IncomeWriteMethod(List<Amount> getListOfIncomes, StreamWriter sw)
         {
             foreach (var amountIncome in getListOfIncomes)
-            { 
+            {
                 sw.WriteLine($"{amountIncome.Date} {amountIncome.Name}: {amountIncome.Value}{ValueTypes.PLN}");
             }
         }

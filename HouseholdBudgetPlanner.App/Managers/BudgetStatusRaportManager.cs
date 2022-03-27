@@ -1,5 +1,5 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
-using HouseholdBudgetPlanner.App.Concrete;
+using HouseholdBudgetPlanner.App.FileSupport;
 using HouseholdBudgetPlanner.Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -13,14 +13,14 @@ namespace HouseholdBudgetPlanner.App.Managers
         private List<Amount> _amountsGetList;
         private List<Amount> _raportExpenseList;
         private List<Amount> _raportIncomeList;
-        private AmountRaportListService _amountRaportListService;
-        public BudgetStatusRaportManager(IService<Amount> amountService, AmountRaportListService amountRaportListService)
+        private AmountRaportFileService _amountRaportFileService;
+        public BudgetStatusRaportManager(IService<Amount> amountService, AmountRaportFileService amountRaportFileService)
         {
             _amountService = amountService;
             _amountsGetList = amountService.GetAllItems();
             _raportExpenseList = new List<Amount>();
             _raportIncomeList = new List<Amount>();
-            _amountRaportListService = amountRaportListService;
+            _amountRaportFileService = amountRaportFileService;
         }
 
         public void BudgetStatusRaportMethod()
@@ -32,7 +32,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                 case '1':
                     _raportExpenseList = RaportAllExpensesMonthList();
                     _raportIncomeList = RaportAllIncomesMonthList();
-                    _amountRaportListService.GenerateRaportMonthMethod(_raportExpenseList, _raportIncomeList);
+                    _amountRaportFileService.GenerateRaportMonthMethod(_raportExpenseList, _raportIncomeList);
                     Console.WriteLine("\r\nRaport has been generated!\r\n");
                     break;
                 case '2':
@@ -46,7 +46,7 @@ namespace HouseholdBudgetPlanner.App.Managers
                     dateEndEntered = DateSelect(dateEnd);
                     _raportExpenseList = RaportExpensesRangeDateList(dateStartEntered, dateEndEntered);
                     _raportIncomeList = RaportIncomesRangeDateList(dateStartEntered, dateEndEntered);
-                    _amountRaportListService.GenerateRaportRangeDateMethod(_raportExpenseList, _raportIncomeList, dateStartEntered, dateEndEntered);
+                    _amountRaportFileService.GenerateRaportRangeDateMethod(_raportExpenseList, _raportIncomeList, dateStartEntered, dateEndEntered);
                     break;
                 default:
                     Console.WriteLine("\r\nAction you entered does not exist\r\n");

@@ -1,5 +1,5 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
-using HouseholdBudgetPlanner.App.Concrete;
+using HouseholdBudgetPlanner.App.FileSupport;
 using HouseholdBudgetPlanner.Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -11,13 +11,13 @@ namespace HouseholdBudgetPlanner.App.Managers
     {
         private IService<ExpenseType> _expenseTypeService;
         private List<ExpenseType> _expenseTypesGetList;
-        private ExpenseTypeListService _expenseTypeListService;
+        private ExpenseTypeFileService _expenseTypeFileService;
         private int i;
 
-        public ExpenseTypeManager(IService<ExpenseType> expenseTypeService, ExpenseTypeListService expenseTypeListService)
+        public ExpenseTypeManager(IService<ExpenseType> expenseTypeService, ExpenseTypeFileService expenseTypeFileService)
         {
             _expenseTypeService = expenseTypeService;
-            _expenseTypeListService = expenseTypeListService;
+            _expenseTypeFileService = expenseTypeFileService;
             _expenseTypesGetList = _expenseTypeService.GetAllItems();
         }
 
@@ -48,7 +48,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 ExpenseType expenseTypeToAdd = new ExpenseType() { Id = i + 1, Name = name };
                 _expenseTypeService.AddItem(expenseTypeToAdd);
-                _expenseTypeListService.ExpenseTypeWriteFile();
+                _expenseTypeFileService.ExpenseTypeWriteFile();
                 Console.WriteLine($"\r\nExpense type {name} has been added.");
             }
             else
@@ -70,7 +70,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 var expenseType = _expenseTypesGetList.AsQueryable().Where(expenseType => expenseType.Name == name).FirstOrDefault();
                 _expenseTypeService.RemoveItem(expenseType);
-                _expenseTypeListService.ExpenseTypeWriteFile();
+                _expenseTypeFileService.ExpenseTypeWriteFile();
                 Console.WriteLine($"\r\nExpense type {name} has been removed.\r\n");
             }
             else

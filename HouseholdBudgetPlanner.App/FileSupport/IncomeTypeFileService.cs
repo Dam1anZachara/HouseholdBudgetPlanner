@@ -1,14 +1,13 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Common;
-using HouseholdBudgetPlanner.App.FileSupport;
 using HouseholdBudgetPlanner.Domain.Entity;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace HouseholdBudgetPlanner.App.Concrete
+namespace HouseholdBudgetPlanner.App.FileSupport
 {
-    public class IncomeTypeListService : BaseService<IncomeType>
+    public class IncomeTypeFileService : BaseService<IncomeType>
     {
         private IService<IncomeType> _incomeTypeService;
         private List<IncomeType> _incomeTypesGetList;
@@ -16,7 +15,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
         private string _filePathIncomeTypes;
         XmlRootAttribute rootIncome = new XmlRootAttribute();
         XmlSerializer xmlSerializer;
-        public IncomeTypeListService(IService<IncomeType> incomeTypeService, FilePath filePath)
+        public IncomeTypeFileService(IService<IncomeType> incomeTypeService, FilePath filePath)
         {
             _incomeTypeService = incomeTypeService;
             _filePath = filePath;

@@ -1,14 +1,13 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Common;
-using HouseholdBudgetPlanner.App.FileSupport;
 using HouseholdBudgetPlanner.Domain.Entity;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace HouseholdBudgetPlanner.App.Concrete
+namespace HouseholdBudgetPlanner.App.FileSupport
 {
-    public class ExpenseTypeListService : BaseService<ExpenseType>
+    public class ExpenseTypeFileService : BaseService<ExpenseType>
     {
         private IService<ExpenseType> _expenseTypeService;
         private List<ExpenseType> _expenseTypesGetList;
@@ -16,7 +15,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
         private string _filePathExpenseTypes;
         XmlRootAttribute rootExpense = new XmlRootAttribute();
         XmlSerializer xmlSerializer;
-        public ExpenseTypeListService(IService<ExpenseType> expenseTypeService, FilePath filePath)
+        public ExpenseTypeFileService(IService<ExpenseType> expenseTypeService, FilePath filePath)
         {
             _expenseTypeService = expenseTypeService;
             _filePath = filePath;

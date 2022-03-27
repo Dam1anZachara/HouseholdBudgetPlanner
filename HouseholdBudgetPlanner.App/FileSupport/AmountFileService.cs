@@ -1,14 +1,13 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
 using HouseholdBudgetPlanner.App.Common;
-using HouseholdBudgetPlanner.App.FileSupport;
 using HouseholdBudgetPlanner.Domain.Entity;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace HouseholdBudgetPlanner.App.Concrete
+namespace HouseholdBudgetPlanner.App.FileSupport
 {
-    public class AmountListService : BaseService<Amount>
+    public class AmountFileService : BaseService<Amount>
     {
         private IService<Amount> _amountService;
         private List<Amount> _amountsGetList;
@@ -16,7 +15,7 @@ namespace HouseholdBudgetPlanner.App.Concrete
         private string _filePathAmounts;
         XmlRootAttribute rootAmounts = new XmlRootAttribute();
         XmlSerializer xmlSerializer;
-        public AmountListService(IService<Amount> amountService, FilePath filePath)
+        public AmountFileService(IService<Amount> amountService, FilePath filePath)
         {
             _amountService = amountService;
             _filePath = filePath;

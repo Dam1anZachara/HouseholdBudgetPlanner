@@ -1,5 +1,5 @@
 ﻿using HouseholdBudgetPlanner.App.Abstract;
-using HouseholdBudgetPlanner.App.Concrete;
+using HouseholdBudgetPlanner.App.FileSupport;
 using HouseholdBudgetPlanner.Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -11,13 +11,13 @@ namespace HouseholdBudgetPlanner.App.Managers
     {
         private IService<IncomeType> _incomeTypeService;
         private List<IncomeType> _incomeTypesGetList;
-        private IncomeTypeListService _incomeTypeListService;
+        private IncomeTypeFileService _incomeTypeFileService;
         private int i;
 
-        public IncomeTypeManager(IService<IncomeType> incomeTypeService, IncomeTypeListService incomeTypeListService)
+        public IncomeTypeManager(IService<IncomeType> incomeTypeService, IncomeTypeFileService incomeTypeFileService)
         {
             _incomeTypeService = incomeTypeService;
-            _incomeTypeListService = incomeTypeListService;
+            _incomeTypeFileService = incomeTypeFileService;
             _incomeTypesGetList = incomeTypeService.GetAllItems();
         }
 
@@ -47,7 +47,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 IncomeType incomeTypeToAdd = new IncomeType() { Id = (i + 1) * -1, Name = name };
                 _incomeTypeService.AddItem(incomeTypeToAdd);
-                _incomeTypeListService.IncomeTypeWriteFile();
+                _incomeTypeFileService.IncomeTypeWriteFile();
                 Console.WriteLine($"\r\nIncome type {name} has been added.");
             }
             else
@@ -68,7 +68,7 @@ namespace HouseholdBudgetPlanner.App.Managers
             {
                 var incomeType = _incomeTypesGetList.AsQueryable().Where(incomeType => incomeType.Name == name).FirstOrDefault();
                 _incomeTypeService.RemoveItem(incomeType);
-                _incomeTypeListService.IncomeTypeWriteFile();
+                _incomeTypeFileService.IncomeTypeWriteFile();
                 Console.WriteLine($"\r\nIncome type {name} has been removed.\r\n");
             }
             else
